@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    
+    <!-- App related strings -->
+    
+    <string name="app_name">Gasteizko Margolariak</string>
+	
+    
+    <!-- Arrow buttons -->
+    
+	<string name="arrow_left">&lt;</string>
+	<string name="arrow_right">&gt;</string>
+    
+	
+	<!-- Menu sections -->
+	
+    <string name="menu_home">Home</string>
+    <string name="menu_schedule">Festival schedule</string>
+    <string name="menu_gm_schedule">Margolariak schedule</string>
+    <string name="menu_around">Around me</string>
+    <string name="menu_location">Find us</string>
+    <string name="menu_settings">Settings</string>
+    <string name="menu_about">About</string>
+    
+    <!-- Schedule strings -->
+    
+    <string name="schedule_filter">Search&#8230;</string>
+    <string name="schedule_close">Close</string>
+    
+    
+    <!-- Month names -->
+    
+    <string name="month_07">July</string>
+    <string name="month_08">August</string>
+    
+    
+    <!-- Day strings -->
+    <string name="today">Today</string>
+    <string name="tomorrow">Tomorrow</string>
+    
+    
+    <!-- "Titles" for days -->
+    
+    <string name="day_title_25">Santiago</string>
+    <string name="day_title_4">Celedon</string>
+    <string name="day_title_5">La Blanca</string>
+    <string name="day_title_6">El ecuador</string>
+    <string name="day_title_7">Celedon Txiki</string>
+    <string name="day_title_8">Blusa Veterano</string>
+    <string name="day_title_9">Despedida</string>
+    
+    
+    <!-- About section strings -->
+    
+    <string name="about_copyright">Copyright 2015 @Iñigo Valentin</string>
+    <string name="about_email">i@inigovalentin.com</string>
+    <string name="about_license">This software is distributed under a </string>
+    <string name="about_code">You can get the source code for this project at &lt;a href="http://www.github.com">Github&lt;/a></string>
+    
+    
+    <!-- Home section strings -->
+    
+    <string name="home_section_schedule">Festival activities</string>
+    <string name="home_section_gm">Margolariak activities</string>
+    <string name="home_section_around">Around me</string>
+    <string name="home_section_location">Find us</string>
+    <string name="home_section_location_text_0">Gasteizko Margolariak is around!</string>
+    <string name="home_section_location_text_1">They are just %1$s away from you! (About %2$d minutes walking)</string>
+    <string name="home_section_social">Follow us</string>
+    <string name="home_section_join">Join Gasteizko Margolariak</string>
+    <string name="home_section_schedule_see">See all</string>
+    <string name="home_section_gm_see">See all</string>
+    <string name="home_section_around_see">See more</string>
+    <string name="home_section_location_see">Map</string>
+    <string name="home_section_social_see">Follow us</string>
+    <string name="home_section_join_see">See prices</string>
+    
+    
+    <!-- Settings section strings -->
+    
+    <string name="settings_section_notification">NOTIFICATIONS</string>
+    <string name="settings_notification">Notifications</string>
+    <string name="settings_notification_on">Receive notifications</string>
+    <string name="settings_notification_off">Don\'t receive notifications</string>
+    <string name="settings_notification_gm">Margolari notifications</string>
+    <string name="settings_notification_gm_on">Receive Margolari notifications</string>
+    <string name="settings_notification_gm_off">Don\'t receive Margolari notifications</string>
+    <string name="settings_section_account">ACCOUNT</string>
+    <string name="settings_account_gm">Margolari</string>
+    <string name="settings_account_gm_on">I am Margolari</string>
+    <string name="settings_account_gm_off">I am not Margolari</string>
+    <string name="settings_account_name">Name</string>
+    <string name="settings_account_message_title">Set username</string>
+    <string name="settings_account_message_text">Set a username to help us identify you and offer you better activities.</string>
+    <string name="settings_account_message_save">Save</string>
+    <string name="settings_account_message_cancel">Cancel</string>
+    <string name="settings_account_unset">Not set</string>
+    <string name="settings_account_name_disclaimer">Blablabla</string>
+    
+    
+    <!-- Location section strings -->
+    
+    <string name="location_not_reporting">Gasteizko Margolariak isn\'t currently reporting thir location.</string>
+    <string name="location_now">But, according to their schedule, you can find them now at %1$s.</string>
+    <string name="location_today">But, according to their schedule, you can find them at %1$s at %2$s.</string>
+    <string name="location_tomorrow">But, according to their schedule, you can find them tomorrow at %1$s at %2$s.</string>
+    
+    <!-- Accesibility strings -->
+    
+    <string name="accesibility_event">Event</string>
+    <string name="accesibility_event_gm">Event organized by Gasteizko Margolariak</string>
+    <string name="accesibility_event_schedule">Event in the municipal schedule</string>
+    
+    
+    <!-- Social networks strings -->
+    
+    <string name="social_facebook">Facebook</string>
+    <string name="social_twitter">Twitter</string>
+    <string name="social_googleplus">Google+</string>
+    <string name="social_youtube">Youtube</string>
+    <string name="social_facebook_link">http://facebook.com/gmargolariak</string>
+    <string name="social_twitter_link">http://twitter.com/gmargolariak</string>
+    <string name="social_googleplus_link">https://plus.google.com/106661466029005469492</string>
+    <string name="social_youtube_link">https://www.youtube.com/user/GasteizkoMargolariak</string>
+    
+    
+    <!-- Misc strings -->
+    <string name="kilometers">kilometers</string>
+    <string name="meters">meters</string>
+    
+</resources>

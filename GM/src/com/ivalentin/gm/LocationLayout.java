@@ -1,0 +1,214 @@
+package com.ivalentin.gm;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.Locale;
+
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.os.Bundle;
+import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
+import android.widget.TextView;
+
+public class LocationLayout extends Fragment implements OnMapReadyCallback{
+	private MapView mapView;
+	private GoogleMap map;
+	private LatLng location, gmLocation;
+	private View v;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
+		
+		//Get the view
+		v = inflater.inflate(R.layout.fragment_layout_location, container, false);
+		
+		//Set the title
+		((MainActivity) getActivity()).setSectionTitle(v.getContext().getString(R.string.menu_location));
+		
+		//LinearLayouts to be shown or hidden
+		LinearLayout llReport = (LinearLayout) v.findViewById(R.id.ll_fragment_location_reported);
+		LinearLayout llNoReport = (LinearLayout) v.findViewById(R.id.ll_fragment_location_no_reported);
+		
+		//Get preferences
+		SharedPreferences settings = v.getContext().getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
+		
+		//Get current date and time string formatters
+		Calendar cal;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd-", Locale.US);
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+		Date date = new Date();
+		
+		//Variable to indicate if there is a report
+		boolean reporting = false;
+		
+		//Try to get last location time
+		try{
+			Date locationDate = dateFormat.parse(settings.getString(GM.PREF_GM_LOCATION, "1970-01-01 00:00:00"));
+			cal = Calendar.getInstance();
+		    cal.setTime(date);
+		    cal.add(Calendar.MINUTE, -10);
+		    
+		    //If the last location report is recent
+		    if (cal.getTime().before(locationDate))
+		    	reporting = true;
+		}
+		catch (Exception ex){
+			Log.e("Error parsing stored date", ex.toString());
+		}
+		
+		//If there is a location report
+		if (reporting){
+			llNoReport.setVisibility(View.GONE);
+			//Get location passed to the app
+			Bundle bundle = this.getArguments();
+			location = new LatLng(bundle.getDouble("lat", 0), bundle.getDouble("lon", 0));
+			
+			mapView = (MapView) v.findViewById(R.id.mapview);
+			mapView.onCreate(savedInstanceState);
+	 
+			// Gets to GoogleMap from the MapView and does initialization stuff
+			mapView.getMapAsync(this);
+	    }
+		
+		//If there is no location report
+	    else{
+	    	llReport.setVisibility(View.GONE);
+	    	TextView tvLocation = (TextView) v.findViewById(R.id.tv_location_schedule);
+	    	
+	    	//Initialize the database
+	    	SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);;
+			Cursor cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host FROM event, place WHERE event.place = place.id ORDER BY start;", null);
+			Date startMinus24, startPlus30, start, end;
+			boolean found = false;
+			while (cursor.moveToNext() && found == false){
+				try{
+					start = dateFormat.parse(cursor.getString(8));
+					cal = Calendar.getInstance();
+				    cal.setTime(dateFormat.parse(cursor.getString(8)));
+				    cal.add(Calendar.HOUR_OF_DAY, -24);
+				    startMinus24 = cal.getTime();
+				    cal = Calendar.getInstance();
+				    cal.setTime(dateFormat.parse(cursor.getString(8)));
+				    cal.add(Calendar.MINUTE, 30);
+				    startPlus30 = cal.getTime();
+				    
+				    //If end set and now between start and end
+				    if (found == false && cursor.getString(9) != null){
+				    	end = dateFormat.parse(cursor.getString(9));
+				    	if (date.after(start) && date.before(end)){
+				    		found = true;
+				    		//Set text
+				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_now), timeFormat.format(cursor.getString(8)), cursor.getString(4)));
+				    	}
+				    }
+				    
+				    //If end not set and now between start and start + 30 min
+				    if (found == false && cursor.getString(9) == null){
+				    	if (date.after(start) && date.before(startPlus30)){
+				    		found = true;
+				    		//Set text
+				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_now), timeFormat.format(cursor.getString(8)), cursor.getString(4)));
+				    	}
+				    }
+				    
+				    //If now between start -24h and start
+				    if (found == false && date.after(startMinus24) && date.before(start)){
+				    	found = true;
+				    	//Set text
+				    	//Switch between today, tomorrow
+				    	if (dayFormat.format(start).equals(dayFormat.format(date)))
+				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_today), timeFormat.format(cursor.getString(8)), cursor.getString(4)));
+				    	else
+				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_tomorrow), timeFormat.format(cursor.getString(8)), cursor.getString(4)));
+				    }
+					
+				}
+				catch (ParseException e){
+					Log.e("Error parsing date for around event", e.toString());
+				}
+				if (found == false){
+					tvLocation.setVisibility(View.GONE);
+				}
+			}
+			cursor.close();
+	    	
+	    }
+				
+
+		return v;
+	}
+
+	@Override
+	public void onResume() {
+		if (mapView != null)
+			mapView.onResume();
+		super.onResume();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mapView != null){
+			mapView.onResume();
+			mapView.onDestroy();
+		}
+	}
+
+	 @Override
+	public void onLowMemory() {
+		super.onLowMemory();
+		if (mapView != null){
+			mapView.onResume();
+			mapView.onLowMemory();
+		}
+	}
+
+	@Override
+	public void onMapReady(GoogleMap googleMap) {
+		this.map = googleMap;
+		map.setMyLocationEnabled(true);
+		
+		map.getUiSettings().setMyLocationButtonEnabled(false);
+		map.setMyLocationEnabled(true);
+		// Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+		try {
+			MapsInitializer.initialize(this.getActivity());
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 12);
+			map.animateCamera(cameraUpdate);
+		} catch (Exception e) {
+			Log.e("Error initializing mapss", e.toString());
+		}
+		//Set GM marker
+		SharedPreferences settings = v.getContext().getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
+		Double lat = Double.parseDouble(settings.getString(GM.PREF_GM_LATITUDE, ""));
+		Double lon = Double.parseDouble(settings.getString(GM.PREF_GM_LONGITUDE, ""));
+		gmLocation = new LatLng(lat, lon);
+		MarkerOptions moGm = new MarkerOptions();
+		moGm.title(v.getContext().getString(R.string.app_name));
+		moGm.position(gmLocation);
+		moGm.icon(BitmapDescriptorFactory.fromResource(R.drawable.pinpoint_gm));
+		map.addMarker(moGm);
+		
+	}
+
+}

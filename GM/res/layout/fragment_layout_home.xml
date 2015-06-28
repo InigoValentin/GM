@@ -1,0 +1,348 @@
+<com.ivalentin.gm.CustomScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/sh_home_layout"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content" >
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="5dp" >
+    
+	    <LinearLayout
+	        android:id="@+id/ll_home_section_schedule"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="fill_parent"
+	            android:orientation="vertical" >
+	
+	            <LinearLayout
+	                android:id="@+id/ll_home_section_schedule_link"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:background="@drawable/home_section_title"
+	                android:padding="5dp" >
+	
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/home_section_schedule"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textStyle="bold" />
+	
+	                <com.ivalentin.gm.FakeLinkTextView
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical|end"
+	                    android:gravity="end"
+	                    android:text="@string/home_section_schedule_see"
+	                    android:textColorHint="@color/link" />
+	
+	            </LinearLayout>
+	
+	            <LinearLayout
+	                android:id="@+id/ll_home_section_schedule_content"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical" >
+	            </LinearLayout>
+	
+	        </LinearLayout>
+	
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="1dp"
+	            android:layout_margin="15dp"
+	            android:background="@color/black" />
+	
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/ll_home_section_gm"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="fill_parent"
+	            android:orientation="vertical" >
+	
+	            <LinearLayout
+	                android:id="@+id/ll_home_section_gm_link"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:background="@drawable/home_section_title"
+	                android:padding="5dp" >
+	
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/home_section_gm"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textStyle="bold" />
+	
+	                <com.ivalentin.gm.FakeLinkTextView
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical|end"
+	                    android:gravity="end"
+	                    android:text="@string/home_section_gm_see"
+	                    android:textColorHint="@color/link" />
+	
+	            </LinearLayout>
+	
+	            <LinearLayout
+	                android:id="@+id/ll_home_section_gm_content"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical" >
+	            </LinearLayout>
+	
+	        </LinearLayout>
+	
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="1dp"
+	            android:layout_margin="15dp"
+	            android:background="@color/black" />
+	
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/ll_home_section_around"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="fill_parent"
+	            android:orientation="vertical" >
+	
+	            <LinearLayout
+	                android:id="@+id/ll_home_section_around_link"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:background="@drawable/home_section_title"
+	                android:padding="5dp" >
+	
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/home_section_around"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textStyle="bold" />
+	
+	                <com.ivalentin.gm.FakeLinkTextView
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical|end"
+	                    android:gravity="end"
+	                    android:text="@string/home_section_around_see"
+	                    android:textColorHint="@color/link" />
+	
+	            </LinearLayout>
+	
+	            <LinearLayout
+	                android:id="@+id/ll_home_section_around_content"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical" >
+	            </LinearLayout>
+	
+	        </LinearLayout>
+	
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="1dp"
+	            android:layout_margin="15dp"
+	            android:background="@color/black" />
+	
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/ll_home_section_location"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="fill_parent"
+	            android:orientation="vertical" >
+	
+	            <LinearLayout
+	                android:id="@+id/ll_home_section_location_link"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:background="@drawable/home_section_title"
+	                android:padding="5dp" >
+	
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/home_section_location"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textStyle="bold" />
+	
+	                <com.ivalentin.gm.FakeLinkTextView
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical|end"
+	                    android:gravity="end"
+	                    android:text="@string/home_section_location_see"
+	                    android:textColorHint="@color/link" />
+	
+	            </LinearLayout>
+	
+	            <LinearLayout
+	                android:id="@+id/ll_home_section_location_content"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical"
+	                android:padding="15dp" >
+
+	                <TextView
+	                    android:id="@+id/tv_home_location_0"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_marginBottom="15dp"
+	                    android:text="@string/home_section_location_text_0" />
+	                
+	                <TextView
+	                    android:id="@+id/tv_home_location_1"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/home_section_location_text_1" />
+
+	            </LinearLayout>
+	
+	        </LinearLayout>
+	
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="1dp"
+	            android:layout_margin="15dp"
+	            android:background="@color/black" />
+	
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/ll_home_section_join"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="fill_parent"
+	            android:orientation="vertical" >
+	
+	            <LinearLayout
+	                android:id="@+id/ll_home_section_join_link"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:background="@drawable/home_section_title"
+	                android:padding="5dp" >
+	
+	                <TextView
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:text="@string/home_section_join"
+	                    android:textAppearance="?android:attr/textAppearanceMedium"
+	                    android:textStyle="bold" />
+	
+	                <com.ivalentin.gm.FakeLinkTextView
+	                    android:layout_width="fill_parent"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical|end"
+	                    android:gravity="end"
+	                    android:text="@string/home_section_join_see"
+	                    android:textColorHint="@color/link" />
+	
+	            </LinearLayout>
+	
+	            <LinearLayout
+	                android:id="@+id/ll_home_section_join_content"
+	                android:layout_width="match_parent"
+	                android:layout_height="wrap_content"
+	                android:orientation="vertical" >
+	            </LinearLayout>
+	
+	        </LinearLayout>
+	
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="1dp"
+	            android:layout_margin="15dp"
+	            android:background="@color/black" />
+	
+	    </LinearLayout>
+	    
+	    <LinearLayout
+	        android:id="@+id/ll_home_section_social"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical" >
+	
+            <TextView
+                android:id="@+id/tv_home_section_social_link"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/home_section_title"
+                android:padding="5dp"
+                android:text="@string/home_section_social"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold" />
+	
+            <LinearLayout
+                android:id="@+id/ll_home_section_social_content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:orientation="horizontal" >
+
+                <ImageView
+                    android:id="@+id/iv_social_facebook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:contentDescription="@string/social_facebook"
+                    android:src="@drawable/social_facebook" />
+                
+                <ImageView
+                    android:id="@+id/iv_social_twitter"
+                    android:contentDescription="@string/social_twitter"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/social_twitter" />
+                
+                <ImageView
+                    android:id="@+id/iv_social_googleplus"
+                    android:contentDescription="@string/social_googleplus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/social_googleplus" />
+                
+                <ImageView
+                    android:id="@+id/iv_social_youtube"
+                    android:contentDescription="@string/social_youtube"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:src="@drawable/social_youtube" />
+
+            </LinearLayout>
+	
+	    </LinearLayout>
+	   
+	</LinearLayout>
+
+</com.ivalentin.gm.CustomScrollView>

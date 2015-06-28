@@ -1,0 +1,1 @@
+{ "name": "gm-web", "files": [ { "directory": ".", "filters": ["*.html", "*.txt", "*.php", "*.css", "*.js", "*.sql", ".htaccess", "*.xml"], "recursive": 1 } ] }

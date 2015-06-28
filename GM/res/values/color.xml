@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Color for text that looks like a link -->
+    <color name="link">#0000ff</color>
+    
+    <!-- Basic colors -->
+    
+    <color name="black">#000000</color>
+    <color name="dark_gray">#444444</color>
+    <color name="white">#ffffff</color>
+    
+    
+    <!-- Backgrounds for several sections -->
+    
+    <color name="background_app">#ccffcc</color>
+    <color name="background_app_gradient">#ffffff</color>
+    <color name="background_sections">#88ee66</color>
+    <color name="background_menu">#449933</color>
+    <color name="background_menu_gradient">#99ff77</color>
+    
+    <color name="background_around_row_even">#bbeebb</color>
+    <color name="background_around_row_odd">#aaddaa</color>
+    
+    <color name="background_notification">#000000</color>
+    
+    
+    <!-- Color for the "About Section" -->
+    
+    <color name="about_code_background">#999999</color>
+    
+    <!-- Colors for the "Home" section -->
+    
+    <color name="home_section_background">#66bb66</color>
+    
+    <!-- Colors for settings section -->
+    
+    <color name="settings_header">#aaaaaa</color>
+    <color name="settings_header_background">#444444</color>
+    
+    
+    <!-- Colors for gradients -->
+    
+    <color name="background_bar">#88ee66</color>
+    <color name="background_bar_gradient">#66aa55</color>
+    <color name="background_date">#cccccc</color>
+    <color name="background_date_gradient">#888888</color>
+    
+    <!-- Color for the arrow buttons -->
+    
+    <color name="arrow_button_start">#aaaaee</color>
+    <color name="arrow_button_center">#eeeeff</color>
+    <color name="arrow_button_start_pressed">#7777bb</color>
+    <color name="arrow_button_center_pressed">#bbbbcc</color>
+    <color name="arrow_button_border">#222290</color>
+</resources>

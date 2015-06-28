@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    <!-- Basic colors -->
+    
+    <color name="light_red">#ffaaaa</color>
+    <color name="light_yellow">#ffffaa</color>
+    <color name="light_green">#aaffaa</color>
+    <color name="black">#000000</color>
+    
+</resources>

@@ -1,0 +1,172 @@
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+	android:layout_width="match_parent"
+	android:layout_height="wrap_content" >
+	
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/notification_title" />
+	
+	    <EditText
+	        android:id="@+id/et_notification_title"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginEnd="10dp"
+	        android:layout_marginStart="10dp"
+	        android:ems="10"
+	        android:hint="@string/notification_title_hint" >
+	
+	        <requestFocus />
+	    </EditText>
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp"
+	        android:text="@string/notification_text" />
+	
+	    <EditText
+	        android:id="@+id/et_notification_text"
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginEnd="10dp"
+	        android:layout_marginStart="10dp"
+	        android:ems="10"
+	        android:hint="@string/notification_text_hint"
+	        android:inputType="textMultiLine"
+	        android:lines="5" />
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp"
+	        android:text="@string/notification_text" />
+	
+	    <RadioGroup
+	        android:id="@+id/rg_notification_type"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginStart="15dp" >
+	
+	        <RadioButton
+	            android:id="@+id/rb_notification_type_text"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:checked="true" 
+	            android:text="@string/notification_type_text" />
+	        
+	        <RadioButton 
+	            android:id="@+id/rb_notification_type_gm" 
+	            android:layout_width="wrap_content" 
+	            android:layout_height="wrap_content" 
+	            android:text="@string/notification_type_gm" />
+	        	
+	        <RadioButton
+	            android:id="@+id/rb_notification_type_schedule"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/notification_type_schedule" />
+	
+	        
+	
+	    </RadioGroup>
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp" >
+	
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/notification_duration" />
+	
+	        <EditText
+	            android:id="@+id/et_notification_h"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="20dp"
+	            android:layout_marginStart="20dp"
+	            android:ems="10"
+	            android:inputType="number"
+	            android:text="@string/notification_h_default"
+	            android:width="50dp" />
+	
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/notification_h" />
+	
+	        <EditText
+	            android:id="@+id/et_notification_m"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:layout_marginStart="10dp"
+	            android:ems="10"
+	            android:inputType="number"
+	            android:text="@string/notification_m_default"
+	            android:width="50dp" />
+	
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/notification_m" />
+	    </LinearLayout>
+	
+	    <TextView
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginTop="20dp"
+	        android:text="@string/notification_scope" />
+	
+	    <RadioGroup
+	        android:id="@+id/rg_notification_scope"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_marginLeft="15dp"
+	        android:layout_marginStart="15dp" >
+	
+	        <RadioButton
+	            android:id="@+id/rb_notification_scope_all"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:checked="true"
+	            android:text="@string/notification_scope_all" />
+	
+	        <RadioButton
+	            android:id="@+id/rb_notification_scope_gm"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/notification_scope_gm" />
+	    </RadioGroup>
+	
+	    <LinearLayout
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content" >
+	
+	        <Button
+	            android:id="@+id/bt_notification_back"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight=".5"
+	            android:text="@string/notification_back" />
+	
+	        <Button
+	            android:id="@+id/bt_notification_send"
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_weight=".5"
+	            android:text="@string/notification_send" />
+	
+	    </LinearLayout>
+	
+	</LinearLayout>
+</ScrollView>

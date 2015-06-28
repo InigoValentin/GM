@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Gasteizko Margolariak - Master</string>
+    <string name="app_name_notifications">GM - Master - Send notification</string>
+    
+    <string name="form_text">Welcome to the Gasteizko Margolariak master app.\n\nPlease provide a username before you can perform any actions.\n\nThis username must be recognizable by the other users of this app. Only admins will see it.</string>
+    <string name="form_hint">Username</string>
+	<string name="form_phone">Phone</string>    
+    <string name="form_send">Send</string>
+    
+    <string name="noadmin">Your account hasn\'t been activated yet. Please wait until it\'s done before you can perform any actions.</string>
+    
+    <string name="toast_not_validated_yet">Your account has not been validated yet.</string>
+    <string name="toast_validated">Account validated!\nYou are now an admin.</string>
+    <string name="toast_submitted">Account submitted. Wait for it to be activated.</string>
+    <string name="toast_not_submitted">There was an error submitting the accounts.</string>
+    
+    <string name="toast_notification_error_title">Please write a title.</string>
+    <string name="toast_notification_error_text">Please write a body text.</string>
+    <string name="toast_notification_error_duration">Duration must be between 15 minutes and 48 hours.</string>
+    <string name="toast_notification_error_unauthorized">Unauthorized to send notifications.</string>
+    <string name="toast_notification_submitted">Notification uploaded.</string>
+    <string name="toast_notification_not_submitted">Couldn\'t upload notification.</string>
+    
+    <string name="location_location">Location report</string>
+    <string name="location_text">Location currently reported by:</string>
+    <string name="location_nobody">Nobody</string>
+    
+    <string name="button_location">Report location from this device</string>
+    <string name="button_location_stop">Stop reporting location</string>
+    <string name="button_notification">Send notification</string>
+    
+    <string name="notification_title">Notification title</string>
+    <string name="notification_title_hint">Title</string>
+    <string name="notification_text">Notification body</string>
+    <string name="notification_type">Action</string>
+    <string name="notification_type_text">Show as text</string>
+    <string name="notification_type_gm">Open GM schedule</string>
+    <string name="notification_type_schedule">Show municipal schedule</string>
+    <string name="notification_text_hint">Body</string>
+    <string name="notification_duration">Duration:</string>
+    <string name="notification_h">h</string>
+    <string name="notification_h_default">1</string>
+    <string name="notification_m">m</string>
+    <string name="notification_m_default">00</string>
+    <string name="notification_scope">Send notification to:</string>
+    <string name="notification_scope_gm">Gasteizko Margolariak members</string>
+    <string name="notification_scope_all">All users</string>
+    <string name="notification_send">Send</string>
+    <string name="notification_back">Back</string>
+    
+    <string name="notif_reporting_title">Location reporting</string>
+    <string name="notif_reporting">Reporting location from this device</string>
+    <string name="notif_reporting_stop_title">Location reporting stopped</string>
+    <string name="notif_reporting_stop">Another user is now reporting location</string>
+
+</resources>

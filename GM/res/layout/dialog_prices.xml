@@ -1,0 +1,300 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/background_app" >
+
+    <Button
+        android:id="@+id/bt_dialog_prices_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="false"
+        android:text="@string/prices_close" />
+
+	<ScrollView
+	    android:id="@+id/scrollView1"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    android:layout_above="@id/bt_dialog_prices_close"
+	    android:layout_alignParentTop="true"
+	    android:padding="10dp" >
+	
+	    <LinearLayout
+	        android:layout_width="match_parent"
+	        android:layout_height="wrap_content"
+	        android:orientation="vertical">
+	
+	        <TextView
+	            android:id="@+id/textView1"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:text="@string/prices_title"
+	            android:textAppearance="?android:attr/textAppearanceLarge"
+	            android:textSize="30sp" />
+	
+	        <TextView
+	            android:id="@+id/textView2"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:layout_marginStart="10dp"
+	            android:layout_marginTop="15dp"
+	            android:text="@string/prices_section_days"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:textSize="20sp" />
+	        
+	        <TableLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="15dp"
+	            android:layout_marginStart="15dp"
+	            android:layout_marginTop="20dp"
+	            android:shrinkColumns="0" >
+
+	            <TableRow
+	                android:id="@+id/tableRow4"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="8dp"
+	                android:layout_marginTop="8dp" >
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_name_0"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:textSize="17sp" />
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_price_0"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginStart="10dp"
+	                    android:textSize="17sp" />
+
+	            </TableRow>
+
+	            <TableRow
+	                android:id="@+id/TableRow01"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="8dp"
+	                android:layout_marginTop="8dp" >
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_name_1"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:textSize="17sp" />
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_price_1"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginStart="10dp"
+	                    android:textSize="17sp" />
+
+	            </TableRow>
+
+	            <TableRow
+	                android:id="@+id/TableRow02"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="8dp"
+	                android:layout_marginTop="8dp" >
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_name_2"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:textSize="17sp" />
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_price_2"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginStart="10dp"
+	                    android:textSize="17sp" />
+
+	            </TableRow>
+
+	            <TableRow
+	                android:id="@+id/TableRow03"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="8dp"
+	                android:layout_marginTop="8dp" >
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_name_3"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:textSize="17sp" />
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_price_3"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginStart="10dp"
+	                    android:textSize="17sp" />
+
+	            </TableRow>
+
+	            <TableRow
+	                android:id="@+id/TableRow04"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="8dp"
+	                android:layout_marginTop="8dp" >
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_name_4"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:textSize="17sp" />
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_price_4"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginStart="10dp"
+	                    android:textSize="17sp" />
+
+	            </TableRow>
+
+	            <TableRow
+	                android:id="@+id/TableRow05"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="8dp"
+	                android:layout_marginTop="8dp" >
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_name_5"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:textSize="17sp" />
+
+	                <TextView
+	                    android:id="@+id/tv_prices_day_price_5"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginStart="10dp"
+	                    android:textSize="17sp" />
+
+	            </TableRow>
+	
+	        </TableLayout>
+	        
+	        <TextView
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="10dp"
+	            android:layout_marginStart="10dp"
+	            android:layout_marginTop="35dp"
+	            android:text="@string/prices_section_packs"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:textSize="20sp" />
+	        
+	        <TableLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginLeft="15dp"
+	            android:layout_marginStart="15dp"
+	            android:layout_marginTop="20dp"
+	            android:shrinkColumns="0" >
+
+	            <TableRow
+	                android:id="@+id/tableRow1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="8dp"
+	                android:layout_marginTop="8dp" >
+
+	                <TextView
+	                    android:id="@+id/tv_prices_offer_name_0"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:textSize="17sp" />
+
+	                <TextView
+	                    android:id="@+id/tv_prices_offer_price_0"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginStart="10dp"
+	                    android:textSize="17sp" />
+
+	            </TableRow>
+
+	            <TableRow
+	                android:id="@+id/tableRow2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="8dp"
+	                android:layout_marginTop="8dp" >
+
+	                <TextView
+	                    android:id="@+id/tv_prices_offer_name_1"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:textSize="17sp" />
+
+	                <TextView
+	                    android:id="@+id/tv_prices_offer_price_1"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginStart="10dp"
+	                    android:textSize="17sp" />
+
+	            </TableRow>
+
+	            <TableRow
+	                android:id="@+id/tableRow3"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginBottom="8dp"
+	                android:layout_marginTop="8dp" >
+
+	                <TextView
+	                    android:id="@+id/tv_prices_offer_name_2"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:textSize="17sp" />
+
+	                <TextView
+	                    android:id="@+id/tv_prices_offer_price_2"
+	                    android:layout_width="wrap_content"
+	                    android:layout_height="wrap_content"
+	                    android:layout_gravity="center_vertical"
+	                    android:layout_marginLeft="10dp"
+	                    android:layout_marginStart="10dp"
+	                    android:textSize="17sp" />
+
+	            </TableRow>
+
+	                
+	
+	            
+	
+	        </TableLayout>
+	
+	    </LinearLayout>
+	
+	</ScrollView>
+</RelativeLayout>

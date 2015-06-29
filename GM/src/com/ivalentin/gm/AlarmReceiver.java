@@ -43,6 +43,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         
+    	Log.d("Alarm", "Received");
+    	
     	//Synchronize database.
     	new Sync(context).execute();
 
@@ -67,6 +69,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 				fu.Run("http://inigovalentin.com/gm/app/notification.php"); 
 				//All the info
 				output = fu.getOutput();
+				Log.d("Alarm", "Fetched notifications");
 			}
 			catch(Exception ex){
 				Log.e("Notification error", "Error fetching remote file: " + ex.toString());
@@ -157,6 +160,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 		fu.Run("http://inigovalentin.com/gm/app/location.php");
 		String lat = "", lon = "";
 		output = fu.getOutput();
+		Log.d("Alarm", "Fetched location");
 		for(int i = 0; i < output.size(); i++){
 			if (output.get(i).length() >= 25){
 				if (output.get(i).substring(0, 25).equals("<location>none</location>"))

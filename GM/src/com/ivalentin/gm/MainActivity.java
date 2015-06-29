@@ -36,7 +36,6 @@ import android.widget.TextView;
  *
  */
 public class MainActivity extends ActionBarActivity implements LocationListener{
-	
 		
 	//Set of GPS coordinates
 	private double[] coordinates = new double[2];

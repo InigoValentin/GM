@@ -56,7 +56,7 @@
     <string name="about_copyright">Copyright 2015 @Iñigo Valentin</string>
     <string name="about_email">i@inigovalentin.com</string>
     <string name="about_license">This software is distributed under a </string>
-    <string name="about_code">You can get the source code for this project at &lt;a href="http://www.github.com">Github&lt;/a></string>
+    <string name="about_code">Puedes ver y descargar el codigo fuente de esta aplicacion en &lt;a href="https://github.com/Seavenois/GM">Github&lt;/a></string>
     
     
     <!-- Home section strings -->

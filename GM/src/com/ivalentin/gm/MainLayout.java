@@ -194,7 +194,10 @@ public class MainLayout extends LinearLayout {
 		
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				prevX = curX;
+				int width = this.getWidth();
+				if (event.getX() <  (float) width / 10){
+					prevX = curX;
+				}
 				return true;
 				//TODO: Return true only if the left of the screen is touched
 			

@@ -248,6 +248,7 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 		} catch (Exception e) {
 			Log.e("Error initializing mapss", e.toString());
 		}
+		
 		//Set GM marker
 		SharedPreferences settings = v.getContext().getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
 		Double lat = Double.parseDouble(settings.getString(GM.PREF_GM_LATITUDE, ""));

@@ -19,6 +19,8 @@ public class Event implements Comparable<Event>{
 	private double[] coordinates = new double[2];
 	private Date start, end;
 	private boolean gm, schedule;
+	private Integer distance = null;
+	private double[] location = new double[2];
 	
 	
 	/**
@@ -140,11 +142,25 @@ public class Event implements Comparable<Event>{
 	/**
 	 * Calculates the event distance to a given point.
 	 * 
-	 * @param location Array of doubles [latitude, longitude] to calculate the distance of the event from.
+	 * @param loc Array of doubles [latitude, longitude] to calculate the distance of the event from.
 	 * @return The distance, in meters, between the event and the given point.
 	 */
-	public int getDistance(double location[]){
-		return Math.round((long) (Distance.calculateDistance(location[0], location[1], coordinates[0], coordinates[1], 'K') * 1000));
+	public Integer getDistance(double loc[]){
+		location = loc;
+		distance = Math.round((long) (Distance.calculateDistance(location[0], location[1], coordinates[0], coordinates[1], 'K') * 1000));
+		return distance;
+	}
+	
+	/**
+	 * Gets the distance between the event location and a location previously provided using getDistance(double loc[]). 
+	 * 
+	 * @return The distance, in meters, between the event and the location set when calling getDistance(double loc[]). If it wasn't called, it will be null.
+	 */
+	public Integer getDistance(){
+		if (location == null)
+			return null;
+		else
+			return getDistance(location);
 	}
 	
 	/**
@@ -175,8 +191,52 @@ public class Event implements Comparable<Event>{
 	 */
 	@Override
 	public int compareTo(Event another) {
-		//TODO: Ponderate distance
-		return this.getStart().compareTo(another.getStart());
+		float distanceDif, timeDif;
+		float result;
+		
+		
+		//Get distance difference
+		if (getDistance() == null && another.getDistance() == null)
+			distanceDif = 0;
+		else if (getDistance() == null)
+			distanceDif = -1;
+		else if (another.getDistance() == null)
+			distanceDif = 1;
+		else{
+			distanceDif = getDistance() - another.getDistance();
+			if (getDistance() > another.getDistance()){
+				if (getDistance() == 0)
+					distanceDif = 1;
+				else
+					distanceDif = distanceDif / getDistance();
+			}
+			else{
+				if (another.getDistance() == 0)
+					distanceDif = -1;
+				else
+					distanceDif = distanceDif / another.getDistance();
+			}
+		}
+		
+		//Get time to start difference
+		timeDif = getTimeToStart() - another.getTimeToStart();
+		if (getTimeToStart() > another.getTimeToStart()){
+			if (getTimeToStart() == 0)
+				timeDif = 1;
+			else
+				timeDif = timeDif / getTimeToStart();
+		}
+		else{
+			if (another.getTimeToStart() == 0)
+				timeDif = -1;
+			else
+				timeDif = timeDif / another.getTimeToStart();
+			
+		}
+		
+		result = timeDif + distanceDif;
+		
+		return Math.round(result);
 	}
 	
 	

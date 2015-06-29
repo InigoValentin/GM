@@ -1,7 +1,13 @@
 package com.ivalentin.gm;
 
+import java.text.DecimalFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
+import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -15,6 +21,7 @@ import android.location.LocationManager;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -103,6 +110,8 @@ public class AroundLayout extends Fragment implements LocationListener{
 		//Set the title
 		((MainActivity) getActivity()).setSectionTitle(view.getContext().getString(R.string.menu_around));
 		
+		//TODO: Ask for GPS
+		
 		//Get the location passed from MainActivity so we dont have to wait for it to be aquired.
 		Bundle bundle = this.getArguments();
 		coordinates[0] = bundle.getDouble("lat", 0);
@@ -164,14 +173,55 @@ public class AroundLayout extends Fragment implements LocationListener{
         
         
         double distance;
+        Calendar cal;
+        Date maxDate;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd-", Locale.US);
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+		Date date = new Date();
+		Date startMinus30, endMinus15, startPlus30;
+		DecimalFormat df = new DecimalFormat("#.#"); 
         
         
         //Loop thorough every returned row, creating an event for each
         while (cursor.moveToNext()){
         	
-        	//Add event to the list
-        	event = new Event(cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
-        	eventList.add(event);
+        	//Add event to the list       	
+        	try{
+				cal = Calendar.getInstance();
+			    cal.setTime(dateFormat.parse(cursor.getString(8)));
+			    cal.add(Calendar.MINUTE, -30);
+			    startMinus30 = cal.getTime();
+			    cal = Calendar.getInstance();
+			    cal.setTime(dateFormat.parse(cursor.getString(8)));
+			    cal.add(Calendar.MINUTE, 30);
+			    startPlus30 = cal.getTime();
+			    
+			    //Events with end date
+			    if (cursor.getString(9) != null){
+			    	cal = Calendar.getInstance();
+				    cal.setTime(dateFormat.parse(cursor.getString(9)));
+				    cal.add(Calendar.MINUTE, -15);
+				    endMinus15 = cal.getTime();
+				    
+				    //If in range
+				    if (date.after(startMinus30) && date.before(endMinus15)){
+				    	event = new Event(cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
+			        	eventList.add(event);
+				    }
+			    }
+			    //Events without end time
+			    else{
+			    	if (date.after(startMinus30) && date.before(startPlus30)){
+			    		event = new Event(cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
+			        	eventList.add(event);
+			    	}
+			    }
+				
+			}
+			catch (ParseException e){
+				Log.e("Error parsing date for around event", e.toString());
+			}
         }
         
         //Close the cursor and the database
@@ -182,34 +232,40 @@ public class AroundLayout extends Fragment implements LocationListener{
         Collections.sort(eventList);
         
         //Loop events in the list.
-        for(int i = 0; i < eventList.size(); i++){
-        	
-        	//Create a new row
-        	entry = (LinearLayout) factory.inflate(R.layout.row_around, null);
-        	
-        	//Set the background color
-        	if (i % 2 == 0)
-        		entry.setBackgroundColor(getResources().getColor(R.color.background_around_row_even));
-        	else
-        		entry.setBackgroundColor(getResources().getColor(R.color.background_around_row_odd));
-        	
-        	//Locate row elements and populate them.
-        	tvRowTitle = (TextView) entry.findViewById(R.id.tv_row_around_title);
-        	tvRowTitle.setText(eventList.get(i).getName());
-        	tvRowDescription = (TextView) entry.findViewById(R.id.tv_row_around_description);
-        	tvRowDescription.setText(eventList.get(i).getDescription());
-        	tvRowAddress = (TextView) entry.findViewById(R.id.tv_row_around_address);
-        	tvRowAddress.setText(eventList.get(i).getPlace());
-        	tvRowDistance = (TextView) entry.findViewById(R.id.tv_row_around_distance);
-        	distance = eventList.get(i).getDistance(coordinates);
-        	if (distance < 1000)
-        		tvRowDistance.setText("Distance: " + distance  + " m   Time walking: " + Math.round(distance * 0.012) + " '");
-        	else
-        		tvRowDistance.setText("Distance: " + (distance / 1000)  + " km   Time walking: " + Math.round(distance * 0.012) + " '");        	
-        	
-        	//Add the entry to the list.
-        	list.addView(entry);
-		}
+        if (eventList.size() == 0){
+        	//TODO: Show text
+        }
+        else{
+	        for(int i = 0; i < eventList.size(); i++){
+	        	
+	        	//Create a new row
+	        	entry = (LinearLayout) factory.inflate(R.layout.row_around, null);
+	        	
+	        	//Set the background color
+	        	//if (i % 2 == 0)
+	        	//	entry.setBackgroundColor(getResources().getColor(R.color.background_around_row_even));
+	        	//else
+	        	//	entry.setBackgroundColor(getResources().getColor(R.color.background_around_row_odd));
+	        	
+	        	//Locate row elements and populate them.
+	        	tvRowTitle = (TextView) entry.findViewById(R.id.tv_row_around_title);
+	        	tvRowTitle.setText(eventList.get(i).getName());
+	        	tvRowDescription = (TextView) entry.findViewById(R.id.tv_row_around_description);
+	        	tvRowDescription.setText(eventList.get(i).getDescription());
+	        	tvRowAddress = (TextView) entry.findViewById(R.id.tv_row_around_address);
+	        	tvRowAddress.setText(eventList.get(i).getPlace());
+	        	tvRowDistance = (TextView) entry.findViewById(R.id.tv_row_around_distance);
+	        	distance = eventList.get(i).getDistance(coordinates);
+	        	if (distance < 1000){
+	        		tvRowDistance.setText(String.format(getResources().getString(R.string.around_distance), Math.round(distance), getResources().getString(R.string.meters), Math.round(distance * 0.012)));
+	        	}
+	        	else
+	        		tvRowDistance.setText(String.format(getResources().getString(R.string.around_distance), df.format(distance / 1000), getResources().getString(R.string.kilometers), Math.round(distance * 0.012)));
+	        	
+	        	//Add the entry to the list.
+	        	list.addView(entry);
+			}
+        }
 	}
 		
 }

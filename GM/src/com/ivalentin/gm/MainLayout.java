@@ -194,31 +194,32 @@ public class MainLayout extends LinearLayout {
 		
 		switch (event.getAction()) {
 			case MotionEvent.ACTION_DOWN:
-				int width = this.getWidth();
-				if (event.getX() <  (float) width / 10){
-					prevX = curX;
-				}
+				prevX = curX;
 				return true;
-				//TODO: Return true only if the left of the screen is touched
 			
 			case MotionEvent.ACTION_MOVE:
-				if (!isDragging) {
-					isDragging = true;
-					menu.setVisibility(View.VISIBLE);
-				}
-				diffX = curX - prevX;
-				if (contentXOffset + diffX <= 0) {
-					diffX = -contentXOffset;
-				}
-				else if (contentXOffset + diffX > mainLayoutWidth - menuRightMargin) {
-					diffX = mainLayoutWidth - menuRightMargin - contentXOffset;
-				}
-				content.offsetLeftAndRight(diffX);
-				contentXOffset += diffX;
-				this.invalidate();
-				
-				prevX = curX;
-				lastDiffX = diffX;
+				//int width = this.getWidth();
+				//if (event.getX() <  (float) width / 4){
+					
+					if (!isDragging) {
+						
+						isDragging = true;
+						menu.setVisibility(View.VISIBLE);
+					}
+					diffX = curX - prevX;
+					if (contentXOffset + diffX <= 0) {
+						diffX = -contentXOffset;
+					}
+					else if (contentXOffset + diffX > mainLayoutWidth - menuRightMargin) {
+						diffX = mainLayoutWidth - menuRightMargin - contentXOffset;
+					}
+					content.offsetLeftAndRight(diffX);
+					contentXOffset += diffX;
+					this.invalidate();
+					
+					prevX = curX;
+					lastDiffX = diffX;
+				//}
 				return true;
 			
 			case MotionEvent.ACTION_UP:

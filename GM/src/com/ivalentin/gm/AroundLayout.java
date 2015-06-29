@@ -164,8 +164,6 @@ public class AroundLayout extends Fragment implements LocationListener{
 				
 		//Read from database
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
-		//TODO: dont harcode fields
-		//TODO: Refine query
 		Cursor cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host FROM event, place WHERE event.place = place.id;", null);
 		
 		//Make the list empty, in case we are not populating it for the first time.

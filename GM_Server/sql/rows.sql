@@ -1,5 +1,16 @@
 INSERT INTO version VALUES (0);
 
+INSERT INTO day VALUES (1, '25 de Julio', 60);
+INSERT INTO day VALUES (2, '5 de Agosto', 60);
+INSERT INTO day VALUES (3, '6 de Agosto', 60);
+INSERT INTO day VALUES (4, '7 de Agosto', 50);
+INSERT INTO day VALUES (5, '8 de Agosto', 50);
+INSERT INTO day VALUES (6, '9 de Agosto', 50);
+
+INSERT INTO offer VALUES (1, 'Pack tres dias a elegir', 3, 150);
+INSERT INTO offer VALUES (2, 'Pack fiestas sin Santiago', 5, 240);
+INSERT INTO offer VALUES (3, 'Pack fiestas + Santiago', 6, 270);
+
 INSERT INTO user VALUES (1, 'Valentin', 'Inigo', 'Valentin', 'i@inigovalentin.com', '620040802'); 
 INSERT INTO user VALUES (2, 'Txapata', 'Aitor', 'Gonzalez', null, null); 
 INSERT INTO user VALUES (3, 'Araiz', 'Araiz', 'Zarain', null, '695732552'); 

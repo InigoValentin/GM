@@ -9,6 +9,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -20,8 +21,10 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -137,7 +140,50 @@ public class HomeLayout extends Fragment{
 		llJoinLink.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
-				//TODO: Show dialog
+				final Dialog dialog = new Dialog(getActivity());
+				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+				dialog.setContentView(R.layout.dialog_prices);
+		 
+				//Assgn dialog views
+				TextView[] tvDayName = new TextView[6];
+				TextView[] tvDayPrice = new TextView[6];
+				tvDayName[0] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_0);
+				tvDayName[1] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_1);
+				tvDayName[2] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_2);
+				tvDayName[3] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_3);
+				tvDayName[4] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_4);
+				tvDayName[5] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_5);
+				tvDayPrice[0] = (TextView) dialog.findViewById(R.id.tv_prices_day_price_0);
+				tvDayPrice[1] = (TextView) dialog.findViewById(R.id.tv_prices_day_price_1);
+				tvDayPrice[2] = (TextView) dialog.findViewById(R.id.tv_prices_day_price_2);
+				tvDayPrice[3] = (TextView) dialog.findViewById(R.id.tv_prices_day_price_3);
+				tvDayPrice[4] = (TextView) dialog.findViewById(R.id.tv_prices_day_price_4);
+				tvDayPrice[5] = (TextView) dialog.findViewById(R.id.tv_prices_day_price_5);
+				Button btClose = (Button) dialog.findViewById(R.id.bt_dialog_prices_close);
+				
+				//Get info from database
+				SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
+				Cursor cursor = db.rawQuery("SELECT name, price FROM day ORDER BY id;", null);
+				
+				//Set textViews
+				int i = 0;
+				while (cursor.moveToNext() && i < 6){
+					tvDayName[i].setText(cursor.getString(0));
+					tvDayPrice[i].setText(cursor.getString(1));
+					i ++;
+				}
+				
+				//Set close button			
+	        	btClose.setOnClickListener(new OnClickListener() {
+	    			@Override
+	    			public void onClick(View v) {
+	    				dialog.dismiss();
+	    			}
+	    		});
+				
+				//Show the dialog
+				dialog.show();
+					
 			}
 		});
 		

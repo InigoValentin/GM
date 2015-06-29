@@ -378,6 +378,8 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
     		db.execSQL("CREATE TABLE IF NOT EXISTS " + GM.DB_EVENT +" (" + GM.DB_EVENT_ID + " INT, " + GM.DB_EVENT_SCHEDULE + " INT, " + GM.DB_EVENT_GM + " INT, " + GM.DB_EVENT_NAME + " VARCHAR, " + GM.DB_EVENT_DESCRIPTION + " VARCHAR, " + GM.DB_EVENT_HOST + " INT, " + GM.DB_EVENT_PLACE + " INT, " + GM.DB_EVENT_START + " DATETIME, " + GM.DB_EVENT_END + " DATETIME);");
     		db.execSQL("CREATE TABLE IF NOT EXISTS " + GM.DB_PEOPLE +" (" + GM.DB_PEOPLE_ID + " INT, " + GM.DB_PEOPLE_NAME + " VARCHAR, " + GM.DB_PEOPLE_LINK + " VARCHAR);");
     		db.execSQL("CREATE TABLE IF NOT EXISTS " + GM.DB_PLACE +" (" + GM.DB_PLACE_ID + " INT, " + GM.DB_PLACE_NAME + " VARCHAR, " + GM.DB_PLACE_ADDRESS + " VARCHAR, " + GM.DB_PLACE_CP + " VARCHAR, " + GM.DB_PLACE_LATITUDE + " FLOAT, " + GM.DB_PLACE_LONGITUDE + " FLOAT);");
+    		db.execSQL("CREATE TABLE IF NOT EXISTS day (id INT, name VARCHAR, price INT);");
+    		db.execSQL("CREATE TABLE IF NOT EXISTS offer (id INT, name VARCHAR, days INT, price INT);");
     	}
     	catch (Exception ex){
     		Log.e("Error creating database", ex.toString());

@@ -78,6 +78,9 @@
     <string name="home_section_location_see">Mapa</string>
     <string name="home_section_social_see">Síguenos</string>
     <string name="home_section_join_see">Precios</string>
+    <string name="home_section_join_header">Unete a Gasteizko Margolariak por el mejor precio!</string>
+    <string name="home_section_join_text">Escoge días sueltos o elige nuestros packs en oferta!</string>
+    <string name="home_section_join_footer">Mira los precios y elige la opcion que mejor se adapte a ti.</string>
     
     
     <!-- Settings section strings -->

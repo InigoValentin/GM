@@ -100,5 +100,21 @@
 			$end = "'$row[end]'";
 		echo "<query>INSERT INTO event VALUES ($row[id], $row[schedule], $row[gm], $name, $description, $host, $place, $start, $end);</query>\n";
 	}
+	$res = mysqli_query($con, "SELECT * FROM day;");
+    while($row = mysqli_fetch_array($res)){
+		if ($row['name'] == '')
+			$name = 'null';
+		else
+			$name = "'$row[name]'";
+		echo "<query>INSERT INTO day VALUES ($row[id], $name, $row[price]);</query>\n";
+	}
+	$res = mysqli_query($con, "SELECT * FROM offer;");
+    while($row = mysqli_fetch_array($res)){
+		if ($row['name'] == '')
+			$name = 'null';
+		else
+			$name = "'$row[name]'";
+		echo "<query>INSERT INTO offer VALUES ($row[id], $name, $row[days], $row[price]);</query>\n";
+	}
 ?>
  

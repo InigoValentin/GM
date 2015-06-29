@@ -55,8 +55,8 @@
     
     <string name="about_copyright">Copyright 2015 @Iñigo Valentin</string>
     <string name="about_email">i@inigovalentin.com</string>
-    <string name="about_license">This software is distributed under a </string>
-    <string name="about_code">Puedes ver y descargar el codigo fuente de esta aplicacion en &lt;a href="https://github.com/Seavenois/GM">Github&lt;/a></string>
+    <string name="about_license">Este programa es software libre. Usted puede distribuirlo y modificarlo de acuerdo con los terminos de la GNU General Public License version 3 publicada por la Free Software Foundation.\n\nEste programa se distrubuye con la espereanza de que sea útil, pero SIN NINGUNA GARANTIA. Consulte la GNU General Public License para mas informacion en http://www.gnu.org/licenses/.\n\nEl nombre "Gasteizko Margolariak" y su logotipo son propiedad de Gasteizko Margolariak.</string>
+    <string name="about_code">&lt;div style="background-color:#bbbbbb;padding:6px;border-radius:5px;border-style:solid;border-width:2px;border-color:#333333;text-align:center;">Puedes ver y descargar el codigo fuente de esta aplicacion en &lt;a href="https://github.com/Seavenois/GM">Github&lt;/a>&lt;/div></string>
     
     
     <!-- Around section string -->

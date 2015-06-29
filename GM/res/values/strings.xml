@@ -55,8 +55,8 @@
     
     <string name="about_copyright">Copyright 2015 @Iñigo Valentin</string>
     <string name="about_email">i@inigovalentin.com</string>
-    <string name="about_license">This software is distributed under a </string>
-    <string name="about_code">You can get the source code for this project at &lt;a href="https://github.com/Seavenois/GM">Github&lt;/a></string>
+    <string name="about_license">This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License version 3 as published by the Free Software Foundation.\n\nThis program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details at http://www.gnu.org/licenses/.\n\nThe name "Gasteizko Margolariak" and its logotype are property of Gasteizko Margolariak.</string>
+    <string name="about_code">&lt;div style="background-color:#bbbbbb;padding:6px;border-radius:5px;border-style:solid;border-width:2px;border-color:#333333;text-align:center;">You can get the source code for this project at &lt;a href="https://github.com/Seavenois/GM">Github&lt;/a>&lt;/div></string>
     
     <!-- Around section string -->
     <string name="around_distance">%1$d %2$s away from you (About %3$d minutes walking)</string>

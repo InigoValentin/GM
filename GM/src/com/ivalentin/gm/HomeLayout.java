@@ -15,7 +15,9 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.res.ResourcesCompat;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -147,6 +149,8 @@ public class HomeLayout extends Fragment{
 				//Assgn dialog views
 				TextView[] tvDayName = new TextView[6];
 				TextView[] tvDayPrice = new TextView[6];
+				TextView[] tvOfferName = new TextView[3];
+				TextView[] tvOfferPrice = new TextView[3];
 				tvDayName[0] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_0);
 				tvDayName[1] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_1);
 				tvDayName[2] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_2);
@@ -159,17 +163,49 @@ public class HomeLayout extends Fragment{
 				tvDayPrice[3] = (TextView) dialog.findViewById(R.id.tv_prices_day_price_3);
 				tvDayPrice[4] = (TextView) dialog.findViewById(R.id.tv_prices_day_price_4);
 				tvDayPrice[5] = (TextView) dialog.findViewById(R.id.tv_prices_day_price_5);
+				tvOfferName[0] = (TextView) dialog.findViewById(R.id.tv_prices_offer_name_0);
+				tvOfferName[1] = (TextView) dialog.findViewById(R.id.tv_prices_offer_name_1);
+				tvOfferName[2] = (TextView) dialog.findViewById(R.id.tv_prices_offer_name_2);
+				tvOfferPrice[0] = (TextView) dialog.findViewById(R.id.tv_prices_offer_price_0);
+				tvOfferPrice[1] = (TextView) dialog.findViewById(R.id.tv_prices_offer_price_1);
+				tvOfferPrice[2] = (TextView) dialog.findViewById(R.id.tv_prices_offer_price_2);
 				Button btClose = (Button) dialog.findViewById(R.id.bt_dialog_prices_close);
 				
-				//Get info from database
+				//Open database
 				SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
-				Cursor cursor = db.rawQuery("SELECT name, price FROM day ORDER BY id;", null);
+				Cursor cursor;
 				
-				//Set textViews
+				//Icon options
+				Drawable dayIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.price_day, null);
+				dayIcon.setBounds(0, 0, 70, 70);
+				Drawable offerIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.price_offer, null);
+				offerIcon.setBounds(0, 0, 70, 70);
+				Drawable alphaIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.alpha, null);
+				alphaIcon.setBounds(0, 0, 1, 70);
+				
+				//Set TextViews for days
 				int i = 0;
+				cursor = db.rawQuery("SELECT name, price FROM day ORDER BY id;", null);
 				while (cursor.moveToNext() && i < 6){
 					tvDayName[i].setText(cursor.getString(0));
-					tvDayPrice[i].setText(cursor.getString(1));
+					tvDayName[i].setCompoundDrawables(dayIcon, null, null, null);
+					tvDayName[i].setCompoundDrawablePadding(5);
+					tvDayPrice[i].setText(cursor.getString(1) + " " + getResources().getString(R.string.eur));
+					tvDayPrice[i].setCompoundDrawables(alphaIcon, null, null, null);
+					tvDayPrice[i].setCompoundDrawablePadding(5);
+					i ++;
+				}
+				
+				//Set TextViews for days
+				i = 0;
+				cursor = db.rawQuery("SELECT name, price FROM offer ORDER BY id;", null);
+				while (cursor.moveToNext() && i < 3){
+					tvOfferName[i].setText(cursor.getString(0));
+					tvOfferName[i].setCompoundDrawables(offerIcon, null, null, null);
+					tvOfferName[i].setCompoundDrawablePadding(5);
+					tvOfferPrice[i].setText(cursor.getString(1) + " " + getResources().getString(R.string.eur));
+					tvOfferPrice[i].setCompoundDrawables(alphaIcon, null, null, null);
+					tvOfferPrice[i].setCompoundDrawablePadding(5);
 					i ++;
 				}
 				

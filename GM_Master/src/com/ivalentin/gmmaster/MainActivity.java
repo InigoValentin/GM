@@ -26,6 +26,15 @@ import android.location.Location;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 
+/**
+ * The main Activity of the app. 
+ * 
+ * If the user is not yet authorized to use it, it will show a form to apply or a text indicating to wait. 
+ * If he is authorized, it will show the location reporting options and a button to send notifications.
+ * 
+ * @author Iñigo Valentin
+ *
+ */
 public class MainActivity extends Activity {
 
 	//The four screens of the activity. Only one of them will be shown at a time
@@ -42,11 +51,13 @@ public class MainActivity extends Activity {
 	private Button btLocationReport;
 	private TextView tvLocationUser;
 	
-	//Constrols if the user is currently reporting location
+	//Controls if the user is currently reporting location
 	private boolean reporting;
 	
 	/**
-	 * Run when the activity is launched.
+	 * Run when the activity is launched. 
+	 * 
+	 * Identifies if the user is authorized and displays options accordingly. 
 	 * 
 	 * @see android.support.v7.app.ActionBarActivity#onCreate(android.os.Bundle)
 	 */
@@ -129,7 +140,6 @@ public class MainActivity extends Activity {
 					else{
 						if (lines.get(i).length() >= 18){
 							if (lines.get(i).substring(0, 18).equals("<status>0</status>")){
-								Log.e("Status: ", "Submitted");
 								Toast.makeText(getApplicationContext(), getString(R.string.toast_not_validated_yet), Toast.LENGTH_LONG).show();
 							}
 							else if (lines.get(i).substring(0, 18).equals("<status>1</status>")){
@@ -160,7 +170,6 @@ public class MainActivity extends Activity {
 				fetch.Run("http://inigovalentin.com/gm/app/location.php");
 				lines = fetch.getOutput();
 				for(int i = 0; i < lines.size(); i++){
-					Log.e("LINE", lines.get(i));
 					if (lines.get(i).length() >= 25){
 						if (lines.get(i).substring(0, 25).equals("<location>none</location>"))
 							result = false;

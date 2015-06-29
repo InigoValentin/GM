@@ -1,3 +1,15 @@
+<?php
+	/*
+	 *
+	 * This file insert the data submitterb by ../add/event.php into the database.
+	 * 
+	 * Please note that, along with the other files in this folder and the "add"
+	 * folder, ths file can cause security problems, so it must be removed from the
+	 * server before publishing or distributng the app.
+	 *
+	 */
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,7 +19,7 @@
 	</head>
 	<body>
 		<?php
-			//The file db-access.php is not here for security reasons.
+			//The file ../db-access.php is not here for security reasons.
 			//It contains just the line
 			//     $con = mysqli_connect(host, user, pass, database);
 			include '../db-access.php';

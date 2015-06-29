@@ -1,5 +1,6 @@
 package com.ivalentin.gm;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
@@ -12,13 +13,11 @@ import android.widget.Scroller;
 /**
  * Extension of LinearLayout to be used in the app. Contains the slider menu.
  * 
- * @author seavenois
+ * @author Iñigo Valentin
  *
  */
 public class MainLayout extends LinearLayout {
 
-	private static final int SLIDING_DURATION = 500;
-	private static final int QUERY_INTERVAL = 16;
 	private int mainLayoutWidth;
 	private View menu;
 	private View content;
@@ -68,6 +67,7 @@ public class MainLayout extends LinearLayout {
 		menuRightMargin = mainLayoutWidth * 25 / 100;
 	}
 	
+	@SuppressLint("ClickableViewAccessibility") //I don't need it.
 	@Override
 	protected void onAttachedToWindow() {
 		super.onAttachedToWindow();
@@ -107,16 +107,16 @@ public class MainLayout extends LinearLayout {
 			case HIDDEN:
 				currentMenuState = MenuState.SHOWING;
 				menu.setVisibility(View.VISIBLE);
-				menuScroller.startScroll(0, 0, menu.getLayoutParams().width, 0, SLIDING_DURATION);
+				menuScroller.startScroll(0, 0, menu.getLayoutParams().width, 0, GM.MENU_SLIDING_DURATION);
 				break;
 			case SHOWN:
 				currentMenuState = MenuState.HIDING;
-				menuScroller.startScroll(contentXOffset, 0, -contentXOffset, 0, SLIDING_DURATION);
+				menuScroller.startScroll(contentXOffset, 0, -contentXOffset, 0, GM.MENU_SLIDING_DURATION);
 				break;
 			default:
 				break;
 		}
-		menuHandler.postDelayed(menuRunnable, QUERY_INTERVAL);
+		menuHandler.postDelayed(menuRunnable, GM.MENU_QUERY_INTERVAL);
 		this.invalidate();
 	}
 	
@@ -136,7 +136,7 @@ public class MainLayout extends LinearLayout {
 		contentXOffset = scrollerXOffset;
 		this.invalidate();
 		if (isScrolling)
-			menuHandler.postDelayed(menuRunnable, QUERY_INTERVAL);
+			menuHandler.postDelayed(menuRunnable, GM.MENU_QUERY_INTERVAL);
 		else
 			this.onMenuSlidingComplete();
 	}
@@ -155,6 +155,12 @@ public class MainLayout extends LinearLayout {
 		}
 	}
 	
+	/**
+	 * Defines the menu animation frame rate.
+	 * 
+	 * @author Iñigo Valentin
+	 *
+	 */
 	protected class EaseInInterpolator implements Interpolator {
 		@Override
 		public float getInterpolation(float t) {
@@ -163,10 +169,23 @@ public class MainLayout extends LinearLayout {
 	
 	}
 	
+	/**
+	 * Indicates if the menu is currently shown.
+	 * 
+	 * @return true if the menu is shown, false otherwise.
+	 */
 	public boolean isMenuShown() {
 		return currentMenuState == MenuState.SHOWN;
 	}
 	
+	/**
+	 * Register touch events. 
+	 * Used to show and hide the menu.
+	 * 
+	 * @param v The touched view.
+	 * @param event The MotionEvent triggering it.
+	 * @return
+	 */
 	public boolean onContentTouch(View v, MotionEvent event) {
 		if (currentMenuState == MenuState.HIDING || currentMenuState == MenuState.SHOWING)
 			return false;
@@ -203,13 +222,13 @@ public class MainLayout extends LinearLayout {
 				
 				if (lastDiffX > 0) {
 					currentMenuState = MenuState.SHOWING;
-					menuScroller.startScroll(contentXOffset, 0,	menu.getLayoutParams().width - contentXOffset, 0, SLIDING_DURATION);
+					menuScroller.startScroll(contentXOffset, 0,	menu.getLayoutParams().width - contentXOffset, 0, GM.MENU_SLIDING_DURATION);
 				}
 				else if (lastDiffX < 0) {
 					currentMenuState = MenuState.HIDING;
-					menuScroller.startScroll(contentXOffset, 0, -contentXOffset, 0, SLIDING_DURATION);
+					menuScroller.startScroll(contentXOffset, 0, -contentXOffset, 0, GM.MENU_SLIDING_DURATION);
 				}
-				menuHandler.postDelayed(menuRunnable, QUERY_INTERVAL);
+				menuHandler.postDelayed(menuRunnable, GM.MENU_QUERY_INTERVAL);
 				this.invalidate();
 				isDragging = false;
 				prevX = 0;

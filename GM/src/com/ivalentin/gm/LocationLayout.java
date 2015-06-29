@@ -29,12 +29,36 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * Section that shows a map with the location of Gasteizko Margolariak. 
+ * If no recent report location, it will explain that and will show the 
+ * next scheduled activity. 
+ * 
+ * @author Iñigo Valentin
+ * 
+ * @see Fragment
+ * @see OnMapReadyCallback
+ *
+ */
 public class LocationLayout extends Fragment implements OnMapReadyCallback{
+	
+	//The map view
 	private MapView mapView;
+	
+	//The map
 	private GoogleMap map;
+	
+	//Locations for the user and Gasteizko Margolariak
 	private LatLng location, gmLocation;
+	
+	//The main View
 	private View v;
 
+	/**
+	 * Run when the fragment is inflated.
+	 * 
+	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
+	 */
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState){
 		
@@ -158,6 +182,12 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 		return v;
 	}
 
+	/**
+	 * Called when the fragment is bought back to the foreground. 
+	 * Ensures that the map is displayed then.
+	 * 
+	 * @see android.support.v4.app.Fragment#onResume()
+	 */
 	@Override
 	public void onResume() {
 		if (mapView != null)
@@ -165,6 +195,12 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 		super.onResume();
 	}
 
+	/**
+	 * Called when the fragment is destroyed. 
+	 * Ensures that the map is destroyed then.
+	 * 
+	 * @see android.support.v4.app.Fragment#onDestroy()
+	 */
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -174,7 +210,13 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 		}
 	}
 
-	 @Override
+	/**
+	 * Called in a situation of low memory. 
+	 * It let's the mapView handle the situation.
+	 * 
+	 * @see android.support.v4.app.Fragment#onLowMemory()
+	 */
+	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
 		if (mapView != null){
@@ -183,6 +225,14 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 		}
 	}
 
+	/**
+	 * Called when the map is ready to be used. 
+	 * Intializes it and sets the Gasteizko Margolariak marker.
+	 * 
+	 * @param googleMap the map
+	 * 
+	 * @see com.google.android.gms.maps.OnMapReadyCallback#onMapReady(com.google.android.gms.maps.GoogleMap)
+	 */
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		this.map = googleMap;

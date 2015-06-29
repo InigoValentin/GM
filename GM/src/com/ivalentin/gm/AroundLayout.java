@@ -206,6 +206,7 @@ public class AroundLayout extends Fragment implements LocationListener{
         		tvRowDistance.setText("Distance: " + distance  + " m   Time walking: " + Math.round(distance * 0.012) + " '");
         	else
         		tvRowDistance.setText("Distance: " + (distance / 1000)  + " km   Time walking: " + Math.round(distance * 0.012) + " '");        	
+        	
         	//Add the entry to the list.
         	list.addView(entry);
 		}

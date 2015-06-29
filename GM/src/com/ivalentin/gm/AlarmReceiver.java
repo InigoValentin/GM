@@ -92,6 +92,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 								String title = line.substring(line.indexOf("<title>") + 7, line.indexOf("</title>"));
 								String text = line.substring(line.indexOf("<text>") + 6, line.indexOf("</text>"));
 								String gm = line.substring(line.indexOf("<gm>") + 4, line.indexOf("</gm>"));
+								
 								//Send notification
 								//The notification has already been red?
 								if (settings.getInt(GM.NOTIFICATION_SEEN + id, 0) == 0){

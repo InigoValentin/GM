@@ -1,3 +1,15 @@
+<?php
+	/*
+	 *
+	 * This file insert the data submitterb by ../add/place.php into the database.
+	 * 
+	 * Please note that, along with the other files in this folder and the "add"
+	 * folder, ths file can cause security problems, so it must be removed from the
+	 * server before publishing or distributng the app.
+	 *
+	 */
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>

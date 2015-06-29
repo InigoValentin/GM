@@ -1,5 +1,11 @@
 <?php
-	//The file db-access.php is not here for security reasons.
+	/*
+	 *
+	 * This file inserts a sumbisson of an user of the master app.
+	 *
+	 */
+
+	//The file ../../db-access.php is not here for security reasons.
 	//It contains just the line
 	//     $con = mysqli_connect(host, user, pass, database);
 	include '../../db-access.php';

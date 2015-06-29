@@ -1,5 +1,14 @@
 <?php
-	//The file db-access.php is not here for security reasons.
+	/*
+	 *
+	 * This file helps building the database in the devices of the client apps.
+	 * 
+	 * To do so, it provides the current database version and the necessary
+	 * queries to replicate the tables place, people and event.
+	 *
+	 */
+
+	//The file ../db-access.php is not here for security reasons.
 	//It contains just the line
 	//     $con = mysqli_connect(host, user, pass, database);
 	include '../db-access.php';

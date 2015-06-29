@@ -27,15 +27,16 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * Layout that show information about the app and the developer. 
- * It's pretty much static.
+ * Section that will be seen when the app is started. 
+ * Contains info from almost every other section.
  * 
  * @author Iñigo Valentin
+ * 
+ * @see Fragment
  *
  */
 public class HomeLayout extends Fragment{
 
-	//Section title
 	
 	//The location of the user
 	private double[] coordinates = new double[2];
@@ -46,7 +47,7 @@ public class HomeLayout extends Fragment{
 	private LinearLayout llScheduleLink, llGmLink, llAroundLink, llLocationLink, llJoinLink;
 	
 	//TextView showing the distance of GM
-	TextView tvLocation;
+	private TextView tvLocation;
 	
 	/**
 	 * Run when the fragment is inflated.

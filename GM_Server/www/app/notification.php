@@ -1,5 +1,13 @@
 <?php
-	//The file db-access.php is not here for security reasons.
+	/*
+	 *
+	 * This file returns notificatos to be delivered to the client app.
+	 * 
+	 * Only the notificatons that are still to be delivered are printed.
+	 *
+	 */
+
+	//The file ../db-access.php is not here for security reasons.
 	//It contains just the line
 	//     $con = mysqli_connect(host, user, pass, database);
 	include '../db-access.php';

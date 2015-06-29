@@ -1,4 +1,9 @@
 <?php
+	/*
+	 * Creates a new notification in the database.
+	 *
+	 */
+
 	//The file db-access.php is not here for security reasons.
 	//It contains just the line
 	//     $con = mysqli_connect(host, user, pass, database);

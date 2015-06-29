@@ -1,4 +1,13 @@
 <?php
+	/*
+	 *
+	 * This file reports the status of an admin submission.
+	 *  <status>-1</status>   No submission from the admin.
+	 *  <status>0</status>    Submission present, still unauthosized.
+	 *  <status>1</status>    Submission approved.
+	 *
+	 */
+
 	//The file db-access.php is not here for security reasons.
 	//It contains just the line
 	//     $con = mysqli_connect(host, user, pass, database);

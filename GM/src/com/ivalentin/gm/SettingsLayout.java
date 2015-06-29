@@ -16,13 +16,20 @@ import android.widget.EditText;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+/**
+ * Section that allow the user to change the app settings.
+ * 
+ * @author Inigo Valentin
+ *
+ */
 public class SettingsLayout extends Fragment{
 
+	//The user name
 	private String userName;
 	
 	/**
 	 * Run when the fragment is inflated.
-	 * Assigns views, gets the date and does the first call to the {@link populate function}.
+	 * Assigns the view and the click listeners.
 	 * 
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */

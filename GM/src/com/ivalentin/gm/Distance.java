@@ -1,33 +1,27 @@
 package com.ivalentin.gm;
 
+/**
+ * Static class that allows to calculate the distance between tho 
+ * sets of GPS coordinates.
+ * 
+ * @author Iñigo Valentin
+ *
+ */
 public final class Distance {
 	
-	/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-	/*::                                                                         :*/
-	/*::  This routine calculates the distance between two points (given the     :*/
-	/*::  latitude/longitude of those points). It is being used to calculate     :*/
-	/*::  the distance between two locations using GeoDataSource (TM) prodducts  :*/
-	/*::                                                                         :*/
-	/*::  Definitions:                                                           :*/
-	/*::    South latitudes are negative, east longitudes are positive           :*/
-	/*::                                                                         :*/
-	/*::  Passed to function:                                                    :*/
-	/*::    lat1, lon1 = Latitude and Longitude of point 1 (in decimal degrees)  :*/
-	/*::    lat2, lon2 = Latitude and Longitude of point 2 (in decimal degrees)  :*/
-	/*::    unit = the unit you desire for results                               :*/
-	/*::           where: 'M' is statute miles (default)                         :*/
-	/*::                  'K' is kilometers                                      :*/
-	/*::                  'N' is nautical miles                                  :*/
-	/*::  Worldwide cities and other features databases with latitude longitude  :*/
-	/*::  are available at http://www.geodatasource.com                          :*/
-	/*::                                                                         :*/
-	/*::  For enquiries, please contact sales@geodatasource.com                  :*/
-	/*::                                                                         :*/
-	/*::  Official Web site: http://www.geodatasource.com                        :*/
-	/*::                                                                         :*/
-	/*::           GeoDataSource.com (C) All Rights Reserved 2015                :*/
-	/*::                                                                         :*/
-	/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+	/**
+	 * Calculates the distance between two points (given the latitude/longitude of those points). 
+	 * 
+	 * Official Web site: http://www.geodatasource.com 
+	 * GeoDataSource.com (C) All Rights Reserved 2015
+	 * 
+	 * @param lat1 Latitude of the first point
+	 * @param lon1 Longitude of the first point
+	 * @param lat2 Latitude of the second point
+	 * @param lon2 Longitude of the second point
+	 * @param unit The result unit. 'M' for statute miles (default), 'K' for kilometers and 'N' for nautical miles.
+	 * @return
+	 */
 	public static final double calculateDistance(double lat1, double lon1, double lat2, double lon2, char unit) {
 		double theta = lon1 - lon2;
 		double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
@@ -42,17 +36,21 @@ public final class Distance {
 		}
 		return (dist);
 	}
-
-	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-	/*::  This function converts decimal degrees to radians             :*/
-	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+	
+	/**
+	 * Converts decimal degrees to radians.
+	 * @param deg Decimal degrees.
+	 * @return Radians.
+	 */
 	private static final double deg2rad(double deg) {
 		return (deg * Math.PI / 180.0);
 	}
 	
-	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-	/*::  This function converts radians to decimal degrees             :*/
-	/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
+	/**
+	 * Converts radians to decimal degrees.
+	 * @param rad Radans.
+	 * @return Decimal degrees.
+	 */
 	private static final double rad2deg(double rad) {
 		return (rad * 180 / Math.PI);
 	}

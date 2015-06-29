@@ -138,7 +138,7 @@ public class Sync extends AsyncTask<Void, Void, Void> {
 		if (success){
 			
 			//If the database is out dated, update it.
-			if (versionSet && version >= preferences.getInt(GM.PREF_DB_VERSION, GM.DEFAULT_PREF_DB_VERSION)){ //TODO: Only ">"
+			if (versionSet && version > preferences.getInt(GM.PREF_DB_VERSION, GM.DEFAULT_PREF_DB_VERSION)){
 				try{
 					SQLiteDatabase db = myContextRef.openOrCreateDatabase(GM.DB_NAME, Activity.MODE_PRIVATE, null);
 					Log.d("Sync query", "DELETE FROM " + GM.DB_EVENT + ";");

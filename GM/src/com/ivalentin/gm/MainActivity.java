@@ -160,7 +160,10 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	/**
 	 * Called when the location is updated.
 	 * 
+	 * @param locaton The updated location.
+	 * 
 	 * @see android.location.LocationListener#onLocationChanged(android.location.Location)
+	 * 
 	 */
 	@Override
 	public void onLocationChanged(Location location) {
@@ -169,7 +172,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	}
 
 	/**
-	 * Extended for nothing. Needed because the class implements {@see LocationListener}.
+	 * Extended for nothing. Needed because the class implements LocationListener.
 	 * 
 	 * @see android.location.LocationListener#onStatusChanged(java.lang.String, int, android.os.Bundle)
 	 */
@@ -177,7 +180,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	public void onStatusChanged(String provider, int status, Bundle extras) {}
 	
 	/**
-	 * Extended for nothing. Needed because the class implements {@see LocationListener}.
+	 * Extended for nothing. Needed because the class implements LocationListener.
 	 * 
 	 * @see android.location.LocationListener#onProviderEnabled(java.lang.String)
 	 */
@@ -185,7 +188,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	public void onProviderEnabled(String provider) {}
 
 	/**
-	 * Extended for nothing. Needed because the class implements {@see LocationListener}.
+	 * Extended for nothing. Needed because the class implements LocationListener.
 	 * 
 	 * @see android.location.LocationListener#onProviderDisabled(java.lang.String)
 	 */
@@ -390,6 +393,12 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 		new Sync(this, pbSync).execute();
 	}
 	
+	/**
+	 * Overrides onBackPressed(). 
+	 * Used to show the previous fragment instead of fnishing the app.
+	 * 
+	 * @see android.support.v7.app.ActionBarActivity#onBackPressed()
+	 */
 	@Override
 	public void onBackPressed(){
 		FragmentManager fm = getSupportFragmentManager();

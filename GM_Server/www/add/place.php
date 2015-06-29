@@ -1,3 +1,15 @@
+<?php
+	/*
+	 *
+	 * This file provides a web interface to easily add entries to the place table.
+	 * 
+	 * Please note that, along with the other files in this folder and the "insert"
+	 * folder, ths file can cause security problems, so it must be removed from the
+	 * server before publishing or distributng the app.
+	 *
+	 */
+?>
+
 <!DOCTYPE html>
 <html>
 	<head>
@@ -7,7 +19,7 @@
 	</head>
 	<body>
 		<?php
-			//The file db-access.php is not here for security reasons.
+			//The file ../db-access.php is not here for security reasons.
 			//It contains just the line
 			//     $con = mysqli_connect(host, user, pass, database);
 			include '../db-access.php';

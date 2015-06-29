@@ -1,4 +1,12 @@
 <?php
+	/*
+	 * This file inserts a location report from the master app.
+	 *
+	 * If the report is generated from the background of the app, it
+	 * will not insert it unless the last manual report is from the same user.
+	 *
+	 */
+
 	//The file db-access.php is not here for security reasons.
 	//It contains just the line
 	//     $con = mysqli_connect(host, user, pass, database);

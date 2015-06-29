@@ -84,12 +84,15 @@ public class LocationAlarm extends BroadcastReceiver {
 		}
 	};
 
-	//Received request from the calling service.
+	/**
+     * Actions to be performed when an alarm is received. 
+     * Upload the location.
+     * 
+     * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
+     */
 	@Override
 	public void onReceive(final Context context, Intent intent) {
 		Log.d("Location request", "New request received by receiver");
-		//_context = context;
-		//_intent = intent;
 		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		if (locationManager.isProviderEnabled(provider)) {
 			locationManager.requestLocationUpdates(provider, GM.LOCATION_MIN_TIME_REQUEST, GM.LOCATION_MIN_DISTANCE_REQUEST, locationListener); //TODO: 0 -> 5
@@ -137,6 +140,11 @@ public class LocationAlarm extends BroadcastReceiver {
 		}
 	}
 
+	/**
+	 * Run when the location is determined.
+	 * 
+	 * @param location The new locaton.
+	 */
 	private static void gotLocation(Location location) {
 		prevLocation = currentLocation == null ? null : new Location(currentLocation);
 		currentLocation = location;
@@ -147,6 +155,11 @@ public class LocationAlarm extends BroadcastReceiver {
 		}
 	}
 
+	/**
+	 * Checks if the location is the same as the previous one, or a new one.
+	 * 
+	 * @return true if it is a new location, false otherwise.
+	 */
 	private static boolean isLocationNew() {
 		if (currentLocation == null) {
 			return false;
@@ -159,6 +172,9 @@ public class LocationAlarm extends BroadcastReceiver {
 		}
 	}
 
+	/**
+	 * Stops the location listener.
+	 */
 	public static void stopLocationListener() {
 		locationManager.removeUpdates(locationListener);
 		Log.d("Location provider", "Provider stopped");
@@ -167,18 +183,30 @@ public class LocationAlarm extends BroadcastReceiver {
 	// listener ----------------------------------------------------
 	static ArrayList<OnNewLocationListener> arrOnNewLocationListener = new ArrayList<OnNewLocationListener>();
 
-	// Allows the user to set a OnNewLocationListener outside of this class
-	// and react to the event.
-	// A sample is provided in ActDocument.java in method: startStopTryGetPoint
+	/**
+	 * Allows the user to set a OnNewLocationListener outside of this class 
+	 * and react to the event.
+	 * 
+	 * @param listener The OnNewLocationListener to be set.
+	 */
 	public static void setOnNewLocationListener(OnNewLocationListener listener) {
 		arrOnNewLocationListener.add(listener);
 	}
 
+	/**
+	 * Clears the location listener.
+	 * 
+	 * @param listener The OnNewLocationListener to be unset.
+	 */
 	public static void clearOnNewLocationListener(OnNewLocationListener listener) {
 		arrOnNewLocationListener.remove(listener);
 	}
 
-	// This function is called after the new point received
+	/**
+	 * Called after the new location is received.
+	 * 
+	 * @param location The new location.
+	 */
 	private static void OnNewLocationReceived(Location location) {
 		// Check if the Listener was set, otherwise we'll get an Exception
 		// when we try to call it

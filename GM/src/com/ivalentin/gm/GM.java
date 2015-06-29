@@ -1,6 +1,22 @@
 package com.ivalentin.gm;
 
+/**
+ * Final class that contains useful static values to be used across the app.
+ * 
+ * @author Iñigo Valentin
+ *
+ */
 public final class GM {
+	
+	/**
+	 * Duration of the menu sliding animation.
+	 */
+	static final int MENU_SLIDING_DURATION = 500;
+	
+	/**
+	 * Interval between menu sliding queries. 
+	 */
+	static final int MENU_QUERY_INTERVAL = 16;
 	
 	/**
 	 * Period of time (in seconds) at the end of witch the app will perform a sync.

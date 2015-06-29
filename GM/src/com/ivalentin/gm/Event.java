@@ -7,12 +7,33 @@ import java.util.Locale;
 
 import android.util.Log;
 
+/**
+ * An event holds information about an activity of the festival
+ * 
+ * @author Iñigo Valentin
+ *
+ */
 public class Event implements Comparable<Event>{
 	
 	private String name, description, place, host;
 	private double[] coordinates = new double[2];
 	private Date start, end;
 	private boolean gm, schedule;
+	
+	
+	/**
+	 * Constructor.
+	 * 
+	 * @param name Name of the event.
+	 * @param description Description of the event.
+	 * @param gm 1 if it's a Margolari event, 0 otherwise.
+	 * @param schedule 1 if it's an event from the municipal schedule, 0 otherwise.
+	 * @param place Name of the place where the event is hold.
+	 * @param host Name of the people/organization that organizes the event. Can be null.
+	 * @param coordinates Array of doubles [latitude, longitude].
+	 * @param start String whit the date and time of the start of the event, in the format yyyy-MM-dd HH:mm:ss.
+	 * @param end String whit the date and time of the end of the event, in the format yyyy-MM-dd HH:mm:ss. Can be null.
+	 */
 	public Event(String name, String description, int gm, int schedule, String place, String host, double[] coordinates, String start, String end){
 		super();
 		this.name = name;
@@ -43,108 +64,120 @@ public class Event implements Comparable<Event>{
 			end = null;
 		}
 	}
+	
+	/**
+	 * Return the name of the event.
+	 * @return The name of the event.
+	 */
 	public String getName() {
 		return name;
 	}
+	
+	/**
+	 * Return the description of the event.
+	 * @return The description of the event.
+	 */
 	public String getDescription() {
 		return description;
 	}
+	
+	/**
+	 * Checks if the event is a Margolari one.
+	 * @return true if it's a Margolari event, false otherwise.
+	 */
 	public boolean isGm(){
 		return gm;
 	}
+	
+	/**
+	 * Checks if the event is an official one.
+	 * @return true if it's an official event, false otherwise.
+	 */
 	public boolean isSchedule(){
 		return schedule;
 	}
+	
+	/**
+	 * Return the place of the event.
+	 * @return The place of the event.
+	 */
 	public String getPlace() {
 		return place;
 	}
+	
+	/**
+	 * Return the host of the event.
+	 * @return The host of the event.
+	 */
 	public String getHost() {
 		return host;
 	}
+	
+	/**
+	 * Return the event coordinates.
+	 * @return The coordinates of the event [latitude, longitude].
+	 */
 	public double[] getCoordinates() {
 		return coordinates;
 	}
+	
+	/**
+	 * Return the event start time.
+	 * @return The event start date and time.
+	 */
 	public Date getStart() {
 		return start;
 	}
+	
+	/**
+	 * Return the event end time.
+	 * @return The event end date and time.
+	 */
 	public Date getEnd() {
 		return end;
 	}
 	
+	/**
+	 * Calculates the event distance to a given point.
+	 * 
+	 * @param location Array of doubles [latitude, longitude] to calculate the distance of the event from.
+	 * @return The distance, in meters, between the event and the given point.
+	 */
 	public int getDistance(double location[]){
-		Log.e("LOCATION", location[0] + "," + location[1]);
-		Log.e("COORDINATES", coordinates[0] + "," + coordinates[1]);
-		return Math.round((long) (calculateDistance(location[0], location[1], coordinates[0], coordinates[1], 'K') * 1000));
+		return Math.round((long) (Distance.calculateDistance(location[0], location[1], coordinates[0], coordinates[1], 'K') * 1000));
 	}
 	
+	/**
+	 * Return the time between the current time and the start of the event.
+	 * @return The time, in minutes, to the event start.
+	 */
 	public int getTimeToStart(){
 		//TODO:
 		return 0;
 	}
 	
+	/**
+	 * Return the time between the current time and the end of the event.
+	 * @return The time, in minutes, to the event end.
+	 */
 	public int getTimeToEnd(){
 		//TODO:
 		return 0;
 	}
 	
-	/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-	/*::                                                                         :*/
-	/*::  This routine calculates the distance between two points (given the     :*/
-	/*::  latitude/longitude of those points). It is being used to calculate     :*/
-	/*::  the distance between two locations using GeoDataSource (TM) prodducts  :*/
-	/*::                                                                         :*/
-	/*::  Definitions:                                                           :*/
-	/*::    South latitudes are negative, east longitudes are positive           :*/
-	/*::                                                                         :*/
-	/*::  Passed to function:                                                    :*/
-	/*::    lat1, lon1 = Latitude and Longitude of point 1 (in decimal degrees)  :*/
-	/*::    lat2, lon2 = Latitude and Longitude of point 2 (in decimal degrees)  :*/
-	/*::    unit = the unit you desire for results                               :*/
-	/*::           where: 'M' is statute miles (default)                         :*/
-	/*::                  'K' is kilometers                                      :*/
-	/*::                  'N' is nautical miles                                  :*/
-	/*::  Worldwide cities and other features databases with latitude longitude  :*/
-	/*::  are available at http://www.geodatasource.com                          :*/
-	/*::                                                                         :*/
-	/*::  For enquiries, please contact sales@geodatasource.com                  :*/
-	/*::                                                                         :*/
-	/*::  Official Web site: http://www.geodatasource.com                        :*/
-	/*::                                                                         :*/
-	/*::           GeoDataSource.com (C) All Rights Reserved 2015                :*/
-	/*::                                                                         :*/
-	/*::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-	private double calculateDistance(double lat1, double lon1, double lat2, double lon2, char unit) {
-		  double theta = lon1 - lon2;
-		  double dist = Math.sin(deg2rad(lat1)) * Math.sin(deg2rad(lat2)) + Math.cos(deg2rad(lat1)) * Math.cos(deg2rad(lat2)) * Math.cos(deg2rad(theta));
-		  dist = Math.acos(dist);
-		  dist = rad2deg(dist);
-		  dist = dist * 60 * 1.1515;
-		  if (unit == 'K') {
-		    dist = dist * 1.609344;
-		  } else if (unit == 'N') {
-		  	dist = dist * 0.8684;
-		    }
-		  return (dist);
-		}
-
-		/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-		/*::  This function converts decimal degrees to radians             :*/
-		/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-		private double deg2rad(double deg) {
-		  return (deg * Math.PI / 180.0);
-		}
-
-		/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-		/*::  This function converts radians to decimal degrees             :*/
-		/*:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::*/
-		private double rad2deg(double rad) {
-		  return (rad * 180 / Math.PI);
-		}
-		@Override
-		public int compareTo(Event another) {
-			//TODO: Ponderate distance
-			return this.getStart().compareTo(another.getStart());
-		}
+	/**
+	 * Compares the event to another event to establish a relative order. 
+	 * The order is based on the time and the distance to the user.
+	 * 
+	 * @see java.lang.Comparable#compareTo(java.lang.Object)
+	 * 
+	 * @param Other event to compare to this.
+	 */
+	@Override
+	public int compareTo(Event another) {
+		//TODO: Ponderate distance
+		return this.getStart().compareTo(another.getStart());
+	}
 	
 	
 	

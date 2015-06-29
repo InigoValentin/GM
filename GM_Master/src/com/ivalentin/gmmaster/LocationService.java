@@ -9,6 +9,12 @@ import android.os.IBinder;
 import android.os.SystemClock;
 import android.util.Log;
 
+/**
+ * Service that allows the app to get the GPS location in the background.
+ * 
+ * @author Iñigo Valentin
+ *
+ */
 public class LocationService extends Service {
 
 	// An alarm for rising in special times to fire the pendingIntentPositioning
@@ -17,6 +23,12 @@ public class LocationService extends Service {
 	// A PendingIntent for calling a receiver in special times
 	public PendingIntent pendingIntentPositioning;
 
+	/**
+	 * Called when the service is created. 
+	 * Sets an alarm for location reporting.
+	 * 
+	 * @see android.app.Service#onCreate()
+	 */
 	@Override
 	public void onCreate() {
 		super.onCreate();
@@ -28,6 +40,14 @@ public class LocationService extends Service {
 		pendingIntentPositioning = PendingIntent.getBroadcast(this, 0, intentToFire, 0);
 	}
 
+	/**
+	 * Run when the service is created.
+	 * 
+	 * @param intent Intent to be used from the service.
+	 * @param startId ID for the service.
+	 * 
+	 * @see android.app.Service#onStart(android.content.Intent, int)
+	 */
 	@Override
 	public void onStart(Intent intent, int startId) {
 		try {
@@ -49,6 +69,12 @@ public class LocationService extends Service {
 		return null;
 	}
 
+	/**
+	 * Called when the service is finished and will be destroyed. 
+	 * Unsets the alarm.
+	 * 
+	 * @see android.app.Service#onDestroy()
+	 */
 	@Override
 	public void onDestroy() {
 		this.alarmManagerPositioning.cancel(pendingIntentPositioning);

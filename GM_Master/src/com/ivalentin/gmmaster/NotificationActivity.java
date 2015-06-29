@@ -13,10 +13,18 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.Toast;
 
+/**
+ * Activity that allows the user to send notifications that will be received by the client apps.
+ * 
+ * @author Iñigo Valentin
+ *
+ */
 public class NotificationActivity extends Activity{
 	
 	/**
-	 * Run when the activity is launched.
+	 * Run when the activity is launched. 
+	 * 
+	 * Assigns elements and click listeners.
 	 * 
 	 * @see android.support.v7.app.ActionBarActivity#onCreate(android.os.Bundle)
 	 */
@@ -69,6 +77,18 @@ public class NotificationActivity extends Activity{
 		});
 	}
 	
+	/**
+	 * Uploads a notification to the server, after checking that every field is OK.
+	 * 
+	 * If a field is wrong, a Toast will be shown and it will stop.
+	 * 
+	 * @param title Title of the notification.
+	 * @param text Text of the notifications.
+	 * @param duration Minutes within the notification can be received by clients.
+	 * @param type Action to perform when the notification is red.
+	 * @param gm Indicates if the notification is intended only for members of Gasteizko Margolariak.
+	 * @return
+	 */
 	private boolean send(String title, String text, int duration, String type, int gm){
 		
 		//Check fields

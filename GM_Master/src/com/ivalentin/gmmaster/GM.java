@@ -1,5 +1,11 @@
 package com.ivalentin.gmmaster;
 
+/**
+ * Final class that contains useful static values to be used across the app.
+ * 
+ * @author Iñigo Valentin
+ *
+ */
 public final class GM {
 	
 	/**

@@ -50,8 +50,10 @@ public class CustomScrollView extends ScrollView{
 	 * Overrides the default onTouchListener. 
 	 * 
 	 * If the motion is in the leftmost part of the screen, the event is not 
-	 * passed along and the menu is slided.
+	 * passed along and the menu is shown.
 	 * @see android.widget.ScrollView#onTouchEvent(android.view.MotionEvent)
+	 * 
+	 * @param ev The MotionEvent triggering the action.
 	 */
 	@SuppressLint("ClickableViewAccessibility")
 	@Override

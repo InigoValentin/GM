@@ -143,7 +143,6 @@ public class MainActivity extends Activity {
 								Toast.makeText(getApplicationContext(), getString(R.string.toast_not_validated_yet), Toast.LENGTH_LONG).show();
 							}
 							else if (lines.get(i).substring(0, 18).equals("<status>1</status>")){
-								Log.e("Status: ", "Active");
 								SharedPreferences.Editor editor = preferences.edit();
 							    editor.putInt(GM.ACCOUNT_STATUS, GM.ACCOUNT_ACTIVE);
 							    editor.commit();
@@ -195,7 +194,7 @@ public class MainActivity extends Activity {
 						reporting = false;
 					}
 					
-					Log.e("ReportingUser", reportingUser);
+					Log.d("ReportingUser", reportingUser);
 				}
 				else{
 					reporting = false;
@@ -273,6 +272,7 @@ public class MainActivity extends Activity {
 								tvLocationUser.setText(user);
 							}
 							else{
+								//TODO: Change toast
 								Toast.makeText(getApplicationContext(), getString(R.string.toast_notification_not_submitted), Toast.LENGTH_LONG).show();
 							}
 						}

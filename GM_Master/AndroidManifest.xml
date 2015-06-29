@@ -26,13 +26,13 @@
 			android:name="com.ivalentin.gmmaster.LocationService"
 			android:enabled="true" />
 
-		<!--  <receiver android:name="com.ivalentin.gmmaster.LocationAlarm" > 
+		<receiver android:name="com.ivalentin.gmmaster.LocationAlarm" > 
 
-            <! this Broadcast Receiver only listens to the following intent 
+            <!-- this Broadcast Receiver only listens to the following intent --> 
             <intent-filter>
                 <action android:name="com.ivalentin.gmmaster.ACTION_REFRESH_SCHEDULE_ALARM" />
             </intent-filter>
-        </receiver>   -->
+        </receiver> 
         
         <activity
             android:name=".MainActivity"

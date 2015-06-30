@@ -32,6 +32,10 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+//TODO: OnLocationChange, update the location section
+//TODO: OnLocationChange, update around section
+//TODO: On GPS state change, update around section
+
 /**
  * Section that will be seen when the app is started. 
  * Contains info from almost every other section.
@@ -416,10 +420,7 @@ public class HomeLayout extends Fragment{
 		} catch (ParseException e) {
 			llLocation.setVisibility(View.GONE);
 			Log.e("Error getting location date", e.toString());
-		}
-		
-		//Populate the "join" section
-		//TODO
+		} 
 		
 		//Assign buttons in social section
 		ImageView ivSocialW = (ImageView) view.findViewById(R.id.iv_social_web);

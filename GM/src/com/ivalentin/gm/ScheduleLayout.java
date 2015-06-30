@@ -41,6 +41,10 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+//TODO: On location changed, if dialog is show, update distance
+//TODO: Check GPS status before showing map in dialog
+//TODO: On GPS state change, hide or show map and hide or show distances
+
 /**
  * Fragment to be inflated showing the festivals schedule.
  * Contains a date selector and a ScrollView with all the activities for the day.

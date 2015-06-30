@@ -7,6 +7,9 @@ import java.util.Locale;
 
 import android.util.Log;
 
+//TODO: getTimetoStart()
+//TODO: getTimeToEnd()
+
 /**
  * An event holds information about an activity of the festival
  * 

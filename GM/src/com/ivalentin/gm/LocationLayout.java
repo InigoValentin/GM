@@ -29,6 +29,8 @@ import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+//TODO: Try to fetch a new location report when created
+
 /**
  * Section that shows a map with the location of Gasteizko Margolariak. 
  * If no recent report location, it will explain that and will show the 

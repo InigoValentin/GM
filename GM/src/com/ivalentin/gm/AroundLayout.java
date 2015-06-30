@@ -11,6 +11,7 @@ import java.util.Locale;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
@@ -24,9 +25,13 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+//TODO: Properly format dates and time
 
 /**
  * Layout that show event close to the user in both time and space.
@@ -44,6 +49,18 @@ public class AroundLayout extends Fragment implements LocationListener{
 	
 	//The location provider
 	private String provider;
+	
+	//Layout where event rows will be added
+	private LinearLayout list;
+	
+	//Layout to be shown when no GPS detected
+	private LinearLayout noGps;
+	
+	//Layout to be shown when no events
+	private LinearLayout noEvents;
+	
+	//Main View
+	private View view;
 	
 	/**
 	 *  Request updates at startup
@@ -89,10 +106,40 @@ public class AroundLayout extends Fragment implements LocationListener{
 	public void onStatusChanged(String provider, int status, Bundle extras) { }
 
 	@Override
-	public void onProviderEnabled(String provider) { }
+	public void onProviderEnabled(String provider) {
+		//Check GPS status
+		LocationManager lm = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
+		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+			//Populate the activity list
+			list.setVisibility(View.VISIBLE);
+			noGps.setVisibility(View.GONE);
+			noEvents.setVisibility(View.GONE);
+			populateAround(list);
+		}
+		else{
+			list.setVisibility(View.GONE);
+			noEvents.setVisibility(View.GONE);
+			noGps.setVisibility(View.VISIBLE);
+		}
+	}
 
 	@Override
-	public void onProviderDisabled(String provider) { }
+	public void onProviderDisabled(String provider) {
+		//Check GPS status
+		LocationManager lm = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
+		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+			//Populate the activity list
+			list.setVisibility(View.VISIBLE);
+			noGps.setVisibility(View.GONE);
+			noEvents.setVisibility(View.GONE);
+			populateAround(list);
+		}
+		else{
+			list.setVisibility(View.GONE);
+			noEvents.setVisibility(View.GONE);
+			noGps.setVisibility(View.VISIBLE);
+		}
+	}
 	
 	/**
 	 * Run when the fragment is inflated.
@@ -105,24 +152,54 @@ public class AroundLayout extends Fragment implements LocationListener{
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
 		//Load the layout
-		View view = inflater.inflate(R.layout.fragment_layout_around, null);		
+		view = inflater.inflate(R.layout.fragment_layout_around, null);		
 		
 		//Set the title
 		((MainActivity) getActivity()).setSectionTitle(view.getContext().getString(R.string.menu_around));
-		
-		//TODO: Ask for GPS
 		
 		//Get the location passed from MainActivity so we dont have to wait for it to be aquired.
 		Bundle bundle = this.getArguments();
 		coordinates[0] = bundle.getDouble("lat", 0);
 		coordinates[1] = bundle.getDouble("lon", 0);
 		
-		
 		//Assign parent layout
-		final LinearLayout list = (LinearLayout) view.findViewById(R.id.ll_around_list);
-				
-		//Populate the activity list
-		populateAround(list);
+		list = (LinearLayout) view.findViewById(R.id.ll_around_list);
+		noGps = (LinearLayout) view.findViewById(R.id.ll_around_no_gps);
+		noEvents = (LinearLayout) view.findViewById(R.id.ll_around_no_events);
+		
+		//"Open Settings" button, shown when GPS is off
+		Button btSettings = (Button) view.findViewById(R.id.bt_around_no_gps);
+		btSettings.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				view.getContext().startActivity(new Intent(android.provider.Settings.ACTION_SETTINGS));
+			}
+		});
+		
+		//"View Schedule" button, shown when no events
+		Button btSchedule = (Button) view.findViewById(R.id.bt_around_no_events);
+		btSchedule.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				((MainActivity) getActivity()).loadSection(GM.SECTION_SCHEDULE, false);
+			}
+			
+		});
+		
+		//Check GPS status
+		LocationManager lm = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
+		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+			//Populate the activity list
+			list.setVisibility(View.VISIBLE);
+			noGps.setVisibility(View.GONE);
+			populateAround(list);
+		}
+		else{
+			list.setVisibility(View.GONE);
+			noGps.setVisibility(View.VISIBLE);
+		}
+						
+		
 		
 		//Return the fragment view
 		return view;
@@ -231,9 +308,12 @@ public class AroundLayout extends Fragment implements LocationListener{
         
         //Loop events in the list.
         if (eventList.size() == 0){
-        	//TODO: Show text
+        	list.setVisibility(View.GONE);
+        	noEvents.setVisibility(View.VISIBLE);
         }
         else{
+        	list.setVisibility(View.VISIBLE);
+        	noEvents.setVisibility(View.GONE);
 	        for(int i = 0; i < eventList.size(); i++){
 	        	
 	        	//Create a new row

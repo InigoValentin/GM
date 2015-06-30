@@ -59,6 +59,11 @@
     <string name="about_code">&lt;div style="background-color:#bbbbbb;padding:6px;border-radius:5px;border-style:solid;border-width:2px;border-color:#333333;text-align:center;">You can get the source code for this project at &lt;a href="https://github.com/Seavenois/GM">Github&lt;/a>&lt;/div></string>
     
     <!-- Around section string -->
+    <string name="around_no_events_0">There are no upcoming events.</string>
+    <string name="around_no_events_1">Wait for the festivals te be closer, and you will see activities around you!</string>
+    <string name="around_no_events_button">Check out festivals schedule</string>
+    <string name="around_no_gps">Turn on GPS to be able to see events around you</string>
+    <string name="around_no_gps_button">Open settings</string>
     <string name="around_distance">%1$d %2$s away from you (About %3$d minutes walking)</string>
     
     

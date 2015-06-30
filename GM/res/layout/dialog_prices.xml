@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
-    android:background="@drawable/background_app" >
+    android:background="@drawable/background_app"
+    android:paddingBottom="5dp" >
 
     <Button
         android:id="@+id/bt_dialog_prices_close"
@@ -10,6 +11,8 @@
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="false"
+        android:layout_marginBottom="10dp"
+        android:background="@drawable/arrowbutton"
         android:text="@string/prices_close" />
 
 	<ScrollView
@@ -18,28 +21,36 @@
 	    android:layout_height="fill_parent"
 	    android:layout_above="@id/bt_dialog_prices_close"
 	    android:layout_alignParentTop="true"
-	    android:padding="10dp" >
+	    android:fadingEdge="vertical"
+	    android:fadingEdgeLength="30dp"
+	    android:padding="0dp"
+	    android:requiresFadingEdge="vertical" >
 	
 	    <LinearLayout
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
-	        android:orientation="vertical">
+	        android:layout_marginEnd="6dp"
+	        android:layout_marginLeft="6dp"
+	        android:layout_marginRight="6dp"
+	        android:layout_marginStart="6dp"
+	        android:orientation="vertical" >
 	
 	        <TextView
 	            android:id="@+id/textView1"
-	            android:layout_width="wrap_content"
+	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
 	            android:text="@string/prices_title"
-	            android:textAppearance="?android:attr/textAppearanceLarge"
-	            android:textSize="30sp" />
+	            android:textAppearance="@android:style/TextAppearance.Large"
+	            android:textSize="30sp"
+	            android:textStyle="bold" />
 	
 	        <TextView
 	            android:id="@+id/textView2"
-	            android:layout_width="wrap_content"
+	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="10dp"
-	            android:layout_marginStart="10dp"
 	            android:layout_marginTop="15dp"
+	            android:background="@drawable/home_section_title"
+	            android:padding="3dp"
 	            android:text="@string/prices_section_days"
 	            android:textAppearance="?android:attr/textAppearanceMedium"
 	            android:textSize="20sp" />
@@ -47,8 +58,10 @@
 	        <TableLayout
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="15dp"
-	            android:layout_marginStart="15dp"
+	            android:layout_marginEnd="10dp"
+	            android:layout_marginLeft="10dp"
+	            android:layout_marginRight="10dp"
+	            android:layout_marginStart="10dp"
 	            android:layout_marginTop="20dp"
 	            android:shrinkColumns="0" >
 
@@ -199,20 +212,22 @@
 	        </TableLayout>
 	        
 	        <TextView
-	            android:layout_width="wrap_content"
+	            android:layout_width="fill_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="10dp"
-	            android:layout_marginStart="10dp"
 	            android:layout_marginTop="35dp"
+	            android:background="@drawable/home_section_title"
+	            android:padding="3dp"
 	            android:text="@string/prices_section_packs"
 	            android:textAppearance="?android:attr/textAppearanceMedium"
 	            android:textSize="20sp" />
-	        
+
 	        <TableLayout
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:layout_marginLeft="15dp"
-	            android:layout_marginStart="15dp"
+	            android:layout_marginEnd="10dp"
+	            android:layout_marginLeft="10dp"
+	            android:layout_marginRight="10dp"
+	            android:layout_marginStart="10dp"
 	            android:layout_marginTop="20dp"
 	            android:shrinkColumns="0" >
 
@@ -237,7 +252,6 @@
 	                    android:layout_marginLeft="10dp"
 	                    android:layout_marginStart="10dp"
 	                    android:textSize="17sp" />
-
 	            </TableRow>
 
 	            <TableRow
@@ -261,7 +275,6 @@
 	                    android:layout_marginLeft="10dp"
 	                    android:layout_marginStart="10dp"
 	                    android:textSize="17sp" />
-
 	            </TableRow>
 
 	            <TableRow
@@ -285,14 +298,69 @@
 	                    android:layout_marginLeft="10dp"
 	                    android:layout_marginStart="10dp"
 	                    android:textSize="17sp" />
-
 	            </TableRow>
-
-	                
-	
-	            
-	
 	        </TableLayout>
+
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="35dp"
+	            android:background="@drawable/home_section_title"
+	            android:padding="3dp"
+	            android:text="@string/prices_section_calculator"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:textSize="20sp" />
+
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginEnd="10dp"
+	            android:layout_marginLeft="10dp"
+	            android:layout_marginRight="10dp"
+	            android:layout_marginStart="10dp"
+	            android:layout_marginTop="20dp"
+	            android:orientation="vertical" >
+
+	            <CheckBox
+	                android:id="@+id/cb_dialog_prices_0"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" />
+	            
+	            <CheckBox
+	                android:id="@+id/cb_dialog_prices_1"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" />
+	            
+	            <CheckBox
+	                android:id="@+id/cb_dialog_prices_2"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" />
+	            
+	            <CheckBox
+	                android:id="@+id/cb_dialog_prices_3"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" />
+	            
+	            <CheckBox
+	                android:id="@+id/cb_dialog_prices_4"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" />
+	            
+	            <CheckBox
+	                android:id="@+id/cb_dialog_prices_5"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content" />
+
+	            <TextView
+	                android:id="@+id/tv_dialog_prices_total"
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:gravity="center_horizontal"
+	                android:text="@string/prices_total_0"
+	                android:textAppearance="?android:attr/textAppearanceMedium"
+	                android:textSize="18sp" />
+
+	        </LinearLayout>
 	
 	    </LinearLayout>
 	

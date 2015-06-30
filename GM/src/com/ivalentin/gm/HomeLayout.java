@@ -27,6 +27,7 @@ import android.view.Window;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -54,6 +55,9 @@ public class HomeLayout extends Fragment{
 	//TextView showing the distance of GM
 	private TextView tvLocation;
 	
+	//The main view
+	private View v;
+	
 	/**
 	 * Run when the fragment is inflated.
 	 * Assigns views, gets the date and does the first call to the {@link populate function}.
@@ -76,6 +80,7 @@ public class HomeLayout extends Fragment{
 		
 		//Load the layout.
 		final View view = inflater.inflate(R.layout.fragment_layout_home, null);
+		this.v = view;
 		
 		//Set the title
 		((MainActivity) getActivity()).setSectionTitle(view.getContext().getString(R.string.menu_home));
@@ -151,6 +156,7 @@ public class HomeLayout extends Fragment{
 				TextView[] tvDayPrice = new TextView[6];
 				TextView[] tvOfferName = new TextView[3];
 				TextView[] tvOfferPrice = new TextView[3];
+				CheckBox[] cbDayName = new CheckBox[6];
 				tvDayName[0] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_0);
 				tvDayName[1] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_1);
 				tvDayName[2] = (TextView) dialog.findViewById(R.id.tv_prices_day_name_2);
@@ -169,6 +175,12 @@ public class HomeLayout extends Fragment{
 				tvOfferPrice[0] = (TextView) dialog.findViewById(R.id.tv_prices_offer_price_0);
 				tvOfferPrice[1] = (TextView) dialog.findViewById(R.id.tv_prices_offer_price_1);
 				tvOfferPrice[2] = (TextView) dialog.findViewById(R.id.tv_prices_offer_price_2);
+				cbDayName[0] = (CheckBox) dialog.findViewById(R.id.cb_dialog_prices_0);
+				cbDayName[1] = (CheckBox) dialog.findViewById(R.id.cb_dialog_prices_1);
+				cbDayName[2] = (CheckBox) dialog.findViewById(R.id.cb_dialog_prices_2);
+				cbDayName[3] = (CheckBox) dialog.findViewById(R.id.cb_dialog_prices_3);
+				cbDayName[4] = (CheckBox) dialog.findViewById(R.id.cb_dialog_prices_4);
+				cbDayName[5] = (CheckBox) dialog.findViewById(R.id.cb_dialog_prices_5);
 				Button btClose = (Button) dialog.findViewById(R.id.bt_dialog_prices_close);
 				
 				//Open database
@@ -180,8 +192,6 @@ public class HomeLayout extends Fragment{
 				dayIcon.setBounds(0, 0, 70, 70);
 				Drawable offerIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.price_offer, null);
 				offerIcon.setBounds(0, 0, 70, 70);
-				Drawable alphaIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.alpha, null);
-				alphaIcon.setBounds(0, 0, 1, 70);
 				
 				//Set TextViews for days
 				int i = 0;
@@ -191,8 +201,13 @@ public class HomeLayout extends Fragment{
 					tvDayName[i].setCompoundDrawables(dayIcon, null, null, null);
 					tvDayName[i].setCompoundDrawablePadding(5);
 					tvDayPrice[i].setText(cursor.getString(1) + " " + getResources().getString(R.string.eur));
-					tvDayPrice[i].setCompoundDrawables(alphaIcon, null, null, null);
-					tvDayPrice[i].setCompoundDrawablePadding(5);
+					
+					cbDayName[i].setText(cursor.getString(0));
+					cbDayName[i].setOnClickListener(new OnClickListener(){
+						@Override
+						public void onClick(View v) { calculatePrice(dialog); }				
+					});
+					
 					i ++;
 				}
 				
@@ -204,8 +219,6 @@ public class HomeLayout extends Fragment{
 					tvOfferName[i].setCompoundDrawables(offerIcon, null, null, null);
 					tvOfferName[i].setCompoundDrawablePadding(5);
 					tvOfferPrice[i].setText(cursor.getString(1) + " " + getResources().getString(R.string.eur));
-					tvOfferPrice[i].setCompoundDrawables(alphaIcon, null, null, null);
-					tvOfferPrice[i].setCompoundDrawablePadding(5);
 					i ++;
 				}
 				
@@ -456,5 +469,54 @@ public class HomeLayout extends Fragment{
 		
 	    //Return the view itself.
 		return view;
+	}
+	
+	/**
+	 * Calculates the total prize in the prices dialog and shows the total.
+	 * 
+	 * @param v A view to be able to get a context.
+	 * 
+	 * @return The total price
+	 */
+	private int calculatePrice(Dialog v){
+		
+		//Locate views
+		CheckBox[] cbDayName = new CheckBox[6];
+		cbDayName[0] = (CheckBox) v.findViewById(R.id.cb_dialog_prices_0);
+		cbDayName[1] = (CheckBox) v.findViewById(R.id.cb_dialog_prices_1);
+		cbDayName[2] = (CheckBox) v.findViewById(R.id.cb_dialog_prices_2);
+		cbDayName[3] = (CheckBox) v.findViewById(R.id.cb_dialog_prices_3);
+		cbDayName[4] = (CheckBox) v.findViewById(R.id.cb_dialog_prices_4);
+		cbDayName[5] = (CheckBox) v.findViewById(R.id.cb_dialog_prices_5);
+		TextView tvTotal = (TextView) v.findViewById(R.id.tv_dialog_prices_total);
+		
+		//Open database
+		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
+
+		
+		Cursor cursor = db.rawQuery("SELECT price FROM day ORDER BY id;", null);
+		int i = 0;
+		int total = 0;
+		int selected = 0;
+		while (cursor.moveToNext() && i < 6){
+			if (cbDayName[i].isChecked()){
+				selected ++;
+				total = total + cursor.getInt(0);
+			}
+			i ++;
+		}
+		
+		//Get offers
+		cursor = db.rawQuery("SELECT price, days FROM offer ORDER BY id;", null);
+		while (cursor.moveToNext()){
+			if (cursor.getInt(1) == selected)
+				total = cursor.getInt(0);
+		}
+		
+		//Set text
+		tvTotal.setText(v.getContext().getResources().getString(R.string.prices_total) + " " + total + v.getContext().getResources().getString(R.string.eur));
+		
+		
+		return total;
 	}
 }

@@ -97,6 +97,8 @@
     <string name="prices_day_name_3">August 7</string>
     <string name="prices_day_name_4">August 8</string>
     <string name="prices_day_name_5">August 9</string>
+    <string name="prices_total">Total: </string>
+    <string name="prices_total_0">Total: 0€</string>
         
     
     <!-- Settings section strings -->

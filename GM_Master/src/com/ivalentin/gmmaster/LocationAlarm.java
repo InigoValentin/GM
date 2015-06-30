@@ -10,11 +10,15 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.location.GpsStatus;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.media.RingtoneManager;
 import android.os.Bundle;
+import android.support.v4.app.NotificationCompat;
+import android.support.v4.app.TaskStackBuilder;
 import android.util.Log;
 
 /**
@@ -85,17 +89,19 @@ public class LocationAlarm extends BroadcastReceiver {
 	};
 
 	/**
-     * Actions to be performed when an alarm is received. 
-     * Upload the location.
-     * 
-     * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
-     */
+	 * Actions to be performed when an alarm is received. 
+	 * Upload the location.
+	 * 
+	 * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
+	 */
 	@Override
 	public void onReceive(final Context context, Intent intent) {
 		Log.d("Location request", "New request received by receiver");
 		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
+		
+		//If GPS enabled
 		if (locationManager.isProviderEnabled(provider)) {
-			locationManager.requestLocationUpdates(provider, GM.LOCATION_MIN_TIME_REQUEST, GM.LOCATION_MIN_DISTANCE_REQUEST, locationListener); //TODO: 0 -> 5
+			locationManager.requestLocationUpdates(provider, GM.LOCATION_MIN_TIME_REQUEST, GM.LOCATION_MIN_DISTANCE_REQUEST, locationListener);
 			Location gotLoc = locationManager.getLastKnownLocation(provider);
 			gotLocation(gotLoc);
 			
@@ -124,19 +130,77 @@ public class LocationAlarm extends BroadcastReceiver {
 				        NotificationManager nMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 				        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING);
 				        nMgr.cancelAll();
-						//TODO: Show new notification
+						//Show new notification
+				        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+			    		.setSmallIcon(R.drawable.pinpoint_cancel)
+			    		.setContentTitle(context.getString(R.string.notif_reporting_override_title))
+			    		.setAutoCancel(true)
+			    		.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.pinpoint_gm_cancel))
+			    		.setVibrate((new long[] {600, 600, 600}))
+			    		.setSubText(context.getString(R.string.app_name))
+			    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+			    		.setContentText(context.getString(R.string.notif_reporting_override));
+				    	// Creates an explicit intent for an Activity in your app
+				    	Intent resultIntent = new Intent(context, MainActivity.class);
+				    	TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+				    	stackBuilder.addParentStack(MainActivity.class);
+				    	// Adds the Intent that starts the Activity to the top of the stack
+				    	stackBuilder.addNextIntent(resultIntent);
+				    	PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+				    	mBuilder.setContentIntent(resultPendingIntent);
+				    	NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+				    	// mId allows you to update the notification later on.
+				    	mNotificationManager.notify(GM.NOTIFICATION_ID_REPORTING_OVERRIDE, mBuilder.build());
 					}
 				}
 				
 			
-		} else {
-			//TODO: Stop reporting and show notification
+		}
+		
+		//If no GPS
+		else {
+			//Stop reporting and show notification
+			Log.d("Location report stop", "No GPS");
+			//Cancel alarm
+			Intent in = new Intent(context, LocationAlarm.class);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1253, in, PendingIntent.FLAG_UPDATE_CURRENT | Intent.FILL_IN_DATA);
+			AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+		    alarmManager.cancel(pendingIntent);
+		    //Cancel notification
+	        NotificationManager nMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+	        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING);
+	        nMgr.cancelAll();
+			//Show new notification
+	        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+    		.setSmallIcon(R.drawable.pinpoint_cancel)
+    		.setContentTitle(context.getString(R.string.notif_reporting_gps_title))
+    		.setAutoCancel(true)
+    		.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.pinpoint_gm_cancel))
+    		.setVibrate((new long[] {600, 600, 600}))
+    		.setSubText(context.getString(R.string.app_name))
+    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+    		.setContentText(context.getString(R.string.notif_reporting_gps));
+	    	// Creates an explicit intent for an Activity in your app
+	    	Intent resultIntent = new Intent(context, MainActivity.class);
+	    	TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+	    	stackBuilder.addParentStack(MainActivity.class);
+	    	// Adds the Intent that starts the Activity to the top of the stack
+	    	stackBuilder.addNextIntent(resultIntent);
+	    	PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+	    	mBuilder.setContentIntent(resultPendingIntent);
+	    	NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+	    	// mId allows you to update the notification later on.
+	    	mNotificationManager.notify(GM.NOTIFICATION_ID_REPORTING_GPS, mBuilder.build());
+			
+			
+			
+			
 			//Toast t = Toast.makeText(context, "please turn on GPS",	Toast.LENGTH_LONG);
 			//t.setGravity(Gravity.CENTER, 0, 0);
 			//t.show();
-			Intent settingsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			settingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			context.startActivity(settingsIntent);
+			//Intent settingsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+			//settingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			//context.startActivity(settingsIntent);
 		}
 	}
 

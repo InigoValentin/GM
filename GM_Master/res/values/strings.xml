@@ -22,6 +22,8 @@
     <string name="toast_notification_error_unauthorized">Unauthorized to send notifications.</string>
     <string name="toast_notification_submitted">Notification uploaded.</string>
     <string name="toast_notification_not_submitted">Couldn\'t upload notification.</string>
+    <string name="toast_location_reporting">Location is now being reported</string>
+    <string name="toast_location_gps">Turn on GPS to start reporting location</string>
     
     <string name="location_location">Location report</string>
     <string name="location_text">Location currently reported by:</string>
@@ -53,6 +55,10 @@
     <string name="notif_reporting_title">Location reporting</string>
     <string name="notif_reporting">Reporting location from this device</string>
     <string name="notif_reporting_stop_title">Location reporting stopped</string>
-    <string name="notif_reporting_stop">Another user is now reporting location</string>
+    <string name="notif_reporting_stop">You are no longer reporting location</string>
+    <string name="notif_reporting_override_title">Location reporting stopped</string>
+    <string name="notif_reporting_override">You are no longer reporting location</string>
+    <string name="notif_reporting_gps_title">Location reporting stopped</string>
+    <string name="notif_reporting_gps">Turn GPS on and try again</string>
 
 </resources>

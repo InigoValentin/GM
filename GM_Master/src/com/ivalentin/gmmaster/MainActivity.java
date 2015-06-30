@@ -22,7 +22,9 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.BitmapFactory;
 import android.location.Location;
+import android.location.LocationManager;
 import android.media.RingtoneManager;
 import android.os.Bundle;
 
@@ -54,6 +56,11 @@ public class MainActivity extends Activity {
 	//Controls if the user is currently reporting location
 	private boolean reporting;
 	
+	//Location provider
+	private String provider = LocationManager.GPS_PROVIDER;
+		
+	//The location manager
+	private static LocationManager locationManager;	
 	/**
 	 * Run when the activity is launched. 
 	 * 
@@ -206,74 +213,91 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						if (reporting == false){
-							//Report initial location
-							//Call server
-							boolean result = false;
-							SharedPreferences preferences = getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
-							String user = preferences.getString(GM.USER_NAME, "");
-							String code = preferences.getString(GM.USER_CODE, "");
-							//Fetches the remote URL, triggering the admin insertion in the database.
-							FetchURL fetch = new FetchURL();
-							fetch.Run("http://inigovalentin.com/gm/app/upload/location.php?user=" + user + "&code=" + code + "&lat=0&lon=0&manual=1");
-							//Read the output to see if the submission was done.
-							List<String> lines = fetch.getOutput();
-							for(int i = 0; i < lines.size(); i++){
-								if (lines.get(i).length() >= 19){
-									if (lines.get(i).substring(0, 21).equals("<status>sent</status>"))
-										result = true;
-									}
+							locationManager = (LocationManager) v.getContext().getSystemService(Context.LOCATION_SERVICE);
+							
+							//If GPS enables
+							if (locationManager.isProviderEnabled(provider)) {
+
+								//Report initial location
+								//Call server
+								boolean result = false;
+								SharedPreferences preferences = getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
+								String user = preferences.getString(GM.USER_NAME, "");
+								String code = preferences.getString(GM.USER_CODE, "");
+								//Fetches the remote URL, triggering the admin insertion in the database.
+								FetchURL fetch = new FetchURL();
+								fetch.Run("http://inigovalentin.com/gm/app/upload/location.php?user=" + user + "&code=" + code + "&lat=0&lon=0&manual=1");
+								//Read the output to see if the submission was done.
+								List<String> lines = fetch.getOutput();
+								for(int i = 0; i < lines.size(); i++){
+									if (lines.get(i).length() >= 19){
+										if (lines.get(i).substring(0, 21).equals("<status>sent</status>"))
+											result = true;
+										}
+								}
+								if (result){
+									//Start the location service
+									v.getContext().startService(new Intent(v.getContext(), LocationService.class));
+									Intent intentToFire = new Intent(GM.ACTION_REFRESH_SCHEDULE_ALARM);
+								    intentToFire.putExtra(GM.ALARM_COMMAND, GM.ALARM_ACT_DOCUMENT);
+								    sendBroadcast(intentToFire);
+								    OnNewLocationListener onNewLocationListener = new OnNewLocationListener() {
+								        @Override
+								        public void onNewLocationReceived(Location location) {
+								            //Use your new location here then stop listening
+								            LocationAlarm.clearOnNewLocationListener(this);
+								        }
+								    };
+								    //Start listening for new location
+								    LocationAlarm.setOnNewLocationListener(onNewLocationListener);
+									
+								    //TODO: Remove notifications
+								    NotificationManager nMgr = (NotificationManager) v.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
+							        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING_GPS);
+							        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING_STOP);
+							        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING_OVERRIDE);
+							        nMgr.cancelAll(); 
+								    
+									//Show notification
+									NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(v.getContext())
+							    		.setSmallIcon(R.drawable.pinpoint)
+							    		.setContentTitle(getString(R.string.notif_reporting_title))
+							    		.setOngoing(true)
+							    		.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.pinpoint_gm))
+							    		.setVibrate((new long[] {200, 200, 200}))
+							    		.setSubText(getString(R.string.app_name))
+							    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+							    		.setContentText(getString(R.string.notif_reporting));
+							    	// Creates an explicit intent for an Activity in your app
+							    	Intent resultIntent = new Intent(v.getContext(), MainActivity.class);
+							    	TaskStackBuilder stackBuilder = TaskStackBuilder.create(v.getContext());
+							    	stackBuilder.addParentStack(MainActivity.class);
+							    	// Adds the Intent that starts the Activity to the top of the stack
+							    	stackBuilder.addNextIntent(resultIntent);
+							    	PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+							    	mBuilder.setContentIntent(resultPendingIntent);
+							    	NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+							    	// mId allows you to update the notification later on.
+							    	mNotificationManager.notify(GM.NOTIFICATION_ID_REPORTING, mBuilder.build());
+									
+									//Change location panel and button text
+									llLocation.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.light_green));
+									
+									//Set reporting status
+									reporting = true;
+									
+									//Change button text
+									btLocationReport.setText(getApplicationContext().getString(R.string.button_location_stop));
+									tvLocationUser.setText(user);
+								}
+								else{
+									Toast.makeText(getApplicationContext(), getString(R.string.toast_location_reporting), Toast.LENGTH_LONG).show();
+								}
 							}
-							if (result){
-								//Start the location service
-								v.getContext().startService(new Intent(v.getContext(), LocationService.class));
-								Intent intentToFire = new Intent(GM.ACTION_REFRESH_SCHEDULE_ALARM);
-							    intentToFire.putExtra(GM.ALARM_COMMAND, GM.ALARM_ACT_DOCUMENT);
-							    sendBroadcast(intentToFire);
-							    OnNewLocationListener onNewLocationListener = new OnNewLocationListener() {
-							        @Override
-							        public void onNewLocationReceived(Location location) {
-							            //Use your new location here then stop listening
-							            LocationAlarm.clearOnNewLocationListener(this);
-							        }
-							    };
-							    //Start listening for new location
-							    LocationAlarm.setOnNewLocationListener(onNewLocationListener);
-								
-								//Show notification
-								NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(v.getContext())
-						    		.setSmallIcon(R.drawable.pinpoint)
-						    		.setContentTitle(getString(R.string.notif_reporting_title))
-						    		.setOngoing(true)
-						    		//.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.pinpoint))
-						    		.setVibrate((new long[] {200, 200, 200}))
-						    		.setSubText(getString(R.string.app_name))
-						    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-						    		.setContentText(getString(R.string.notif_reporting));
-						    	// Creates an explicit intent for an Activity in your app
-						    	Intent resultIntent = new Intent(v.getContext(), MainActivity.class);
-						    	TaskStackBuilder stackBuilder = TaskStackBuilder.create(v.getContext());
-						    	stackBuilder.addParentStack(MainActivity.class);
-						    	// Adds the Intent that starts the Activity to the top of the stack
-						    	stackBuilder.addNextIntent(resultIntent);
-						    	PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-						    	mBuilder.setContentIntent(resultPendingIntent);
-						    	NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-						    	// mId allows you to update the notification later on.
-						    	mNotificationManager.notify(GM.NOTIFICATION_ID_REPORTING, mBuilder.build());
-								
-								//Change location panel and button text
-								llLocation.setBackgroundColor(getApplicationContext().getResources().getColor(R.color.light_green));
-								
-								//Set reporting status
-								reporting = true;
-								
-								//Change button text
-								btLocationReport.setText(getApplicationContext().getString(R.string.button_location_stop));
-								tvLocationUser.setText(user);
-							}
+							
+							//If GPS is not enabled
 							else{
-								//TODO: Change toast
-								Toast.makeText(getApplicationContext(), getString(R.string.toast_notification_not_submitted), Toast.LENGTH_LONG).show();
+								Toast.makeText(getApplicationContext(), getString(R.string.toast_location_gps), Toast.LENGTH_LONG).show();
 							}
 						}
 						else{
@@ -287,6 +311,7 @@ public class MainActivity extends Activity {
 						        String ns = Context.NOTIFICATION_SERVICE;
 						        NotificationManager nMgr = (NotificationManager) getApplicationContext().getSystemService(ns);
 						        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING);
+						        nMgr.cancelAll();
 						    }
 							
 						    //Send another notification
@@ -294,8 +319,8 @@ public class MainActivity extends Activity {
 				    		.setSmallIcon(R.drawable.pinpoint_cancel)
 				    		.setContentTitle(getString(R.string.notif_reporting_stop_title))
 				    		.setAutoCancel(true)
-				    		//.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.pinpoint))
-				    		.setVibrate((new long[] {2000, 2000, 2000}))
+				    		.setLargeIcon(BitmapFactory.decodeResource(getResources(), R.drawable.pinpoint_gm_cancel))
+				    		.setVibrate((new long[] {600, 600, 600}))
 				    		.setSubText(getString(R.string.app_name))
 				    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
 				    		.setContentText(getString(R.string.notif_reporting_stop));

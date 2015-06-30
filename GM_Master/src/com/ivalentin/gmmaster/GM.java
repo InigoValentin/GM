@@ -69,9 +69,19 @@ public final class GM {
 	static final int NOTIFICATION_ID_REPORTING = 0;
 	
 	/**
-	 * Id for notification "Reporting stopped"
+	 * Id for notification "Reporting stopped".
 	 */
 	static final int NOTIFICATION_ID_REPORTING_STOP = 1;
+	
+	/**
+	 * Id for notification "Another user is reporting".
+	 */
+	static final int NOTIFICATION_ID_REPORTING_OVERRIDE  = 2;
+	
+	/**
+	 * Id for notification "No GPS".
+	 */
+	static final int NOTIFICATION_ID_REPORTING_GPS  = 3;
 	
 	/**
 	 * Command for the location alarm.

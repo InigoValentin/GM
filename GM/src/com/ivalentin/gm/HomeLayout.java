@@ -422,10 +422,22 @@ public class HomeLayout extends Fragment{
 		//TODO
 		
 		//Assign buttons in social section
+		ImageView ivSocialW = (ImageView) view.findViewById(R.id.iv_social_web);
 		ImageView ivSocialF = (ImageView) view.findViewById(R.id.iv_social_facebook);
 		ImageView ivSocialT = (ImageView) view.findViewById(R.id.iv_social_twitter);
 		ImageView ivSocialG = (ImageView) view.findViewById(R.id.iv_social_googleplus);
 		ImageView ivSocialY = (ImageView) view.findViewById(R.id.iv_social_youtube);
+		ImageView ivSocialI = (ImageView) view.findViewById(R.id.iv_social_instagram);
+		
+		ivSocialW.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = view.getContext().getString(R.string.social_web_link);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
 		
 		ivSocialF.setOnClickListener(new OnClickListener() {
             @Override
@@ -461,6 +473,16 @@ public class HomeLayout extends Fragment{
             @Override
             public void onClick(View v) {
                 String url = view.getContext().getString(R.string.social_youtube_link);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+		
+		ivSocialI.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = view.getContext().getString(R.string.social_instagram_link);
                 Intent i = new Intent(Intent.ACTION_VIEW);
                 i.setData(Uri.parse(url));
                 startActivity(i);

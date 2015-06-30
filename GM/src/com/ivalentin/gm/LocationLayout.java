@@ -142,7 +142,7 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 				    	if (date.after(start) && date.before(end)){
 				    		found = true;
 				    		//Set text
-				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_now), timeFormat.format(cursor.getString(8)), cursor.getString(4)));
+				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_now), cursor.getString(4)));
 				    	}
 				    }
 				    
@@ -151,7 +151,7 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 				    	if (date.after(start) && date.before(startPlus30)){
 				    		found = true;
 				    		//Set text
-				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_now), timeFormat.format(cursor.getString(8)), cursor.getString(4)));
+				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_now), cursor.getString(4)));
 				    	}
 				    }
 				    

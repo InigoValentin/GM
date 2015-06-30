@@ -1997,17 +1997,27 @@ containing a value of this type.
         public static final int Base_TextAppearance_Widget_AppCompat_ExpandedMenu_Item=0x7f0b0083;
         public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Subtitle=0x7f0b0097;
         public static final int Base_TextAppearance_Widget_AppCompat_Toolbar_Title=0x7f0b0096;
+        /**  <item name="android:actionModeShareDrawable">?actionModeShareDrawable</item>
+ <item name="android:actionModeShareDrawable">?actionModeShareDrawable</item>
+         */
         public static final int Base_Theme_AppCompat=0x7f0b00db;
         /**  Menu/item attributes 
          */
         public static final int Base_Theme_AppCompat_CompactMenu=0x7f0b00de;
+        /**  <item name="android:actionModeShareDrawable">?actionModeShareDrawable</item>
+         */
         public static final int Base_Theme_AppCompat_Dialog=0x7f0b00e1;
         public static final int Base_Theme_AppCompat_Dialog_FixedSize=0x7f0b00e3;
         /**  We're not large, so redirect to Theme.AppCompat 
          */
         public static final int Base_Theme_AppCompat_DialogWhenLarge=0x7f0b00e5;
+        /**  <item name="android:actionModeShareDrawable">?actionModeShareDrawable</item>
+ <item name="android:actionModeShareDrawable">?actionModeShareDrawable</item>
+         */
         public static final int Base_Theme_AppCompat_Light=0x7f0b00dc;
         public static final int Base_Theme_AppCompat_Light_DarkActionBar=0x7f0b00dd;
+        /**  <item name="android:actionModeShareDrawable">?actionModeShareDrawable</item>
+         */
         public static final int Base_Theme_AppCompat_Light_Dialog=0x7f0b00e2;
         public static final int Base_Theme_AppCompat_Light_Dialog_FixedSize=0x7f0b00e4;
         public static final int Base_Theme_AppCompat_Light_DialogWhenLarge=0x7f0b00e6;

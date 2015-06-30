@@ -97,8 +97,14 @@
     <string name="prices_day_name_3">August 7</string>
     <string name="prices_day_name_4">August 8</string>
     <string name="prices_day_name_5">August 9</string>
+    <string name="prices_calculator">Choose the days you are interested in. Offers will be applied automatically.</string>
     <string name="prices_total">Total: </string>
     <string name="prices_total_0">Total: 0€</string>
+    <string name="prices_howto_0">You musk make a deposit in the account 2095 3140 50 9112766611 in the bank Kutxabank indicating your full name and the days you have chosen.</string>
+    <string name="prices_howto_1">i.e.: Jhon Smith 5, 6, 9</string>
+    <string name="prices_howto_2">If you have chosen the 5 days offer pack or the 6 days offer pack, there is no need to indicate the days: Your full name will suffice.</string>
+    <string name="prices_howto_3">Payments for the Santiago day (July 25) have to be done before July 22</string>
+    <string name="prices_howto_4">Payments for the rest of days have to be done before August 1</string>
         
     
     <!-- Settings section strings -->
@@ -139,14 +145,18 @@
     
     <!-- Social networks strings -->
     
+    <string name="social_web">Web</string>
     <string name="social_facebook">Facebook</string>
     <string name="social_twitter">Twitter</string>
     <string name="social_googleplus">Google+</string>
     <string name="social_youtube">Youtube</string>
+    <string name="social_instagram">Instagram</string>
+    <string name="social_web_link">http://margolariak.com/</string>
     <string name="social_facebook_link">http://facebook.com/gmargolariak</string>
     <string name="social_twitter_link">http://twitter.com/gmargolariak</string>
     <string name="social_googleplus_link">https://plus.google.com/106661466029005469492</string>
     <string name="social_youtube_link">https://www.youtube.com/user/GasteizkoMargolariak</string>
+    <string name="social_instagram_link">https://instagram.com/gmargolariak/</string>
     
     
     <!-- Misc strings -->

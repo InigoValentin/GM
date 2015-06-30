@@ -271,18 +271,21 @@
 	                android:id="@+id/ll_home_section_join_content"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
-	                android:orientation="vertical" >
+	                android:orientation="vertical"
+	                android:padding="15dp" >
 
 	                <TextView
 	                    android:id="@+id/TextView01"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:layout_marginBottom="15dp"
 	                    android:text="@string/home_section_join_header" />
 
 	                <TextView
 	                    android:id="@+id/TextView02"
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
+	                    android:layout_marginBottom="15dp"
 	                    android:text="@string/home_section_join_text" />
 
 	                <TextView
@@ -325,39 +328,69 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_horizontal"
-                android:orientation="horizontal" >
+                android:orientation="vertical" >
 
-                <ImageView
-                    android:id="@+id/iv_social_facebook"
-                    android:layout_width="wrap_content"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:contentDescription="@string/social_facebook"
-                    android:src="@drawable/social_facebook" />
-                
-                <ImageView
-                    android:id="@+id/iv_social_twitter"
-                    android:contentDescription="@string/social_twitter"
-                    android:layout_width="wrap_content"
+                    android:gravity="center_horizontal" >
+
+                    <ImageView
+                        android:id="@+id/iv_social_web"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/social_web"
+                        android:src="@drawable/social_web" />
+
+                    <ImageView
+                        android:id="@+id/iv_social_facebook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/social_facebook"
+                        android:src="@drawable/social_facebook" />
+
+                    <ImageView
+                        android:id="@+id/iv_social_twitter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/social_twitter"
+                        android:src="@drawable/social_twitter" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/social_twitter" />
-                
-                <ImageView
-                    android:id="@+id/iv_social_googleplus"
-                    android:contentDescription="@string/social_googleplus"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/social_googleplus" />
-                
-                <ImageView
-                    android:id="@+id/iv_social_youtube"
-                    android:contentDescription="@string/social_youtube"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:src="@drawable/social_youtube" />
+                    android:gravity="center_horizontal" >
+
+                    <ImageView
+                        android:id="@+id/iv_social_googleplus"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/social_googleplus"
+                        android:src="@drawable/social_googleplus" />
+
+                    <ImageView
+                        android:id="@+id/iv_social_youtube"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/social_youtube"
+                        android:src="@drawable/social_youtube" />
+
+                    <ImageView
+                        android:id="@+id/iv_social_instagram"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="10dp"
+                        android:contentDescription="@string/social_instagram"
+                        android:src="@drawable/social_instagram" />
+
+                </LinearLayout>
 
             </LinearLayout>
 	

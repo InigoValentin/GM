@@ -321,6 +321,12 @@
 	            android:layout_marginTop="20dp"
 	            android:orientation="vertical" >
 
+	            <TextView
+	                android:id="@+id/textView3"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/prices_calculator" />
+
 	            <CheckBox
 	                android:id="@+id/cb_dialog_prices_0"
 	                android:layout_width="wrap_content"
@@ -361,8 +367,63 @@
 	                android:textSize="18sp" />
 
 	        </LinearLayout>
+
+	        <TextView
+	            android:layout_width="fill_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginTop="35dp"
+	            android:background="@drawable/home_section_title"
+	            android:padding="3dp"
+	            android:text="@string/prices_section_howto"
+	            android:textAppearance="?android:attr/textAppearanceMedium"
+	            android:textSize="20sp" />
+
+	        <LinearLayout
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:layout_marginBottom="20dp"
+	            android:layout_marginEnd="10dp"
+	            android:layout_marginLeft="10dp"
+	            android:layout_marginRight="10dp"
+	            android:layout_marginStart="10dp"
+	            android:layout_marginTop="20dp"
+	            android:orientation="vertical" >
+
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:text="@string/prices_howto_0" />
+	            
+	            <TextView
+	                android:layout_width="fill_parent"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="15dp"
+	                android:gravity="center_horizontal"
+	                android:text="@string/prices_howto_1"
+	                android:textStyle="italic" />
+	            
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="15dp"
+	                android:text="@string/prices_howto_2" />
+	            
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="15dp"
+	                android:text="@string/prices_howto_3" />
+	            
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="15dp"
+	                android:text="@string/prices_howto_4" />
+
+	        </LinearLayout>
 	
 	    </LinearLayout>
 	
 	</ScrollView>
+
 </RelativeLayout>

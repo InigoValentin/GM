@@ -31,8 +31,6 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-//TODO: Properly format dates and time
-
 /**
  * Layout that show event close to the user in both time and space.
  * 
@@ -249,10 +247,7 @@ public class AroundLayout extends Fragment implements LocationListener{
         
         double distance;
         Calendar cal;
-        Date maxDate;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
-		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd-", Locale.US);
-		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
 		Date date = new Date();
 		Date startMinus30, endMinus15, startPlus30;
 		DecimalFormat df = new DecimalFormat("#.#"); 

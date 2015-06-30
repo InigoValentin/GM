@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.SharedPreferences;
+import android.content.res.ColorStateList;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -26,6 +27,8 @@ public class SettingsLayout extends Fragment{
 
 	//The user name
 	private String userName;
+	
+	private ColorStateList defaultColorTitle, defaultColorSummary;
 	
 	/**
 	 * Run when the fragment is inflated.
@@ -52,9 +55,14 @@ public class SettingsLayout extends Fragment{
 		final CheckBox cbNotificationGm = (CheckBox) view.findViewById(R.id.cb_settings_notifications_gm);
 		final CheckBox cbAccountGm = (CheckBox) view.findViewById(R.id.cb_settings_gm);
 		final TextView tvNotification = (TextView) view.findViewById(R.id.tv_settings_notifications_summary);
+		final TextView tvNotificationGmTitle = (TextView) view.findViewById(R.id.tv_settings_notifications_gm);
 		final TextView tvNotificationGm = (TextView) view.findViewById(R.id.tv_settings_notifications_gm_summary);
 		final TextView tvAccountGm = (TextView) view.findViewById(R.id.tv_settings_gm_summary);
 		final TextView tvAccountName = (TextView) view.findViewById(R.id.tv_settings_account_name_summary);
+		
+		//Get TextView defaultColors
+		defaultColorTitle = tvNotificationGmTitle.getTextColors();
+		defaultColorSummary = tvNotificationGm.getTextColors();
 		
 		//Set initial state of the settings
 		SharedPreferences settings = view.getContext().getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
@@ -67,6 +75,8 @@ public class SettingsLayout extends Fragment{
 			cbNotification.setChecked(false);
 			tvNotification.setText(view.getContext().getString(R.string.settings_notification_off));
 			cbNotificationGm.setEnabled(false);
+			tvNotificationGm.setTextColor(view.getResources().getColor(R.color.settings_disabled));
+			tvNotificationGmTitle.setTextColor(view.getResources().getColor(R.color.settings_disabled));
 		}
 		
 		if (settings.getInt(GM.PREF_NOTIFICATION_GM, GM.DEFAULT_PREF_NOTIFICATION_GM) == 1){
@@ -106,7 +116,9 @@ public class SettingsLayout extends Fragment{
 					SharedPreferences.Editor editor = preferences.edit();
 					editor.putInt(GM.PREF_NOTIFICATION, 0);
 					editor.commit();
-					//TODO: change color of disabled preference
+					//Change color of disabled preference
+					tvNotificationGm.setTextColor(view.getResources().getColor(R.color.settings_disabled));
+					tvNotificationGmTitle.setTextColor(view.getResources().getColor(R.color.settings_disabled));
 				}
 				else{
 					cbNotification.setChecked(true);
@@ -116,7 +128,9 @@ public class SettingsLayout extends Fragment{
 					SharedPreferences.Editor editor = preferences.edit();
 					editor.putInt(GM.PREF_NOTIFICATION, 1);
 					editor.commit();
-					//TODO: change color of disabled preferences
+					//Change color of disabled preferences
+					tvNotificationGmTitle.setTextColor(defaultColorTitle);
+					tvNotificationGm.setTextColor(defaultColorSummary);
 				}
 			}
 			

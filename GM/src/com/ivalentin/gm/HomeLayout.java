@@ -18,6 +18,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.content.res.ResourcesCompat;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -32,10 +35,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-//TODO: OnLocationChange, update the location section
-//TODO: OnLocationChange, update around section
-//TODO: On GPS state change, update around section
-
 /**
  * Section that will be seen when the app is started. 
  * Contains info from almost every other section.
@@ -45,7 +44,7 @@ import android.widget.TextView;
  * @see Fragment
  *
  */
-public class HomeLayout extends Fragment{
+public class HomeLayout extends Fragment implements LocationListener{
 
 	
 	//The location of the user
@@ -321,106 +320,10 @@ public class HomeLayout extends Fragment{
 		}
 
 		//Populate the around section
-		db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
-		
-	    ArrayList<Event> eventList = new ArrayList<Event>();
-		Event event;
-		cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host FROM event, place WHERE event.place = place.id;", null);
-		Date startMinus30, endMinus15, startPlus30;
-		while (cursor.moveToNext()){
-			try{
-				cal = Calendar.getInstance();
-			    cal.setTime(dateFormat.parse(cursor.getString(8)));
-			    cal.add(Calendar.MINUTE, -30);
-			    startMinus30 = cal.getTime();
-			    cal = Calendar.getInstance();
-			    cal.setTime(dateFormat.parse(cursor.getString(8)));
-			    cal.add(Calendar.MINUTE, 30);
-			    startPlus30 = cal.getTime();
-			    
-			    //Events with end date
-			    if (cursor.getString(9) != null){
-			    	cal = Calendar.getInstance();
-				    cal.setTime(dateFormat.parse(cursor.getString(9)));
-				    cal.add(Calendar.MINUTE, -15);
-				    endMinus15 = cal.getTime();
-				    
-				    //If in range
-				    if (date.after(startMinus30) && date.before(endMinus15)){
-				    	event = new Event(cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
-			        	eventList.add(event);
-				    }
-			    }
-			    //Events without end time
-			    else{
-			    	if (date.after(startMinus30) && date.before(startPlus30)){
-			    		event = new Event(cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
-			        	eventList.add(event);
-			    	}
-			    }
-				
-			}
-			catch (ParseException e){
-				Log.e("Error parsing date for around event", e.toString());
-			}
-		}
-		cursor.close();
-		if (eventList.size() == 0)
-			llAround.setVisibility(View.GONE);
-		else{
-			TextView tvRowName, tvRowDescription, tvRowPlace, tvRowTime;
-			Collections.sort(eventList);
-			for(int i = 0; i < eventList.size() && i < 2; i++){
-	        	
-	        	//Create a new row
-	        	entry = (LinearLayout) factory.inflate(R.layout.row_around, null);
-	        	
-	        	
-	        	//Locate row elements and populate them.
-	        	tvRowName = (TextView) entry.findViewById(R.id.tv_row_home_schedule_title);
-	        	tvRowName.setText(eventList.get(i).getName());
-	        	tvRowDescription = (TextView) entry.findViewById(R.id.tv_row_home_schedule_description);
-	        	tvRowDescription.setText(eventList.get(i).getDescription());
-	        	tvRowPlace = (TextView) entry.findViewById(R.id.tv_row_home_schedule_place);
-	        	tvRowPlace.setText(eventList.get(i).getPlace());
-	        	tvRowTime = (TextView) entry.findViewById(R.id.tv_row_home_schedule_time);
-	        	tvRowTime.setText(timeFormat.format(eventList.get(i).getStart()));
-	        	
-	        	//Add the entry to the list.
-	        	llAroundContent.addView(entry);
-			}
-		}
+		populateAround();
 		
 		//Populate the location section
-		SharedPreferences preferences = view.getContext().getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
-		tvLocation = (TextView) view.findViewById(R.id.tv_home_location_1);
-		try {
-			Date locationDate = dateFormat.parse(preferences.getString(GM.PREF_GM_LOCATION, "1970-01-01 00:00:00"));
-			cal = Calendar.getInstance();
-		    cal.setTime(date);
-		    cal.add(Calendar.MINUTE, -10);
-		    if (cal.getTime().before(locationDate)){
-		    	//Get Location
-		    	double gmLat = Double.parseDouble(preferences.getString(GM.PREF_GM_LATITUDE, "0"));
-		    	double gmLon = Double.parseDouble(preferences.getString(GM.PREF_GM_LONGITUDE, "0"));
-		    	Double distance = Distance.calculateDistance(coordinates[0], coordinates[1], gmLat, gmLon, 'K');
-		    	distance = (double) Math.round(1000 * distance);
-		    	
-		    	if (distance > 1000d)
-		    		tvLocation.setText(String.format(view.getContext().getString(R.string.home_section_location_text_1), String.format("%.2f", distance / 1000)  + " " + view.getContext().getString(R.string.kilometers), Math.round(distance * 0.012)));
-	        		//tvLocation.setText("Distance: " + (distance / 1000)  + " km   Time walking: " + Math.round(distance * 0.012) + " '");
-		    	else
-		    		tvLocation.setText(String.format(view.getContext().getString(R.string.home_section_location_text_1), distance.intValue()  + " " + view.getContext().getString(R.string.meters), Math.round(distance * 0.012)));
-
-		    }
-		    else{
-		    	llLocation.setVisibility(View.GONE);
-		    }
-			
-		} catch (ParseException e) {
-			llLocation.setVisibility(View.GONE);
-			Log.e("Error getting location date", e.toString());
-		} 
+		updateLocation();
 		
 		//Assign buttons in social section
 		ImageView ivSocialW = (ImageView) view.findViewById(R.id.iv_social_web);
@@ -541,5 +444,164 @@ public class HomeLayout extends Fragment{
 		
 		
 		return total;
+	}
+
+	/**
+	 * Handles the location section of this screen. Its updated every time the location changes. 
+	 * 
+	 * Shows or hides the location panel depending on if there is a recent location report, and sets the distance and time text.
+	 */
+	private void updateLocation(){
+		Calendar cal;
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+		Date date = new Date();
+		SharedPreferences preferences = v.getContext().getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
+		tvLocation = (TextView) v.findViewById(R.id.tv_home_location_1);
+		try {
+			Date locationDate = dateFormat.parse(preferences.getString(GM.PREF_GM_LOCATION, "1970-01-01 00:00:00"));
+			cal = Calendar.getInstance();
+		    cal.setTime(date);
+		    cal.add(Calendar.MINUTE, -10);
+		    if (cal.getTime().before(locationDate)){
+		    	//Get Location
+		    	double gmLat = Double.parseDouble(preferences.getString(GM.PREF_GM_LATITUDE, "0"));
+		    	double gmLon = Double.parseDouble(preferences.getString(GM.PREF_GM_LONGITUDE, "0"));
+		    	Double distance = Distance.calculateDistance(coordinates[0], coordinates[1], gmLat, gmLon, 'K');
+		    	distance = (double) Math.round(1000 * distance);
+		    	
+		    	if (distance > 1000d)
+		    		tvLocation.setText(String.format(v.getContext().getString(R.string.home_section_location_text_1), String.format("%.2f", distance / 1000)  + " " + v.getContext().getString(R.string.kilometers), Math.round(distance * 0.012)));
+	        		//tvLocation.setText("Distance: " + (distance / 1000)  + " km   Time walking: " + Math.round(distance * 0.012) + " '");
+		    	else
+		    		tvLocation.setText(String.format(v.getContext().getString(R.string.home_section_location_text_1), distance.intValue()  + " " + v.getContext().getString(R.string.meters), Math.round(distance * 0.012)));
+
+		    }
+		    else{
+		    	llLocation.setVisibility(View.GONE);
+		    }
+			
+		} catch (ParseException e) {
+			llLocation.setVisibility(View.GONE);
+			Log.e("Error getting location date", e.toString());
+		} 
+	}
+	
+	/**
+	 * Populates the around section with events, or hiddes it if none
+	 */
+	@SuppressLint("InflateParams") //Rows are added in a loop.
+	private void populateAround(){
+		Calendar cal;
+		LinearLayout entry;
+		LayoutInflater factory = LayoutInflater.from(getActivity());
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+		Date date = new Date();
+		SQLiteDatabase db;
+		Cursor cursor;
+		Date startMinus30, endMinus15, startPlus30;
+	    ArrayList<Event> eventList = new ArrayList<Event>();
+		Event event;
+		
+		//Check GPS status
+		LocationManager lm = (LocationManager) v.getContext().getSystemService(Context.LOCATION_SERVICE);
+		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+		
+			db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
+			cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host FROM event, place WHERE event.place = place.id;", null);
+			while (cursor.moveToNext()){
+				try{
+					cal = Calendar.getInstance();
+				    cal.setTime(dateFormat.parse(cursor.getString(8)));
+				    cal.add(Calendar.MINUTE, -30);
+				    startMinus30 = cal.getTime();
+				    cal = Calendar.getInstance();
+				    cal.setTime(dateFormat.parse(cursor.getString(8)));
+				    cal.add(Calendar.MINUTE, 30);
+				    startPlus30 = cal.getTime();
+				    
+				    //Events with end date
+				    if (cursor.getString(9) != null){
+				    	cal = Calendar.getInstance();
+					    cal.setTime(dateFormat.parse(cursor.getString(9)));
+					    cal.add(Calendar.MINUTE, -15);
+					    endMinus15 = cal.getTime();
+					    
+					    //If in range
+					    if (date.after(startMinus30) && date.before(endMinus15)){
+					    	event = new Event(cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
+				        	eventList.add(event);
+					    }
+				    }
+				    //Events without end time
+				    else{
+				    	if (date.after(startMinus30) && date.before(startPlus30)){
+				    		event = new Event(cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
+				        	eventList.add(event);
+				    	}
+				    }
+					
+				}
+				catch (ParseException e){
+					Log.e("Error parsing date for around event", e.toString());
+				}
+			}
+			cursor.close();
+			if (eventList.size() == 0)
+				llAround.setVisibility(View.GONE);
+			else{
+				TextView tvRowName, tvRowDescription, tvRowPlace, tvRowTime;
+				Collections.sort(eventList);
+				for(int i = 0; i < eventList.size() && i < 2; i++){
+		        	
+		        	//Create a new row
+		        	entry = (LinearLayout) factory.inflate(R.layout.row_around, null);
+		        	
+		        	
+		        	//Locate row elements and populate them.
+		        	tvRowName = (TextView) entry.findViewById(R.id.tv_row_home_schedule_title);
+		        	tvRowName.setText(eventList.get(i).getName());
+		        	tvRowDescription = (TextView) entry.findViewById(R.id.tv_row_home_schedule_description);
+		        	tvRowDescription.setText(eventList.get(i).getDescription());
+		        	tvRowPlace = (TextView) entry.findViewById(R.id.tv_row_home_schedule_place);
+		        	tvRowPlace.setText(eventList.get(i).getPlace());
+		        	tvRowTime = (TextView) entry.findViewById(R.id.tv_row_home_schedule_time);
+		        	tvRowTime.setText(timeFormat.format(eventList.get(i).getStart()));
+		        	
+		        	//Add the entry to the list.
+		        	llAroundContent.addView(entry);
+				}
+			}
+		}
+		
+		//If no GPS
+		else{
+			llAround.setVisibility(View.GONE);
+		}
+	}
+	
+	@Override
+	public void onLocationChanged(Location location) {
+		coordinates[0] = location.getLatitude();
+		coordinates[1] = location.getLongitude();
+		updateLocation();
+		populateAround();
+		
+	}
+
+	@Override
+	public void onStatusChanged(String provider, int status, Bundle extras) {
+		populateAround();		
+	}
+
+	@Override
+	public void onProviderEnabled(String provider) {
+		populateAround();		
+	}
+
+	@Override
+	public void onProviderDisabled(String provider) {
+		populateAround();
+		
 	}
 }

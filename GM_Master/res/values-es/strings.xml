@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+	<string name="app_name">Gasteizko Margolariak - Master</string>
+	<string name="app_name_notifications">GM - Master - Enviar notificacion</string>
+
+	<string name="form_text">Bienvenido a la Master app de Gasteizko Margolariak.\n\nPor favor, proporciona un nombre de usuario y un telefono antes de poder utilizar la app.\n\nEste nombre de usuario debera poder ser reconocido por otros usuarios de esta aplicacion. Solo los otros usuarios de la Master App podran verlo.</string>
+	<string name="form_hint">Nombre de usuario</string>
+	<string name="form_phone">Telefono</string>
+	<string name="form_send">Enviar</string>
+
+	<string name="noadmin">Tu cuenta no ha sido activada aun. Por favor, espera a la activacion antes de poder utilizar la app.</string>
+
+	<string name="toast_not_validated_yet">Tu cuenta no ha sido activada aun.</string>
+	<string name="toast_validated">Cuenta activada!\nAhora puedes usar las funciones de esta app.</string>
+	<string name="toast_submitted">Datos enviados. Espera a que tu cuenta sea activada.</string>
+	<string name="toast_not_submitted">Ocurrio un error al enviar los datos.</string>
+
+	<string name="toast_notification_error_title">Escribe un titulo.</string>
+	<string name="toast_notification_error_text">Escribe un texto.</string>
+	<string name="toast_notification_error_duration">La duracion de una notificacion debe estar entre 15 minutos y 48 horas.</string>
+	<string name="toast_notification_error_unauthorized">No autorizado para enviar notificaciones.</string>
+	<string name="toast_notification_submitted">Notificacion enviada.</string>
+	<string name="toast_notification_not_submitted">No se pudo enviar la localizacion.</string>
+	<string name="toast_location_reporting">Estas reportando localizacion.</string>
+	<string name="toast_location_gps">Enciende el GPS para poder reportar localizacion.</string>
+
+	<string name="location_location">Reporte de localizacion</string>
+	<string name="location_text">Localizacion reportada por:</string>
+	<string name="location_nobody">Nadie</string>
+
+	<string name="button_location">Reportar localizacion desde este dispositivo</string>
+	<string name="button_location_stop">Dejar de reportar localizacion</string>
+	<string name="button_notification">Enviar notificacion</string>
+
+	<string name="notification_title">Titulo de la notificacion</string>
+	<string name="notification_title_hint">Titulo</string>
+	<string name="notification_text">Texto de la notificacion</string>
+	<string name="notification_type">Accion</string>
+	<string name="notification_type_text">Mostrar como texto</string>
+	<string name="notification_type_gm">Abrir programa margolari</string>
+	<string name="notification_type_schedule">Abrir programa de fiestas</string>
+	<string name="notification_text_hint">Text</string>
+	<string name="notification_duration">Duracion:</string>
+	<string name="notification_h">h</string>
+	<string name="notification_h_default">1</string>
+	<string name="notification_m">m</string>
+	<string name="notification_m_default">00</string>
+	<string name="notification_scope">Enviar a:</string>
+	<string name="notification_scope_gm">Miembros de Gasteizko Margolariak</string>
+	<string name="notification_scope_all">Todos los usuarios</string>
+	<string name="notification_send">Enviar</string>
+	<string name="notification_back">Volver</string>
+
+	<string name="notif_reporting_title">Reportando localizacion</string>
+	<string name="notif_reporting">Reportando localizacion desde este dispositivo</string>
+	<string name="notif_reporting_stop_title">Se ha dejado de reportar localizacion</string>
+	<string name="notif_reporting_stop">Ya no estas reportando localizacion</string>
+	<string name="notif_reporting_override_title">Se ha dejado de reportar localizacion</string>
+	<string name="notif_reporting_override">Ya no estas reportando localizacion</string>
+	<string name="notif_reporting_gps_title">Se ha dejado de reportar localizacion</string>
+	<string name="notif_reporting_gps">Enciende el GPS y prueba de nuevo</string>
+
+</resources>

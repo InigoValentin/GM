@@ -2005,6 +2005,7 @@ containing a value of this type.
          */
         public static final int Base_Theme_AppCompat_CompactMenu=0x7f0b00de;
         /**  <item name="android:actionModeShareDrawable">?actionModeShareDrawable</item>
+ <item name="android:actionModeShareDrawable">?actionModeShareDrawable</item>
          */
         public static final int Base_Theme_AppCompat_Dialog=0x7f0b00e1;
         public static final int Base_Theme_AppCompat_Dialog_FixedSize=0x7f0b00e3;
@@ -2017,6 +2018,7 @@ containing a value of this type.
         public static final int Base_Theme_AppCompat_Light=0x7f0b00dc;
         public static final int Base_Theme_AppCompat_Light_DarkActionBar=0x7f0b00dd;
         /**  <item name="android:actionModeShareDrawable">?actionModeShareDrawable</item>
+ <item name="android:actionModeShareDrawable">?actionModeShareDrawable</item>
          */
         public static final int Base_Theme_AppCompat_Light_Dialog=0x7f0b00e2;
         public static final int Base_Theme_AppCompat_Light_Dialog_FixedSize=0x7f0b00e4;

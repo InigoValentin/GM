@@ -85,59 +85,6 @@ public class AroundLayout extends Fragment implements LocationListener{
 		super.onPause();
 		locationManager.removeUpdates(this);
 	}
-
-	/**
-	 * When the location is updated, reload the list of events. 
-	 * 
-	 * @see android.location.LocationListener#onLocationChanged(android.location.Location)
-	 */
-	@Override
-	public void onLocationChanged(Location location) {
-		double lat = location.getLatitude();
-		double lng = location.getLongitude();
-		coordinates[0] = lat;
-		coordinates[1] = lng;
-		populateAround();
-	}
-
-	@Override
-	public void onStatusChanged(String provider, int status, Bundle extras) { }
-
-	@Override
-	public void onProviderEnabled(String provider) {
-		//Check GPS status
-		LocationManager lm = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
-		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-			//Populate the activity list
-			list.setVisibility(View.VISIBLE);
-			noGps.setVisibility(View.GONE);
-			noEvents.setVisibility(View.GONE);
-			populateAround(list);
-		}
-		else{
-			list.setVisibility(View.GONE);
-			noEvents.setVisibility(View.GONE);
-			noGps.setVisibility(View.VISIBLE);
-		}
-	}
-
-	@Override
-	public void onProviderDisabled(String provider) {
-		//Check GPS status
-		LocationManager lm = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
-		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-			//Populate the activity list
-			list.setVisibility(View.VISIBLE);
-			noGps.setVisibility(View.GONE);
-			noEvents.setVisibility(View.GONE);
-			populateAround(list);
-		}
-		else{
-			list.setVisibility(View.GONE);
-			noEvents.setVisibility(View.GONE);
-			noGps.setVisibility(View.VISIBLE);
-		}
-	}
 	
 	/**
 	 * Run when the fragment is inflated.
@@ -184,9 +131,54 @@ public class AroundLayout extends Fragment implements LocationListener{
 			
 		});
 		
-		//Check GPS status
-		LocationManager lm = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
-		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+		//Set Location manager
+		locationManager = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, new LocationListener() {
+            @Override
+            public void onLocationChanged(Location location) {
+            	double lat = location.getLatitude();
+        		double lng = location.getLongitude();
+        		coordinates[0] = lat;
+        		coordinates[1] = lng;
+        		populateAround();
+            }
+            @Override
+            public void onProviderDisabled(String provider) {
+            	//Check GPS status
+        		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+        			//Populate the activity list
+        			list.setVisibility(View.VISIBLE);
+        			noGps.setVisibility(View.GONE);
+        			noEvents.setVisibility(View.GONE);
+        			populateAround(list);
+        		}
+        		else{
+        			list.setVisibility(View.GONE);
+        			noEvents.setVisibility(View.GONE);
+        			noGps.setVisibility(View.VISIBLE);
+        		}
+            }
+            @Override
+            public void onProviderEnabled(String provider) {
+            	//Check GPS status
+        		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+        			//Populate the activity list
+        			list.setVisibility(View.VISIBLE);
+        			noGps.setVisibility(View.GONE);
+        			noEvents.setVisibility(View.GONE);
+        			populateAround(list);
+        		}
+        		else{
+        			list.setVisibility(View.GONE);
+        			noEvents.setVisibility(View.GONE);
+        			noGps.setVisibility(View.VISIBLE);
+        		}
+            }
+            @Override
+            public void onStatusChanged(String provider, int status, Bundle extras) { }           
+        });
+		
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 			//Populate the activity list
 			list.setVisibility(View.VISIBLE);
 			noGps.setVisibility(View.GONE);
@@ -340,6 +332,49 @@ public class AroundLayout extends Fragment implements LocationListener{
 			}
         }
 	}
+	
+	@Override
+    public void onLocationChanged(Location location) {
+    	double lat = location.getLatitude();
+		double lng = location.getLongitude();
+		coordinates[0] = lat;
+		coordinates[1] = lng;
+		populateAround();
+    }
+    @Override
+    public void onProviderDisabled(String provider) {
+    	//Check GPS status
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+			//Populate the activity list
+			list.setVisibility(View.VISIBLE);
+			noGps.setVisibility(View.GONE);
+			noEvents.setVisibility(View.GONE);
+			populateAround(list);
+		}
+		else{
+			list.setVisibility(View.GONE);
+			noEvents.setVisibility(View.GONE);
+			noGps.setVisibility(View.VISIBLE);
+		}
+    }
+    @Override
+    public void onProviderEnabled(String provider) {
+    	//Check GPS status
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+			//Populate the activity list
+			list.setVisibility(View.VISIBLE);
+			noGps.setVisibility(View.GONE);
+			noEvents.setVisibility(View.GONE);
+			populateAround(list);
+		}
+		else{
+			list.setVisibility(View.GONE);
+			noEvents.setVisibility(View.GONE);
+			noGps.setVisibility(View.VISIBLE);
+		}
+    }
+    @Override
+    public void onStatusChanged(String provider, int status, Bundle extras) { }
 		
 }
 

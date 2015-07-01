@@ -46,6 +46,8 @@ import android.widget.TextView;
  */
 public class HomeLayout extends Fragment implements LocationListener{
 
+	//The location manager
+	LocationManager locationManager;
 	
 	//The location of the user
 	private double[] coordinates = new double[2];
@@ -84,6 +86,33 @@ public class HomeLayout extends Fragment implements LocationListener{
 		//Load the layout.
 		final View view = inflater.inflate(R.layout.fragment_layout_home, null);
 		this.v = view;
+		
+		//Set Location manager
+		locationManager = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, new LocationListener() {
+			@Override
+			public void onLocationChanged(Location location) {
+				coordinates[0] = location.getLatitude();
+				coordinates[1] = location.getLongitude();
+				updateLocation();
+				populateAround();
+			}
+
+			@Override
+			public void onStatusChanged(String provider, int status, Bundle extras) {
+				populateAround();		
+			}
+
+			@Override
+			public void onProviderEnabled(String provider) {
+				populateAround();		
+			}
+
+			@Override
+			public void onProviderDisabled(String provider) {
+				populateAround();
+			}
+		});
 		
 		//Set the title
 		((MainActivity) getActivity()).setSectionTitle(view.getContext().getString(R.string.menu_home));

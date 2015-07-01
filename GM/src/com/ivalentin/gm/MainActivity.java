@@ -232,8 +232,6 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 		//Remove title bar.
 	    this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 	    super.onCreate(savedInstanceState);
-	    //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
-	    //getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE|WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE);
 	    
 	    //Set layout.
 		setContentView(R.layout.activity_main);
@@ -380,6 +378,12 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
     		db.execSQL("CREATE TABLE IF NOT EXISTS " + GM.DB_PLACE +" (" + GM.DB_PLACE_ID + " INT, " + GM.DB_PLACE_NAME + " VARCHAR, " + GM.DB_PLACE_ADDRESS + " VARCHAR, " + GM.DB_PLACE_CP + " VARCHAR, " + GM.DB_PLACE_LATITUDE + " FLOAT, " + GM.DB_PLACE_LONGITUDE + " FLOAT);");
     		db.execSQL("CREATE TABLE IF NOT EXISTS day (id INT, name VARCHAR, price INT);");
     		db.execSQL("CREATE TABLE IF NOT EXISTS offer (id INT, name VARCHAR, days INT, price INT);");
+    		db.execSQL("CREATE INDEX id ON event(id)");
+    		db.execSQL("CREATE INDEX id ON place(id)");
+    		db.execSQL("CREATE INDEX id ON people(id)");
+    		db.execSQL("CREATE INDEX id ON day(id)");
+    		db.execSQL("CREATE INDEX id ON offer(id)");
+    		//TODO: Create indexes
     	}
     	catch (Exception ex){
     		Log.e("Error creating database", ex.toString());

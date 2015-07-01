@@ -61,6 +61,9 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	//Currently selected day
 	private int selected;
 	
+	//Indidicates official schedule
+	private int schedule;
+	
 	//Arrow buttons
 	private Button btL, btR;
 	
@@ -91,7 +94,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		
 		//Get schedule type
 		Bundle bundle = this.getArguments();
-		final int schedule = bundle.getInt(GM.SCHEDULE, GM.SECTION_SCHEDULE);
+		schedule = bundle.getInt(GM.SCHEDULE, GM.SECTION_SCHEDULE);
 		//Set the title
 		if (schedule == GM.SECTION_SCHEDULE)
 			((MainActivity) getActivity()).setSectionTitle(view.getContext().getString(R.string.menu_schedule));
@@ -123,6 +126,11 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 			public void onClick(View v) {
 				if (selected > GM.DAY_25){
 					selected --;
+					
+					//If August 4 selected and GM schedule, skip
+					if (selected == GM.DAY_4 && schedule != GM.SECTION_SCHEDULE)
+						selected --;
+					
 					String filter = ((EditText) view.findViewById(R.id.et_schedule_filter)).getText().toString();
 					populateSchedule(selected, list, schedule, filter);
 				}
@@ -133,6 +141,11 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 			public void onClick(View v) {
 				if (selected < GM.DAY_9){
 					selected ++;
+					
+					//If August 4 selected and GM schedule, skip
+					if (selected == GM.DAY_4 && schedule != GM.SECTION_SCHEDULE)
+						selected ++;
+					
 					String filter = ((EditText) view.findViewById(R.id.et_schedule_filter)).getText().toString();
 					populateSchedule(selected, list, schedule, filter);
 				}

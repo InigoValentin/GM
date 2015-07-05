@@ -7,8 +7,6 @@ import java.util.Locale;
 
 import android.util.Log;
 
-//TODO: getTimetoStart()
-//TODO: getTimeToEnd()
 
 /**
  * An event holds information about an activity of the festival
@@ -168,20 +166,24 @@ public class Event implements Comparable<Event>{
 	
 	/**
 	 * Return the time between the current time and the start of the event.
-	 * @return The time, in minutes, to the event start.
+	 * @return The time, in minutes, to the event start. A positive value indicates that the event is in the future, and a negative indicates that the event has already started.
 	 */
-	public int getTimeToStart(){
-		//TODO:
-		return 0;
+	public long getTimeToStart(){
+		Date now = new Date();
+		long dif = (start.getTime() / 60000) - (now.getTime() / 60000);
+		return dif;
 	}
 	
 	/**
 	 * Return the time between the current time and the end of the event.
-	 * @return The time, in minutes, to the event end.
+	 * @return The time, in minutes, to the event end. A positive value indicates that the event is in the future, and a negative indicates that the event has already started. If the event doesn't have an end date, it will return 0.
 	 */
-	public int getTimeToEnd(){
-		//TODO:
-		return 0;
+	public long getTimeToEnd(){
+		if (end == null)
+			return 0;
+		Date now = new Date();
+		long dif = (start.getTime() / 60000) - (now.getTime() / 60000);
+		return dif;
 	}
 	
 	/**
@@ -222,7 +224,7 @@ public class Event implements Comparable<Event>{
 		}
 		
 		//Get time to start difference
-		timeDif = getTimeToStart() - another.getTimeToStart();
+		timeDif = Math.abs(getTimeToStart()) - Math.abs(another.getTimeToStart());
 		if (getTimeToStart() > another.getTimeToStart()){
 			if (getTimeToStart() == 0)
 				timeDif = 1;

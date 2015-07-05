@@ -29,6 +29,9 @@ import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+//TODO: Icons resolution-dependentatn
+//TODO: Text color: older devices
+
 /**
  * The main Activity of the app. It's actually the only activity, and it loads other fragments.
  * 
@@ -262,7 +265,8 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 		menuIcon[5] = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_settings, null);
 		menuIcon[6] = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_about, null);
 		for (int i = 0; i < 7; i ++){
-			menuIcon[i].setBounds(0, 0, 140, 140);
+			//menuIcon[i].setBounds(0, 0, 140, 140);
+			menuIcon[i].setBounds(0, 0, (int) (menuItem[i].getTextSize() * 2.2), (int) (menuItem[i].getTextSize() * 2.2));
 			menuItem[i].setCompoundDrawables(menuIcon[i], null, null, null);
 			menuItem[i].setCompoundDrawablePadding(20);
 		}
@@ -383,7 +387,6 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
     		db.execSQL("CREATE INDEX id ON people(id)");
     		db.execSQL("CREATE INDEX id ON day(id)");
     		db.execSQL("CREATE INDEX id ON offer(id)");
-    		//TODO: Create indexes
     	}
     	catch (Exception ex){
     		Log.e("Error creating database", ex.toString());

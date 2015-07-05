@@ -66,7 +66,7 @@
 	<string name="around_no_events_button">Ver el programa de fiestas</string>
 	<string name="around_no_gps">Enciende el GPS de tu telefono para poder localizar eventos a tu alrededor.</string>
 	<string name="around_no_gps_button">Abrir ajustes</string>
-	<string name="around_distance">A %1$d %2$s de ti (about %3$d minutes walking)</string>
+	<string name="around_distance">A %1$s %2$s de ti (about %3$s minutes walking)</string>
 
 
 	<!-- Home section strings -->

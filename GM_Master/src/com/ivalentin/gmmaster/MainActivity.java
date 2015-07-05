@@ -251,7 +251,7 @@ public class MainActivity extends Activity {
 								    //Start listening for new location
 								    LocationAlarm.setOnNewLocationListener(onNewLocationListener);
 									
-								    //TODO: Remove notifications
+								    //Remove notifications
 								    NotificationManager nMgr = (NotificationManager) v.getContext().getSystemService(Context.NOTIFICATION_SERVICE);
 							        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING_GPS);
 							        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING_STOP);

@@ -52,18 +52,6 @@
 
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/tv_about_license"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/ll_about_header"
-        android:layout_marginEnd="5dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
-        android:layout_marginStart="5dp"
-        android:layout_marginTop="30dp"
-        android:text="@string/about_license" />
-
     <WebView
         android:id="@+id/wv_about_code"
         android:layout_width="fill_parent"
@@ -74,5 +62,27 @@
         android:layout_marginRight="10dp"
         android:layout_marginStart="10dp"
         android:background="@color/about_code_background" />
+
+    <com.ivalentin.gm.CustomScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fadingEdge="vertical"
+	    android:fadingEdgeLength="30dp"
+	    android:requiresFadingEdge="vertical"
+        android:layout_above="@id/wv_about_code"
+        android:layout_below="@id/ll_about_header" >
+
+        <TextView
+            android:id="@+id/tv_about_license"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="5dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="30dp"
+            android:text="@string/about_license" />
+
+    </com.ivalentin.gm.CustomScrollView>
 
 </RelativeLayout>

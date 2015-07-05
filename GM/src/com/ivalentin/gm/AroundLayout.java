@@ -31,6 +31,8 @@ import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+//TODO: GPS and no events: dont display both messages at the same time
+
 /**
  * Layout that show event close to the user in both time and space.
  * 
@@ -140,7 +142,19 @@ public class AroundLayout extends Fragment implements LocationListener{
         		double lng = location.getLongitude();
         		coordinates[0] = lat;
         		coordinates[1] = lng;
-        		populateAround();
+        		//Check GPS status
+        		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+        			//Populate the activity list
+        			list.setVisibility(View.VISIBLE);
+        			noGps.setVisibility(View.GONE);
+        			noEvents.setVisibility(View.GONE);
+        			populateAround(list);
+        		}
+        		else{
+        			list.setVisibility(View.GONE);
+        			noEvents.setVisibility(View.GONE);
+        			noGps.setVisibility(View.VISIBLE);
+        		}
             }
             @Override
             public void onProviderDisabled(String provider) {
@@ -339,7 +353,19 @@ public class AroundLayout extends Fragment implements LocationListener{
 		double lng = location.getLongitude();
 		coordinates[0] = lat;
 		coordinates[1] = lng;
-		populateAround();
+		//Check GPS status
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+			//Populate the activity list
+			list.setVisibility(View.VISIBLE);
+			noGps.setVisibility(View.GONE);
+			noEvents.setVisibility(View.GONE);
+			populateAround(list);
+		}
+		else{
+			list.setVisibility(View.GONE);
+			noEvents.setVisibility(View.GONE);
+			noGps.setVisibility(View.VISIBLE);
+		}
     }
     @Override
     public void onProviderDisabled(String provider) {

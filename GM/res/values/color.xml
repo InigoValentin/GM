@@ -7,20 +7,18 @@
     <!-- Basic colors -->
     
     <color name="black">#000000</color>
-    <color name="dark_gray">#444444</color>
     <color name="white">#ffffff</color>
     
+    
+    <!-- Text colors -->
+	<color name="text_title">#333333</color>
     
     <!-- Backgrounds for several sections -->
     
     <color name="background_app">#ccffcc</color>
     <color name="background_app_gradient">#ffffff</color>
-    <color name="background_sections">#88ee66</color>
     <color name="background_menu">#449933</color>
     <color name="background_menu_gradient">#99ff77</color>
-    
-    <color name="background_around_row_even">#bbeebb</color>
-    <color name="background_around_row_odd">#aaddaa</color>
     
     <color name="background_notification">#000000</color>
     

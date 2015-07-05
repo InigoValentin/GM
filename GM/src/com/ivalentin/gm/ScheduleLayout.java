@@ -41,10 +41,6 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-//TODO: On location changed, if dialog is show, update distance
-//TODO: Check GPS status before showing map in dialog
-//TODO: On GPS state change, hide or show map and hide or show distances
-
 /**
  * Fragment to be inflated showing the festivals schedule.
  * Contains a date selector and a ScrollView with all the activities for the day.
@@ -101,14 +97,24 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		else
 			((MainActivity) getActivity()).setSectionTitle(view.getContext().getString(R.string.menu_gm_schedule));
 		
+		
+		//TODO Uncoment when test is over
 		//Populate days array
-		days[GM.DAY_25] = new String[] {"2015-07-25", "25", getString(R.string.month_07), getString(R.string.day_title_25)};
+		/*days[GM.DAY_25] = new String[] {"2015-07-25", "25", getString(R.string.month_07), getString(R.string.day_title_25)};
 		days[GM.DAY_4] = new String[] {"2015-08-04", "4", getString(R.string.month_08), getString(R.string.day_title_4)};
 		days[GM.DAY_5] = new String[] {"2015-08-05", "5", getString(R.string.month_08), getString(R.string.day_title_5)};
 		days[GM.DAY_6] = new String[] {"2015-08-06", "6", getString(R.string.month_08), getString(R.string.day_title_6)};
 		days[GM.DAY_7] = new String[] {"2015-08-07", "7", getString(R.string.month_08), getString(R.string.day_title_7)};
 		days[GM.DAY_8] = new String[] {"2015-08-08", "8", getString(R.string.month_08), getString(R.string.day_title_8)};
-		days[GM.DAY_9] = new String[] {"2015-08-09", "9", getString(R.string.month_08), getString(R.string.day_title_9)};
+		days[GM.DAY_9] = new String[] {"2015-08-09", "9", getString(R.string.month_08), getString(R.string.day_title_9)};*/
+		
+		days[GM.DAY_25] = new String[] {"2015-06-25", "25", getString(R.string.month_07), getString(R.string.day_title_25)};
+		days[GM.DAY_4] = new String[] {"2015-07-04", "4", getString(R.string.month_08), getString(R.string.day_title_4)};
+		days[GM.DAY_5] = new String[] {"2015-07-05", "5", getString(R.string.month_08), getString(R.string.day_title_5)};
+		days[GM.DAY_6] = new String[] {"2015-07-06", "6", getString(R.string.month_08), getString(R.string.day_title_6)};
+		days[GM.DAY_7] = new String[] {"2015-07-07", "7", getString(R.string.month_08), getString(R.string.day_title_7)};
+		days[GM.DAY_8] = new String[] {"2015-07-08", "8", getString(R.string.month_08), getString(R.string.day_title_8)};
+		days[GM.DAY_9] = new String[] {"2015-07-09", "9", getString(R.string.month_08), getString(R.string.day_title_9)};
 		
 		//Assign parent layout
 		final LinearLayout list = (LinearLayout) view.findViewById(R.id.ll_schedule_list);
@@ -218,7 +224,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
         
         //Icon next to the location text
         Drawable icon = ResourcesCompat.getDrawable(getResources(), R.drawable.pinpoint, null);
-        icon.setBounds(0, 0, 80, 80);
+        //icon.setBounds(0, 0, 80, 80);
 		
 		//Set date selector texts
 		tvDayNumber.setText(days[selected][1]);
@@ -243,7 +249,6 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		//Read from database
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
 		Cursor cursor;
-		//TODO: Dates! not from 00:00 to 23:59, but 06:00 to 05:59 of the next day
 		Calendar cal;
 		Date maxDate, minDate;
 		String maxDateStr, minDateStr;
@@ -283,6 +288,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
         	tvRowDesc.setText(cursor.getString(2));
         	tvRowPlace = (TextView) entry.findViewById(R.id.tv_row_schedule_place);
         	tvRowPlace.setText(cursor.getString(5));
+        	icon.setBounds(0, 0, (int) (tvRowPlace.getTextSize() * 1.5), (int) (tvRowPlace.getTextSize() * 1.5));
         	tvRowPlace.setCompoundDrawables(icon, null, null, null);
         	tvRowTime = (TextView) entry.findViewById(R.id.tv_row_schedule_time);
         	String tm = cursor.getString(6).substring(cursor.getString(6).length() - 8, cursor.getString(6).length() - 3);

@@ -1,5 +1,6 @@
 package com.ivalentin.gm;
 
+import java.text.DecimalFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -221,9 +222,11 @@ public class HomeLayout extends Fragment implements LocationListener{
 				
 				//Icon options
 				Drawable dayIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.price_day, null);
-				dayIcon.setBounds(0, 0, 70, 70);
+				//dayIcon.setBounds(0, 0, 70, 70);
+				dayIcon.setBounds(0, 0, (int) (tvDayName[0].getTextSize() * 1.5), (int) (tvDayName[0].getTextSize() * 1.5));
 				Drawable offerIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.price_offer, null);
-				offerIcon.setBounds(0, 0, 70, 70);
+				//offerIcon.setBounds(0, 0, 70, 70);
+				offerIcon.setBounds(0, 0, (int) (tvOfferName[0].getTextSize() * 1.5), (int) (tvOfferName[0].getTextSize() * 1.5));
 				
 				//Set TextViews for days
 				int i = 0;
@@ -274,7 +277,7 @@ public class HomeLayout extends Fragment implements LocationListener{
 	    cal.setTime(date);
 	    cal.add(Calendar.HOUR_OF_DAY, 24); 
 	    maxDate = cal.getTime();
-		cursor = db.rawQuery("SELECT event.id, event.name, event.description, event.place, place.id, place.name, event.start FROM event, place WHERE schedule = 1 AND place.id = event.place AND start BETWEEN '" + dateFormat.format(date) + "' AND '" + dateFormat.format(maxDate) + "' ORDER BY start DESC LIMIT 2;", null);
+		cursor = db.rawQuery("SELECT event.id, event.name, event.description, event.place, place.id, place.name, event.start FROM event, place WHERE schedule = 1 AND place.id = event.place AND start BETWEEN '" + dateFormat.format(date) + "' AND '" + dateFormat.format(maxDate) + "' ORDER BY start LIMIT 2;", null);
 		if (cursor.getCount() == 0){
 			llSchedule.setVisibility(View.GONE);
 		}
@@ -299,7 +302,8 @@ public class HomeLayout extends Fragment implements LocationListener{
 		        		tvRowTime.setText(view.getContext().getString(R.string.today) + " " + timeFormat.format(tm));
 		        	else
 		        		tvRowTime.setText(view.getContext().getString(R.string.tomorrow) + " " + timeFormat.format(tm));
-				} catch (ParseException e) {
+				}
+				catch (ParseException e) {
 					Log.e("Date error", e.toString());
 				}
 	        	
@@ -314,7 +318,7 @@ public class HomeLayout extends Fragment implements LocationListener{
 	    cal.setTime(date);
 	    cal.add(Calendar.HOUR_OF_DAY, 24); 
 	    maxDate = cal.getTime();
-		cursor = db.rawQuery("SELECT event.id, event.name, event.description, event.place, place.id, place.name, event.start FROM event, place WHERE gm = 1 AND place.id = event.place AND start BETWEEN '" + dateFormat.format(date) + "' AND '" + dateFormat.format(maxDate) + "' ORDER BY start DESC LIMIT 2;", null);
+		cursor = db.rawQuery("SELECT event.id, event.name, event.description, event.place, place.id, place.name, event.start FROM event, place WHERE gm = 1 AND place.id = event.place AND start BETWEEN '" + dateFormat.format(date) + "' AND '" + dateFormat.format(maxDate) + "' ORDER BY start LIMIT 2;", null);
 		if (cursor.getCount() == 0){
 			llGm.setVisibility(View.GONE);
 		}
@@ -339,7 +343,8 @@ public class HomeLayout extends Fragment implements LocationListener{
 		        		tvRowTime.setText(view.getContext().getString(R.string.today) + " " + timeFormat.format(tm));
 		        	else
 		        		tvRowTime.setText(view.getContext().getString(R.string.tomorrow) + " " + timeFormat.format(tm));
-				} catch (ParseException e) {
+				}
+				catch (ParseException e) {
 					Log.e("Date error", e.toString());
 				}
 	        	
@@ -500,7 +505,6 @@ public class HomeLayout extends Fragment implements LocationListener{
 		    	
 		    	if (distance > 1000d)
 		    		tvLocation.setText(String.format(v.getContext().getString(R.string.home_section_location_text_1), String.format("%.2f", distance / 1000)  + " " + v.getContext().getString(R.string.kilometers), Math.round(distance * 0.012)));
-	        		//tvLocation.setText("Distance: " + (distance / 1000)  + " km   Time walking: " + Math.round(distance * 0.012) + " '");
 		    	else
 		    		tvLocation.setText(String.format(v.getContext().getString(R.string.home_section_location_text_1), distance.intValue()  + " " + v.getContext().getString(R.string.meters), Math.round(distance * 0.012)));
 
@@ -525,6 +529,7 @@ public class HomeLayout extends Fragment implements LocationListener{
 		LayoutInflater factory = LayoutInflater.from(getActivity());
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd-", Locale.US);
 		Date date = new Date();
 		SQLiteDatabase db;
 		Cursor cursor;
@@ -579,23 +584,48 @@ public class HomeLayout extends Fragment implements LocationListener{
 			if (eventList.size() == 0)
 				llAround.setVisibility(View.GONE);
 			else{
-				TextView tvRowName, tvRowDescription, tvRowPlace, tvRowTime;
+				TextView tvRowName, tvRowDescription, tvRowPlace, tvRowTime, tvRowDistance;
+				int distance;
+				DecimalFormat df = new DecimalFormat("#.#"); 
 				Collections.sort(eventList);
 				for(int i = 0; i < eventList.size() && i < 2; i++){
 		        	
 		        	//Create a new row
-		        	entry = (LinearLayout) factory.inflate(R.layout.row_around, null);
+		        	entry = (LinearLayout) factory.inflate(R.layout.row_home_around, null);
 		        	
-		        	
-		        	//Locate row elements and populate them.
-		        	tvRowName = (TextView) entry.findViewById(R.id.tv_row_home_schedule_title);
+		        	//Set name
+		        	tvRowName = (TextView) entry.findViewById(R.id.tv_row_home_around_title);
 		        	tvRowName.setText(eventList.get(i).getName());
-		        	tvRowDescription = (TextView) entry.findViewById(R.id.tv_row_home_schedule_description);
+		        	
+		        	//Set description
+		        	tvRowDescription = (TextView) entry.findViewById(R.id.tv_row_home_around_description);
 		        	tvRowDescription.setText(eventList.get(i).getDescription());
-		        	tvRowPlace = (TextView) entry.findViewById(R.id.tv_row_home_schedule_place);
+		        	
+		        	//Set place
+		        	tvRowPlace = (TextView) entry.findViewById(R.id.tv_row_home_around_address);
 		        	tvRowPlace.setText(eventList.get(i).getPlace());
-		        	tvRowTime = (TextView) entry.findViewById(R.id.tv_row_home_schedule_time);
-		        	tvRowTime.setText(timeFormat.format(eventList.get(i).getStart()));
+		        	
+		        	//Set distance
+		        	tvRowDistance = (TextView) entry.findViewById(R.id.tv_row_home_around_distance);
+		        	distance = eventList.get(i).getDistance(coordinates);
+		        	if (distance < 1000)
+		        		tvRowDistance.setText(String.format(getResources().getString(R.string.around_distance), Math.round(distance), getResources().getString(R.string.meters), Math.round(distance * 0.012)));
+		        	else
+		        		tvRowDistance.setText(String.format(getResources().getString(R.string.around_distance), df.format(distance / 1000), getResources().getString(R.string.kilometers), Math.round(distance * 0.012)));
+		        	
+		        	//Set time
+		        	tvRowTime = (TextView) entry.findViewById(R.id.tv_row_home_around_time);
+		        	Date tm;
+					try {
+						tm = eventList.get(i).getStart();
+						if (dayFormat.format(tm).equals(dayFormat.format(date)))
+			        		tvRowTime.setText(v.getContext().getString(R.string.today) + " " + timeFormat.format(tm));
+			        	else
+			        		tvRowTime.setText(v.getContext().getString(R.string.tomorrow) + " " + timeFormat.format(tm));
+					}
+					catch (Exception e) {
+						Log.e("Date error", e.toString());
+					}
 		        	
 		        	//Add the entry to the list.
 		        	llAroundContent.addView(entry);

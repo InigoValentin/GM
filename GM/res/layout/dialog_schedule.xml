@@ -23,6 +23,7 @@
             android:layout_marginTop="5dp"
             android:layout_weight=".5"
             android:background="@drawable/arrowbutton"
+            android:minHeight="40dp"
             android:text="@string/schedule_close" />
 
     </LinearLayout>
@@ -84,8 +85,8 @@
                 android:layout_height="fill_parent"
                 android:adjustViewBounds="true"
                 android:contentDescription="@string/arrow_right"
-                android:maxHeight="60dp"
-                android:maxWidth="60dp"
+                android:maxHeight="50dp"
+                android:maxWidth="50dp"
                 android:scaleType="centerInside"
                 android:src="@drawable/pinpoint" />
 

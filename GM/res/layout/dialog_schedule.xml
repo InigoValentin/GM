@@ -42,6 +42,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:layout_marginTop="5dp"
+            android:textColor="@color/text_dialog"
             android:textSize="30sp"
             android:textStyle="bold" />
 
@@ -50,28 +51,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
+            android:textColor="@color/text_dialog"
             android:textSize="14sp" />
 
-        <LinearLayout
-            android:layout_width="match_parent"
+        <TextView
+            android:id="@+id/tv_dialog_schedule_date"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp" >
+            android:textColor="@color/text_dialog"
+            android:textSize="14sp" />
 
-            <TextView
-                android:id="@+id/tv_dialog_schedule_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="14sp" />
-
-            <TextView
-                android:id="@+id/tv_dialog_schedule_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:textSize="14sp" />
-
-        </LinearLayout>
+        <TextView
+            android:id="@+id/tv_dialog_schedule_time"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp"
+            android:textColor="@color/text_dialog"
+            android:textSize="14sp" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -99,12 +96,14 @@
                     android:id="@+id/tv_dialog_schedule_place"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/text_dialog"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/tv_dialog_schedule_address"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textColor="@color/text_dialog"
                     android:textSize="12sp" />
 
             </LinearLayout>

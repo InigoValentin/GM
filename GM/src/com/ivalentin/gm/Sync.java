@@ -147,6 +147,10 @@ public class Sync extends AsyncTask<Void, Void, Void> {
 					db.execSQL("DELETE FROM " + GM.DB_PEOPLE + ";");
 					Log.d("Sync query", "DELETE FROM " + GM.DB_PLACE + ";");
 					db.execSQL("DELETE FROM " + GM.DB_PLACE + ";");
+					Log.d("Sync query", "DELETE FROM day;");
+					db.execSQL("DELETE FROM day;");
+					Log.d("Sync query", "DELETE FROM offer;");
+					db.execSQL("DELETE FROM offer;");
 					for(int i = 0; i < query.size(); i++){
 						Log.d("Sync query", query.get(i));
 						db.execSQL(query.get(i));

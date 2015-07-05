@@ -19,7 +19,7 @@
 	<string name="menu_schedule">Programa de fiestas</string>
 	<string name="menu_gm_schedule">Programa Margolari</string>
 	<string name="menu_around">Cerca de mi</string>
-	<string name="menu_location">Encuentranos</string>
+	<string name="menu_location">Encuéntranos</string>
 	<string name="menu_settings">Ajustes</string>
 	<string name="menu_about">Acerca de</string>
 
@@ -43,9 +43,9 @@
 	<!-- "Titles" for days -->
 
 	<string name="day_title_25">Santiago</string>
-	<string name="day_title_4">Celedon</string>
+	<string name="day_title_4">Celedón</string>
 	<string name="day_title_5">La Blanca</string>
-	<string name="day_title_6">El ecuador</string>
+	<string name="day_title_6">Aniversario Margolari</string>
 	<string name="day_title_7">Celedon Txiki</string>
 	<string name="day_title_8">Blusa Veterano</string>
 	<string name="day_title_9">Despedida</string>
@@ -55,18 +55,18 @@
 
 	<string name="about_copyright">Copyright 2015 @Iñigo Valentin</string>
 	<string name="about_email">i@inigovalentin.com</string>
-	<string name="about_license">Este programa es software libre. Usted puede distribuirlo y modificarlo de acuerdo con los terminos de la GNU General Public License version 3 publicada por la Free Software Foundation.\n\nEste programa se distrubuye con la espereanza de que sea útil, pero SIN NINGUNA GARANTIA. Consulte la GNU General Public License para mas informacion en http://www.gnu.org/licenses/.\n\nEl nombre "Gasteizko Margolariak" y su logotipo son propiedad de Gasteizko Margolariak.</string>
-	<string name="about_code">&lt;div style="background-color:#bbbbbb;padding:6px;border-radius:5px;border-style:solid;border-width:2px;border-color:#333333;text-align:center;">Puedes ver y descargar el codigo fuente de esta aplicacion en &lt;a href="https://github.com/Seavenois/GM">Github&lt;/a>&lt;/div></string>
+	<string name="about_license">Este programa es software libre. Usted puede distribuirlo y modificarlo de acuerdo con los términos de la GNU General Public License versión 3 publicada por la Free Software Foundation.\n\nEste programa se distrubuye con la espereanza de que sea útil, pero SIN NINGUNA GARANTIA. Consulte la GNU General Public License para más informacion en http://www.gnu.org/licenses/.\n\nEl nombre "Gasteizko Margolariak" y su logotipo son propiedad de Gasteizko Margolariak.</string>
+	<string name="about_code">&lt;div style="background-color:#bbbbbb;padding:6px;border-radius:5px;border-style:solid;border-width:2px;border-color:#333333;text-align:center;">Puedes ver y descargar el código fuente de esta aplicación en &lt;a href="https://github.com/Seavenois/GM">Github&lt;/a>&lt;/div></string>
 
 
 	<!-- Around section string -->
 	
 	<string name="around_no_events_0">No hay eventos proximamente.</string>
-	<string name="around_no_events_1">Segun se acerquen las fiestas, aqui iran apareceido actividades cerca de ti!</string>
+	<string name="around_no_events_1">Según se acerquen las fiestas, aquí irán apareceido actividades cerca de ti!</string>
 	<string name="around_no_events_button">Ver el programa de fiestas</string>
-	<string name="around_no_gps">Enciende el GPS de tu telefono para poder localizar eventos a tu alrededor.</string>
+	<string name="around_no_gps">Enciende el GPS de tu teléfono para poder localizar eventos a tu alrededor.</string>
 	<string name="around_no_gps_button">Abrir ajustes</string>
-	<string name="around_distance">A %1$s %2$s de ti (about %3$s minutes walking)</string>
+	<string name="around_distance">A %1$s %2$s de ti (%3$s minutos andando)</string>
 
 
 	<!-- Home section strings -->
@@ -74,27 +74,27 @@
 	<string name="home_section_schedule">Actividades en la ciudad</string>
 	<string name="home_section_gm">Actividades de Margolariak</string>
 	<string name="home_section_around">Cerca de mi</string>
-	<string name="home_section_location">Encuentranos</string>
-	<string name="home_section_location_text_0">Gasteizko Margolariak esta cerca!</string>
+	<string name="home_section_location">Encuéntranos</string>
+	<string name="home_section_location_text_0">Gasteizko Margolariak está cerca!</string>
 	<string name="home_section_location_text_1">Están a solo %1$s de ti! (Unos %2$d minutos andando)</string>
-	<string name="home_section_social">Siguenos</string>
+	<string name="home_section_social">Síguenos</string>
 	<string name="home_section_join">Hazte Margolari</string>
 	<string name="home_section_schedule_see">Ver programa</string>
 	<string name="home_section_gm_see">Ver todas</string>
-	<string name="home_section_around_see">Ver mas</string>
+	<string name="home_section_around_see">Ver más</string>
 	<string name="home_section_location_see">Mapa</string>
 	<string name="home_section_social_see">Síguenos</string>
 	<string name="home_section_join_see">Precios</string>
-	<string name="home_section_join_header">Unete a Gasteizko Margolariak por el mejor precio!</string>
+	<string name="home_section_join_header">Únete a Gasteizko Margolariak por el mejor precio!</string>
 	<string name="home_section_join_text">Escoge días sueltos o elige nuestros packs en oferta!</string>
-	<string name="home_section_join_footer">Mira los precios y elige la opcion que mejor se adapte a ti.</string>
+	<string name="home_section_join_footer">Mira los precios y elige la opción que mejor se adapte a ti.</string>
 
 	
 	<!-- Prices dialog strings -->
 
 	<string name="prices_title">Precios</string>
 	<string name="prices_close">Cerrar</string>
-	<string name="prices_section_days">Dias sueltos</string>
+	<string name="prices_section_days">Días sueltos</string>
 	<string name="prices_section_packs">Packs de ofertas</string>
 	<string name="prices_section_calculator">Calculadora de precios</string>
 	<string name="prices_section_howto">Como pagar</string>
@@ -104,14 +104,14 @@
 	<string name="prices_day_name_3">7 de agosto</string>
 	<string name="prices_day_name_4">8 de agosto</string>
 	<string name="prices_day_name_5">9 de agosto</string>
-	<string name="prices_calculator">Elige los dias que te interesen. Los descuentos se aplicaran automaticamente.</string>
+	<string name="prices_calculator">Elige los días que te interesen. Los descuentos se aplicarán automáticamente.</string>
 	<string name="prices_total">Total: </string>
 	<string name="prices_total_0">Total: 0€</string>
-	<string name="prices_howto_0">Deberas hacer un ingreso en la cuenta 2095 3140 50 9112766611 de Kutxabank indicando tu nombre completo y los dias que has elegido.</string>
-	<string name="prices_howto_1">p.e.: Jhon Smith 5, 6, 9</string>
-	<string name="prices_howto_2">Si optas por los packs de 5 o 6 dias, no es necesario indicar los dias, bastara con tu nombre completo.</string>
-	<string name="prices_howto_3">Los pagos para el dia de Santiago (25 de julio) deberan realizarse antes del 22 de julio.</string>
-	<string name="prices_howto_4">Los pagos para fiestas de la blanca (del 4 al 9 de Agosto) deberan realizarse antes del 1 de agosto.</string>
+	<string name="prices_howto_0">Deberás hacer un ingreso en la cuenta 3035 0012 71 0120111936 de la Caja Laboral indicando tu nombre completo y los días que has elegido.</string>
+	<string name="prices_howto_1">p.e.: Kepa Barrenengoetxea 5, 6, 9</string>
+	<string name="prices_howto_2">Si optas por los packs de 5 o 6 días, no es necesario indicar los días, bastará con tu nombre completo.</string>
+	<string name="prices_howto_3">Los pagos para el día de Santiago (25 de julio) deberán realizarse antes del 22 de julio.</string>
+	<string name="prices_howto_4">Los pagos para fiestas de La Blanca (del 4 al 9 de Agosto) deberán realizarse antes del 1 de agosto.</string>
 
 
 	<!-- Settings section strings -->
@@ -129,16 +129,16 @@
 	<string name="settings_account_gm_off">No soy Margolari</string>
 	<string name="settings_account_name">Nombre</string>
 	<string name="settings_account_message_title">Nombre de usuario</string>
-	<string name="settings_account_message_text">Introduce un nombre de usuario para ayudarnos a ofrecerte mejores actividades.</string>
+	<string name="settings_account_message_text">Introduce un nombre de usuario para ayudarnos a ofrecerte actividades más interesantes.</string>
 	<string name="settings_account_message_save">Guardar</string>
 	<string name="settings_account_message_cancel">Cancelar</string>
 	<string name="settings_account_unset"> </string>
-	<string name="settings_account_name_disclaimer">Blablabla</string>
+	<string name="settings_account_name_disclaimer">No publicaremos ni compartiremos tu nombre o información asociada a él con nadie.</string>
 
 
 	<!-- Location section strings -->
 
-	<string name="location_not_reporting">Gasteizko Margolariak no esta compartiendo su ubicación en estos momentos.</string>
+	<string name="location_not_reporting">Gasteizko Margolariak no está compartiendo su ubicación en estos momentos.</string>
 	<string name="location_now">Pero, según su programa, puedes encontrarles ahora en %1$s.</string>
 	<string name="location_today">Pero, según su programa, puedes encontrarles hoy a las %1$s en %2$s.</string>
 	<string name="location_tomorrow">Pero, según su programa, puedes encontrarles mañana a las %1$s en %2$s.</string>
@@ -168,7 +168,7 @@
 
 	
 	<!-- Misc strings -->
-	<string name="kilometers">kilometros</string>
+	<string name="kilometers">kilómetros</string>
 	<string name="meters">metros</string>
 	<string name="eur">€</string>
 	

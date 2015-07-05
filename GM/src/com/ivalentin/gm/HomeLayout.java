@@ -232,6 +232,7 @@ public class HomeLayout extends Fragment implements LocationListener{
 				int i = 0;
 				cursor = db.rawQuery("SELECT name, price FROM day ORDER BY id;", null);
 				while (cursor.moveToNext() && i < 6){
+					Log.e("DAY", cursor.getString(0));
 					tvDayName[i].setText(cursor.getString(0));
 					tvDayName[i].setCompoundDrawables(dayIcon, null, null, null);
 					tvDayName[i].setCompoundDrawablePadding(5);

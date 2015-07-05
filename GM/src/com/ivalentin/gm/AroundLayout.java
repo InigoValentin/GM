@@ -237,7 +237,7 @@ public class AroundLayout extends Fragment implements LocationListener{
         LayoutInflater factory = LayoutInflater.from(getActivity());
         
         //TextViews in each row
-        TextView tvRowTitle, tvRowDescription, tvRowAddress, tvRowDistance;
+        TextView tvRowTitle, tvRowDescription, tvRowAddress, tvRowDistance, tvRowTime;
         
         //Icon next to the location text
         Drawable icon = ResourcesCompat.getDrawable(getResources(), R.drawable.pinpoint, null);
@@ -254,6 +254,8 @@ public class AroundLayout extends Fragment implements LocationListener{
         double distance;
         Calendar cal;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd-", Locale.US);
 		Date date = new Date();
 		Date startMinus30, endMinus15, startPlus30;
 		DecimalFormat df = new DecimalFormat("#.#"); 
@@ -340,6 +342,20 @@ public class AroundLayout extends Fragment implements LocationListener{
 	        	}
 	        	else
 	        		tvRowDistance.setText(String.format(getResources().getString(R.string.around_distance), df.format(distance / 1000), getResources().getString(R.string.kilometers), Math.round(distance * 0.012)));
+	        	
+	        	//Set time
+	        	tvRowTime = (TextView) entry.findViewById(R.id.tv_row_around_time);
+	        	Date tm;
+				try {
+					tm = eventList.get(i).getStart();
+					if (dayFormat.format(tm).equals(dayFormat.format(date)))
+		        		tvRowTime.setText(view.getContext().getString(R.string.today) + " " + timeFormat.format(tm));
+		        	else
+		        		tvRowTime.setText(view.getContext().getString(R.string.tomorrow) + " " + timeFormat.format(tm));
+				}
+				catch (Exception e) {
+					Log.e("Date error", e.toString());
+				}
 	        	
 	        	//Add the entry to the list.
 	        	list.addView(entry);

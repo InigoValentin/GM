@@ -168,8 +168,15 @@
 
 
 	<!-- Misc strings -->
+	
 	<string name="kilometers">kilometers</string>
 	<string name="meters">meters</string>
 	<string name="eur">€</string>
 
+	
+	<!-- Notification dialog strings -->
+	
+	<string name="notification_close">Close</string>
+	<string name="notification_action_schedule">Open festival schedule</string>
+	<string name="notification_action_gm">Open Margolariak Schedule</string>
 </resources>

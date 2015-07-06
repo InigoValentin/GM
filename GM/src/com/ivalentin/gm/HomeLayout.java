@@ -49,6 +49,7 @@ public class HomeLayout extends Fragment implements LocationListener{
 
 	//The location manager
 	LocationManager locationManager;
+	Location listener;
 	
 	//The location of the user
 	private double[] coordinates = new double[2];
@@ -87,33 +88,10 @@ public class HomeLayout extends Fragment implements LocationListener{
 		//Load the layout.
 		final View view = inflater.inflate(R.layout.fragment_layout_home, null);
 		this.v = view;
-		
+				
 		//Set Location manager
 		locationManager = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, new LocationListener() {
-			@Override
-			public void onLocationChanged(Location location) {
-				coordinates[0] = location.getLatitude();
-				coordinates[1] = location.getLongitude();
-				updateLocation();
-				populateAround();
-			}
-
-			@Override
-			public void onStatusChanged(String provider, int status, Bundle extras) {
-				populateAround();		
-			}
-
-			@Override
-			public void onProviderEnabled(String provider) {
-				populateAround();		
-			}
-
-			@Override
-			public void onProviderDisabled(String provider) {
-				populateAround();
-			}
-		});
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, this);
 		
 		//Set the title
 		((MainActivity) getActivity()).setSectionTitle(view.getContext().getString(R.string.menu_home));
@@ -527,7 +505,7 @@ public class HomeLayout extends Fragment implements LocationListener{
 	private void populateAround(){
 		Calendar cal;
 		LinearLayout entry;
-		LayoutInflater factory = LayoutInflater.from(getActivity());
+		LayoutInflater factory = LayoutInflater.from(v.getContext());
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
 		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd-", Locale.US);
@@ -539,8 +517,7 @@ public class HomeLayout extends Fragment implements LocationListener{
 		Event event;
 		
 		//Check GPS status
-		LocationManager lm = (LocationManager) v.getContext().getSystemService(Context.LOCATION_SERVICE);
-		if (lm.isProviderEnabled(LocationManager.GPS_PROVIDER)){
+		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 		
 			db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
 			cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host FROM event, place WHERE event.place = place.id;", null);
@@ -663,5 +640,17 @@ public class HomeLayout extends Fragment implements LocationListener{
 	public void onProviderDisabled(String provider) {
 		populateAround();
 		
+	}
+	
+	@Override
+	public void onPause(){
+		locationManager.removeUpdates(this);
+		super.onPause();
+	}
+	
+	@Override
+	public void onResume(){
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, this);
+		super.onResume();
 	}
 }

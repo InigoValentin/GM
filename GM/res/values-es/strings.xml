@@ -168,8 +168,16 @@
 
 	
 	<!-- Misc strings -->
+	
 	<string name="kilometers">kilómetros</string>
 	<string name="meters">metros</string>
 	<string name="eur">€</string>
+	
+	
+	<!-- Notification dialog strings -->
+	
+	<string name="notification_close">Cerrar</string>
+	<string name="notification_action_schedule">Ver programa de fiestas</string>
+	<string name="notification_action_gm">Ver programa Margolari</string>
 	
 </resources>

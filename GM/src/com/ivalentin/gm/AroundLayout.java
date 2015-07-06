@@ -213,7 +213,7 @@ public class AroundLayout extends Fragment implements LocationListener{
 	 * Populates the list of activities around.
 	 * 
 	 */
-	private void populateAround(){
+	public void populateAround(){
 		LinearLayout list = (LinearLayout) this.getView().findViewById(R.id.ll_around_list);
 		populateAround(list);
 	}

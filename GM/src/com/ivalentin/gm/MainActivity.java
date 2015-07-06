@@ -10,9 +10,8 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.res.ResourcesCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.annotation.SuppressLint;
-import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
@@ -25,12 +24,10 @@ import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ProgressBar;
 import android.widget.TextView;
-
-//TODO: Icons resolution-dependentatn
-//TODO: Text color: older devices
 
 /**
  * The main Activity of the app. It's actually the only activity, and it loads other fragments.
@@ -51,9 +48,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	
 	//GPS coordinates provider
 	private String provider;
-	
-	private byte sect;
-	
+		
 	/**
 	 * Loads a section in the main screen.
 	 * 
@@ -209,6 +204,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 		
 		// Get the location manager.
 	    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+	    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, this);
 	    // Define the criteria how to select the location provider: use default.
 	    Criteria criteria = new Criteria();
 	    provider = locationManager.getBestProvider(criteria, false);
@@ -321,37 +317,72 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 		sync();
 		
 		//Load initial section
-		sect = GM.SECTION_HOME;
+		loadSection(GM.SECTION_HOME, false);
 		
 		//If the intent had extras, do something
 		if (actionText != null){
-			String title;
-			if (actionTitle == null)
-				title = getString(R.string.app_name);
-			else
-				title = actionTitle;
-			new AlertDialog.Builder(this)
-		    .setTitle(title)
-		    .setMessage(actionText)
-		    .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
-		        public void onClick(DialogInterface dialog, int which) { 
-		            // do nothing
-		        }
-		     })
-		    .setIcon(android.R.drawable.ic_dialog_alert)
-		    .show();
-		}
-		if (action != null){
-			if (action.equals(GM.EXTRA_ACTION_GM)){
-				sect = GM.SECTION_GM_SCHEDULE;
+			TextView tvDialogTitle, tvDialogText;
+			Button btDialogClose, btDialogAction;
+			if (actionTitle != null){
+				
+				final Dialog dialog = new Dialog(this);
+				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+				dialog.setContentView(R.layout.dialog_notification);
+				
+				//Set title
+				tvDialogTitle = (TextView) dialog.findViewById(R.id.tv_dialog_notification_title);
+				tvDialogTitle.setText(actionTitle);
+				
+				//Set text
+				tvDialogText = (TextView) dialog.findViewById(R.id.tv_dialog_notification_text);
+				tvDialogText.setText(actionText);
+				
+				//Set close button
+				btDialogClose = (Button) dialog.findViewById(R.id.bt_dialog_notification_close);
+				btDialogClose.setOnClickListener(new OnClickListener() {
+	    			@Override
+	    			public void onClick(View v) {
+	    				dialog.dismiss();
+	    			}
+	    		});
+				
+				//Set the action button
+				btDialogAction = (Button) dialog.findViewById(R.id.bt_dialog_notification_action);
+				if (action != null){
+					if (action.equals(GM.EXTRA_ACTION_GM)){
+						btDialogAction.setVisibility(View.VISIBLE);
+						btDialogAction.setText(this.getApplicationContext().getString(R.string.notification_action_gm));
+						btDialogAction.setOnClickListener(new OnClickListener() {
+			    			@Override
+			    			public void onClick(View v) {
+			    				dialog.dismiss();
+			    				loadSection(GM.SECTION_GM_SCHEDULE, false);
+			    			}
+			    		});
+					}
+					else if (action.equals(GM.EXTRA_ACTION_SCHEDULE)){
+						btDialogAction.setVisibility(View.VISIBLE);
+						btDialogAction.setText(this.getApplicationContext().getString(R.string.notification_action_schedule));
+						btDialogAction.setOnClickListener(new OnClickListener() {
+			    			@Override
+			    			public void onClick(View v) {
+			    				dialog.dismiss();
+			    				loadSection(GM.SECTION_SCHEDULE, false);
+			    			}
+			    		});
+					}
+					else{
+						btDialogAction.setVisibility(View.GONE);
+					}
+				}
+				else{
+					btDialogAction.setVisibility(View.GONE);
+				}
+
+				//Show the dialog
+				dialog.show();
 			}
-			if (action.equals(GM.EXTRA_ACTION_SCHEDULE)){
-				sect = GM.SECTION_SCHEDULE;
-			}
 		}
-		
-		//Load initial section
-		loadSection(sect, false);
 	}
 	
 	/**

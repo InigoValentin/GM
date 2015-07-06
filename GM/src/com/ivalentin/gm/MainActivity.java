@@ -323,6 +323,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 		if (actionText != null){
 			TextView tvDialogTitle, tvDialogText;
 			Button btDialogClose, btDialogAction;
+			Drawable dialogIcon;
 			if (actionTitle != null){
 				
 				final Dialog dialog = new Dialog(this);
@@ -332,6 +333,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 				//Set title
 				tvDialogTitle = (TextView) dialog.findViewById(R.id.tv_dialog_notification_title);
 				tvDialogTitle.setText(actionTitle);
+				
 				
 				//Set text
 				tvDialogText = (TextView) dialog.findViewById(R.id.tv_dialog_notification_text);
@@ -350,6 +352,10 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 				btDialogAction = (Button) dialog.findViewById(R.id.bt_dialog_notification_action);
 				if (action != null){
 					if (action.equals(GM.EXTRA_ACTION_GM)){
+						dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_gm, null);
+						dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
+						tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
+						tvDialogTitle.setCompoundDrawablePadding(20);
 						btDialogAction.setVisibility(View.VISIBLE);
 						btDialogAction.setText(this.getApplicationContext().getString(R.string.notification_action_gm));
 						btDialogAction.setOnClickListener(new OnClickListener() {
@@ -361,6 +367,10 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 			    		});
 					}
 					else if (action.equals(GM.EXTRA_ACTION_SCHEDULE)){
+						dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_program, null);
+						dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
+						tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
+						tvDialogTitle.setCompoundDrawablePadding(20);
 						btDialogAction.setVisibility(View.VISIBLE);
 						btDialogAction.setText(this.getApplicationContext().getString(R.string.notification_action_schedule));
 						btDialogAction.setOnClickListener(new OnClickListener() {
@@ -372,6 +382,10 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 			    		});
 					}
 					else{
+						dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_about, null);
+						dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
+						tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
+						tvDialogTitle.setCompoundDrawablePadding(20);
 						btDialogAction.setVisibility(View.GONE);
 					}
 				}

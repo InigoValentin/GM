@@ -26,6 +26,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.View.OnClickListener;
+import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -87,9 +89,19 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 		//Variable to indicate if there is a report
 		boolean reporting = false;
 		
+		//Button to show the GM schedule if no report
+		Button btSchedule = (Button) v.findViewById(R.id.bt_location_no_report);
+		btSchedule.setOnClickListener(new OnClickListener(){
+			@Override
+			public void onClick(View v) {
+				((MainActivity) getActivity()).loadSection(GM.SECTION_GM_SCHEDULE, false);
+			}
+		});
+		
 		//Try to get last location time
 		try{
 			Date locationDate = dateFormat.parse(settings.getString(GM.PREF_GM_LOCATION, "1970-01-01 00:00:00"));
+			Log.e("REPORT DATE", locationDate.toString());
 			cal = Calendar.getInstance();
 		    cal.setTime(date);
 		    cal.add(Calendar.MINUTE, -10);
@@ -160,20 +172,24 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 				    //If now between start -24h and start
 				    if (found == false && date.after(startMinus24) && date.before(start)){
 				    	found = true;
-				    	//Set text
+				    	//Get date start
+				    	Date dateS = dateFormat.parse((cursor.getString(8)));
 				    	//Switch between today, tomorrow
 				    	if (dayFormat.format(start).equals(dayFormat.format(date)))
-				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_today), timeFormat.format(cursor.getString(8)), cursor.getString(4)));
+				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_today), timeFormat.format(dateS), cursor.getString(4)));
 				    	else
-				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_tomorrow), timeFormat.format(cursor.getString(8)), cursor.getString(4)));
+				    		tvLocation.setText(String.format(v.getContext().getString(R.string.location_tomorrow), timeFormat.format(dateS), cursor.getString(4)));
 				    }
 					
 				}
-				catch (ParseException e){
+				catch (Exception e){
 					Log.e("Error parsing date for around event", e.toString());
 				}
 				if (found == false){
 					tvLocation.setVisibility(View.GONE);
+				}
+				else{
+					tvLocation.setVisibility(View.VISIBLE);
 				}
 			}
 			cursor.close();

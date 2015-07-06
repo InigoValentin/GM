@@ -22,6 +22,7 @@ public class Event implements Comparable<Event>{
 	private boolean gm, schedule;
 	private Integer distance = null;
 	private double[] location = new double[2];
+	private int id;
 	
 	
 	/**
@@ -37,8 +38,9 @@ public class Event implements Comparable<Event>{
 	 * @param start String whit the date and time of the start of the event, in the format yyyy-MM-dd HH:mm:ss.
 	 * @param end String whit the date and time of the end of the event, in the format yyyy-MM-dd HH:mm:ss. Can be null.
 	 */
-	public Event(String name, String description, int gm, int schedule, String place, String host, double[] coordinates, String start, String end){
+	public Event(int id, String name, String description, int gm, int schedule, String place, String host, double[] coordinates, String start, String end){
 		super();
+		this.id = id;
 		this.name = name;
 		this.description = description;
 		this.place = place;
@@ -66,6 +68,15 @@ public class Event implements Comparable<Event>{
 		catch (Exception ex){
 			end = null;
 		}
+	}
+	
+	/**
+	 * Return the id of the event
+	 * 
+	 * @return the id of the event
+	 */
+	public int getId(){
+		return id;
 	}
 	
 	/**

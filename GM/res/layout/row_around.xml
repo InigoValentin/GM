@@ -21,9 +21,16 @@
 	        android:src="@drawable/pinpoint" />
 	
 	    <LinearLayout
+	        android:id="@+id/ll_row_around_content"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:orientation="vertical" >
+
+	        <TextView
+	            android:id="@+id/tv_row_around_id"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:visibility="gone" />
 	
 	        <TextView
 	            android:id="@+id/tv_row_around_title"

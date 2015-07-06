@@ -48,7 +48,9 @@
 	                android:id="@+id/ll_home_section_schedule_content"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
+	                android:layout_margin="10dp"
 	                android:orientation="vertical" >
+
 	            </LinearLayout>
 	
 	        </LinearLayout>
@@ -100,7 +102,9 @@
 	                android:id="@+id/ll_home_section_gm_content"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
+	                android:layout_margin="10dp"
 	                android:orientation="vertical" >
+
 	            </LinearLayout>
 	
 	        </LinearLayout>
@@ -152,7 +156,9 @@
 	                android:id="@+id/ll_home_section_around_content"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
+	                android:layout_margin="10dp"
 	                android:orientation="vertical" >
+
 	            </LinearLayout>
 	
 	        </LinearLayout>
@@ -204,6 +210,7 @@
 	                android:id="@+id/ll_home_section_location_content"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
+	                android:layout_margin="10dp"
 	                android:orientation="vertical"
 	                android:padding="15dp" >
 
@@ -271,6 +278,7 @@
 	                android:id="@+id/ll_home_section_join_content"
 	                android:layout_width="match_parent"
 	                android:layout_height="wrap_content"
+	                android:layout_margin="10dp"
 	                android:orientation="vertical"
 	                android:padding="15dp" >
 

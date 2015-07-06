@@ -18,7 +18,7 @@
 	}
 	else{
 		$row_manuals = mysqli_fetch_array($res_manual);
-		$res = mysqli_query($con, "SELECT lat, lon, name FROM location, admin WHERE time > date_sub(curdate(), INTERVAL 25 MINUTE) AND location.user = $row_manuals[uid] AND manual = 0 AND location.user = admin.id ORDER BY time DESC LIMIT 1;");
+		$res = mysqli_query($con, "SELECT lat, lon, name FROM location, admin WHERE time > date_sub(now(), INTERVAL 15 MINUTE) AND location.user = $row_manuals[uid] AND manual = 0 AND location.user = admin.id ORDER BY time DESC LIMIT 1;");
 		if (mysqli_num_rows($res) == 0){
 			echo "<location>none</location>\n";
 		}

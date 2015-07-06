@@ -9,9 +9,21 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.Locale;
 
+import com.google.android.gms.maps.CameraUpdate;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapView;
+import com.google.android.gms.maps.MapsInitializer;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
 import android.annotation.SuppressLint;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnShowListener;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.graphics.drawable.Drawable;
@@ -25,13 +37,13 @@ import android.support.v4.content.res.ResourcesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-
-//TODO: GPS and no events: dont display both messages at the same time
 
 /**
  * Layout that show event close to the user in both time and space.
@@ -39,7 +51,7 @@ import android.widget.TextView;
  * @author Iñigo Valentin
  *
  */
-public class AroundLayout extends Fragment implements LocationListener{
+public class AroundLayout extends Fragment implements LocationListener, OnMapReadyCallback{
 
 	//The location of the user
 	private double[] coordinates = new double[2];
@@ -62,20 +74,11 @@ public class AroundLayout extends Fragment implements LocationListener{
 	//Main View
 	private View view;
 	
-	/**
-	 *  Request updates at startup
-	 *
-	 * @see android.support.v4.app.Fragment#onResume()
-	 */
-	@Override
-	public void onResume() {
-		super.onResume();
-		locationManager = (LocationManager) this.getView().getContext().getSystemService(Context.LOCATION_SERVICE);
-	    // Define the criteria how to select the locatioin provider -> use default
-	    Criteria criteria = new Criteria();
-	    provider = locationManager.getBestProvider(criteria, false);
-		locationManager.requestLocationUpdates(provider, 5000, 10, this);
-	}
+	//Map stuff for the dialog
+	private MapView mapView;
+	private Bundle bund;
+	private GoogleMap map;
+	private LatLng location;
 
 	/**
 	 * Remove the location listener updates when Activity is paused.
@@ -233,11 +236,14 @@ public class AroundLayout extends Fragment implements LocationListener{
 		//A layout to be populated with an event.
 		LinearLayout entry;
 		
+		//Touchable layout of each entry
+		LinearLayout llTouch;
+		
 		//An inflater
-        LayoutInflater factory = LayoutInflater.from(getActivity());
+        LayoutInflater factory = LayoutInflater.from(view.getContext());
         
         //TextViews in each row
-        TextView tvRowTitle, tvRowDescription, tvRowAddress, tvRowDistance, tvRowTime;
+        TextView tvRowTitle, tvRowDescription, tvRowAddress, tvRowDistance, tvRowTime, tvRowId;
         
         //Icon next to the location text
         Drawable icon = ResourcesCompat.getDrawable(getResources(), R.drawable.pinpoint, null);
@@ -245,7 +251,7 @@ public class AroundLayout extends Fragment implements LocationListener{
 				
 		//Read from database
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
-		Cursor cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host FROM event, place WHERE event.place = place.id;", null);
+		Cursor cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host, event.id FROM event, place WHERE event.place = place.id;", null);
 		
 		//Make the list empty, in case we are not populating it for the first time.
         list.removeAllViews();
@@ -284,14 +290,14 @@ public class AroundLayout extends Fragment implements LocationListener{
 				    
 				    //If in range
 				    if (date.after(startMinus30) && date.before(endMinus15)){
-				    	event = new Event(cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
+				    	event = new Event(cursor.getInt(11), cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
 			        	eventList.add(event);
 				    }
 			    }
 			    //Events without end time
 			    else{
 			    	if (date.after(startMinus30) && date.before(startPlus30)){
-			    		event = new Event(cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
+			    		event = new Event(cursor.getInt(11), cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
 			        	eventList.add(event);
 			    	}
 			    }
@@ -322,19 +328,23 @@ public class AroundLayout extends Fragment implements LocationListener{
 	        	//Create a new row
 	        	entry = (LinearLayout) factory.inflate(R.layout.row_around, null);
 	        	
-	        	//Set the background color
-	        	//if (i % 2 == 0)
-	        	//	entry.setBackgroundColor(getResources().getColor(R.color.background_around_row_even));
-	        	//else
-	        	//	entry.setBackgroundColor(getResources().getColor(R.color.background_around_row_odd));
+	        	//Set id
+	        	tvRowId = (TextView) entry.findViewById(R.id.tv_row_around_id);
+	        	tvRowId.setText(Integer.toString(eventList.get(i).getId()));
 	        	
-	        	//Locate row elements and populate them.
+	        	//Set title
 	        	tvRowTitle = (TextView) entry.findViewById(R.id.tv_row_around_title);
 	        	tvRowTitle.setText(eventList.get(i).getName());
+	        	
+	        	//Set description
 	        	tvRowDescription = (TextView) entry.findViewById(R.id.tv_row_around_description);
 	        	tvRowDescription.setText(eventList.get(i).getDescription());
+	        	
+	        	//Set address
 	        	tvRowAddress = (TextView) entry.findViewById(R.id.tv_row_around_address);
 	        	tvRowAddress.setText(eventList.get(i).getPlace());
+	        	
+	        	//Set distance
 	        	tvRowDistance = (TextView) entry.findViewById(R.id.tv_row_around_distance);
 	        	distance = eventList.get(i).getDistance(coordinates);
 	        	if (distance < 1000){
@@ -357,10 +367,175 @@ public class AroundLayout extends Fragment implements LocationListener{
 					Log.e("Date error", e.toString());
 				}
 	        	
+				//Set touch event
+				llTouch = (LinearLayout) entry.findViewById(R.id.ll_row_around_content);
+				llTouch.setOnClickListener(new OnClickListener(){
+					@Override
+					public void onClick(View v) {
+		            	TextView tvId = (TextView) v.findViewById(R.id.tv_row_around_id);
+		            	int id = Integer.parseInt(tvId.getText().toString());
+						showDialog(id);
+					}
+	        	});
+				
 	        	//Add the entry to the list.
 	        	list.addView(entry);
 			}
         }
+	}
+	
+	private void showDialog(int id){
+		Log.e("DIALOG", "#" + id);
+		final Dialog dialog = new Dialog(getActivity());
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.dialog_around);
+		
+		//Date formatters
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
+		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd-", Locale.US);
+		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
+ 
+		//Set the custom dialog components - text, image and button
+		TextView tvTitle = (TextView) dialog.findViewById(R.id.tv_dialog_around_title);
+		TextView tvDescription = (TextView) dialog.findViewById(R.id.tv_dialog_around_description);
+		TextView tvDate = (TextView) dialog.findViewById(R.id.tv_dialog_around_date);
+		TextView tvTime = (TextView) dialog.findViewById(R.id.tv_dialog_around_time);
+		TextView tvPlace = (TextView) dialog.findViewById(R.id.tv_dialog_around_place);
+		TextView tvAddress = (TextView) dialog.findViewById(R.id.tv_dialog_around_address);
+		Button btClose = (Button) dialog.findViewById(R.id.bt_around_close);
+		//Get info about the event
+		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
+		Cursor cursor = db.rawQuery("SELECT event.id, event.name, description, start, end, place.name, address, lat, lon FROM event, place WHERE schedule = 1 AND place.id = event.place AND event.id = " + id + ";", null);
+		if (cursor.getCount() > 0){
+			cursor.moveToNext();
+		
+			//Set texts
+			tvTitle.setText(cursor.getString(1));
+			tvDescription.setText(cursor.getString(2));
+			try{
+				Date day = dateFormat.parse(cursor.getString(3));
+				Date date = new Date();
+				//If the event is today
+				if (dayFormat.format(day).equals(dayFormat.format(date)))
+					tvDate.setText(dialog.getContext().getString(R.string.today));
+				
+				else{
+					Calendar cal = Calendar.getInstance();
+				    cal.setTime(date);
+				    cal.add(Calendar.HOUR_OF_DAY, 24);
+				    //If the event is tomorrow
+				    if (dayFormat.format(cal.getTime()).equals(dayFormat.format(date))){
+				    	tvDate.setText(dialog.getContext().getString(R.string.tomorrow));
+				    }
+					
+				    //Else
+				    else{
+				    	SimpleDateFormat printFormat = new SimpleDateFormat("dd MMMM", Locale.US);
+				    	tvDate.setText(printFormat.format(day));
+				    }
+				}
+			}
+			catch (Exception ex){
+				Log.e("Error parsing event date", ex.toString());
+			}
+			
+			try{
+				if (cursor.getString(4) == null)
+					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))));
+				else
+					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))) + " - " + timeFormat.format(timeFormat.parse(cursor.getString(4))));
+			}
+			catch (ParseException ex){
+				Log.e("Error parsing event time", ex.toString());
+			}
+			tvPlace.setText(cursor.getString(5));
+			tvAddress.setText(cursor.getString(6));
+			
+			//Set up map
+			location = new LatLng(Double.parseDouble(cursor.getString(7)), Double.parseDouble(cursor.getString(8)));
+			mapView = (MapView) dialog.findViewById(R.id.mv_dialog_around_map);
+			mapView.onCreate(bund);
+			
+			//Set close button			
+        	btClose.setOnClickListener(new OnClickListener() {
+    			@Override
+    			public void onClick(View v) {
+    				dialog.dismiss();
+    			}
+    		});
+			
+			//Show the dialog
+			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
+			lp.dimAmount = 0.0f; 
+			dialog.show();
+			startMap();
+			mapView.onResume();
+			dialog.setOnShowListener(new OnShowListener(){
+
+				@Override
+				public void onShow(DialogInterface dialog) {
+					// Gets to GoogleMap from the MapView and does initialization stuff
+					startMap();
+					
+				}});
+			
+			
+		}
+	}
+	
+	public void startMap(){
+		mapView.getMapAsync(this);
+	}
+	
+	@Override
+	public void onResume() {
+		if (mapView != null)
+			mapView.onResume();
+		Criteria criteria = new Criteria();
+	    provider = locationManager.getBestProvider(criteria, false);
+		locationManager.requestLocationUpdates(provider, 5000, 10, this);
+		super.onResume();
+	}
+
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		if (mapView != null){
+			mapView.onResume();
+			mapView.onDestroy();
+		}
+	}
+
+	 @Override
+	public void onLowMemory() {
+		super.onLowMemory();
+		if (mapView != null){
+			mapView.onResume();
+			mapView.onLowMemory();
+		}
+	}
+
+	@Override
+	public void onMapReady(GoogleMap googleMap) {
+		this.map = googleMap;
+		map.setMyLocationEnabled(true);
+		
+		map.getUiSettings().setMyLocationButtonEnabled(false);
+		map.setMyLocationEnabled(true);
+		// Needs to call MapsInitializer before doing any CameraUpdateFactory calls
+		try {
+			MapsInitializer.initialize(this.getActivity());
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 13);
+			map.animateCamera(cameraUpdate);
+		} catch (Exception e) {
+			Log.e("Error initializing mapss", e.toString());
+		}
+		//Set GM marker
+		MarkerOptions mo = new MarkerOptions();
+		mo.title(view.getContext().getString(R.string.app_name));
+		mo.position(location);
+		map.addMarker(mo);
+		
 	}
 	
 	@Override

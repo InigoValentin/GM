@@ -45,7 +45,7 @@
 	<string name="day_title_25">Santiago</string>
 	<string name="day_title_4">Celedón</string>
 	<string name="day_title_5">La Blanca</string>
-	<string name="day_title_6">Aniversario Margolari</string>
+	<string name="day_title_6">Día Margolari</string>
 	<string name="day_title_7">Celedon Txiki</string>
 	<string name="day_title_8">Blusa Veterano</string>
 	<string name="day_title_9">Despedida</string>
@@ -142,6 +142,7 @@
 	<string name="location_now">Pero, según su programa, puedes encontrarles ahora en %1$s.</string>
 	<string name="location_today">Pero, según su programa, puedes encontrarles hoy a las %1$s en %2$s.</string>
 	<string name="location_tomorrow">Pero, según su programa, puedes encontrarles mañana a las %1$s en %2$s.</string>
+	<string name="location_button">Ver el programa Margolari</string>
 	
 
 	<!-- Accesibility strings -->

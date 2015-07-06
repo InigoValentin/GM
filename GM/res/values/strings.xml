@@ -43,9 +43,9 @@
 	<!-- "Titles" for days -->
 
 	<string name="day_title_25">Santiago</string>
-	<string name="day_title_4">Celedon</string>
+	<string name="day_title_4">Celedón</string>
 	<string name="day_title_5">La Blanca</string>
-	<string name="day_title_6">El ecuador</string>
+	<string name="day_title_6">Día Margolari</string>
 	<string name="day_title_7">Celedon Txiki</string>
 	<string name="day_title_8">Blusa Veterano</string>
 	<string name="day_title_9">Despedida</string>
@@ -142,6 +142,7 @@
 	<string name="location_now">But, according to their schedule, you can find them now at %1$s.</string>
 	<string name="location_today">But, according to their schedule, you can find them at %1$s at %2$s.</string>
 	<string name="location_tomorrow">But, according to their schedule, you can find them tomorrow at %1$s at %2$s.</string>
+	<string name="location_button">Check out the Margolari schedule</string>
 
 
 	<!-- Accesibility strings -->

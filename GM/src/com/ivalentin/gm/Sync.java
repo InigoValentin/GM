@@ -181,7 +181,6 @@ public class Sync extends AsyncTask<Void, Void, Void> {
 						}
 						if (o.get(i).substring(0, 7).equals("<query>")){
 							query.add(o.get(i).substring(7, o.get(i).length() - 8));
-							//Log.d("Remote query", query);
 						}
 					}
 				}

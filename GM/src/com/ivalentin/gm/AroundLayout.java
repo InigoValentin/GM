@@ -207,7 +207,7 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 				
 		//Read from database
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
-		Cursor cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host, event.id FROM event, place WHERE event.place = place.id;", null);
+		Cursor cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host, event.id FROM event, place WHERE schedule = 1 AND event.place = place.id;", null);
 		
 		//Make the list empty, in case we are not populating it for the first time.
         list.removeAllViews();
@@ -338,6 +338,7 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 					public void onClick(View v) {
 		            	TextView tvId = (TextView) v.findViewById(R.id.tv_row_around_id);
 		            	int id = Integer.parseInt(tvId.getText().toString());
+		            	Log.e("TOUCH", "#" +id);
 						showDialog(id);
 					}
 	        	});
@@ -378,7 +379,8 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		
 		//Get info about the event
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
-		Cursor cursor = db.rawQuery("SELECT event.id, event.name, description, start, end, place.name, address, lat, lon FROM event, place WHERE schedule = 1 AND place.id = event.place AND event.id = " + id + ";", null);
+		Cursor cursor = db.rawQuery("SELECT event.id, event.name, description, start, end, place.name, address, lat, lon FROM event, place WHERE place.id = event.place AND event.id = " + id + ";", null);
+		Log.e("RESULTS FOUND", "#" + cursor.getCount());
 		if (cursor.getCount() > 0){
 			cursor.moveToNext();
 		
@@ -448,8 +450,10 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 			
 			//Show the dialog
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-			lp.dimAmount = 0.0f; 
+			lp.dimAmount = 0.0f;
 			dialog.show();
+			
+			//Start the map
 			startMap();
 			mapView.onResume();
 			dialog.setOnShowListener(new OnShowListener(){
@@ -533,7 +537,7 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		// Needs to call MapsInitializer before doing any CameraUpdateFactory calls
 		try {
 			MapsInitializer.initialize(this.getActivity());
-			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 13);
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 14);
 			map.animateCamera(cameraUpdate);
 		} catch (Exception e) {
 			Log.e("Error initializing mapss", e.toString());

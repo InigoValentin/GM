@@ -99,108 +99,135 @@ public class LocationAlarm extends BroadcastReceiver {
 		Log.d("Location request", "New request received by receiver");
 		locationManager = (LocationManager) context.getSystemService(Context.LOCATION_SERVICE);
 		
-		//If GPS enabled
-		if (locationManager.isProviderEnabled(provider)) {
-			locationManager.requestLocationUpdates(provider, GM.LOCATION_MIN_TIME_REQUEST, GM.LOCATION_MIN_DISTANCE_REQUEST, locationListener);
-			Location gotLoc = locationManager.getLastKnownLocation(provider);
-			gotLocation(gotLoc);
-			
-			//Upload location
-			SharedPreferences preferences = context.getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
-			String user = preferences.getString(GM.USER_NAME, "");
-			String code = preferences.getString(GM.USER_CODE, "");
-			//Fetches the remote URL, triggering the location insertion in the database.
-			FetchURL fetch = new FetchURL();
-			fetch.Run("http://inigovalentin.com/gm/app/upload/location.php?user=" + user + "&code=" + code + "&lat=" + gotLoc.getLatitude() + "&lon=" + gotLoc.getLongitude() + "&manual=0");
-			//Read the output to see if the submission was done.
-			List<String> lines = fetch.getOutput();
-			for(int i = 0; i < lines.size(); i++)
-				if (lines.get(i).length() >= 21){
-					if (lines.get(i).substring(0, 21).equals("<status>sent</status>")){
-						Log.d("Location uploaded", gotLoc.getLatitude() + ", " + gotLoc.getLongitude());
-					}
-					if (lines.get(i).substring(0, 21).equals("<status>stop</status>")){
-						Log.d("Location report stop", "Location is now being reported by other admin");
-						//Cancel alarm
-						Intent in = new Intent(context, LocationAlarm.class);
-			            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1253, in, PendingIntent.FLAG_UPDATE_CURRENT | Intent.FILL_IN_DATA);
-						AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-					    alarmManager.cancel(pendingIntent);
-					    //Cancel notification
-				        NotificationManager nMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-				        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING);
-				        nMgr.cancelAll();
-						//Show new notification
-				        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-			    		.setSmallIcon(R.drawable.pinpoint_cancel)
-			    		.setContentTitle(context.getString(R.string.notif_reporting_override_title))
-			    		.setAutoCancel(true)
-			    		.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.pinpoint_gm_cancel))
-			    		.setVibrate((new long[] {600, 600, 600}))
-			    		.setSubText(context.getString(R.string.app_name))
-			    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-			    		.setContentText(context.getString(R.string.notif_reporting_override));
-				    	// Creates an explicit intent for an Activity in your app
-				    	Intent resultIntent = new Intent(context, MainActivity.class);
-				    	TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-				    	stackBuilder.addParentStack(MainActivity.class);
-				    	// Adds the Intent that starts the Activity to the top of the stack
-				    	stackBuilder.addNextIntent(resultIntent);
-				    	PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-				    	mBuilder.setContentIntent(resultPendingIntent);
-				    	NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-				    	// mId allows you to update the notification later on.
-				    	mNotificationManager.notify(GM.NOTIFICATION_ID_REPORTING_OVERRIDE, mBuilder.build());
-					}
-				}
+		//If reporting
+		SharedPreferences preferences = context.getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
+		if (preferences.getBoolean(GM.CURRENTLY_REPORTING, GM.DEFAULT_CURRENTLY_REPORTING)){
+			//If GPS enabled
+			if (locationManager.isProviderEnabled(provider)) {
+				locationManager.requestLocationUpdates(provider, GM.LOCATION_MIN_TIME_REQUEST, GM.LOCATION_MIN_DISTANCE_REQUEST, locationListener);
+				Location gotLoc = locationManager.getLastKnownLocation(provider);
+				gotLocation(gotLoc);
 				
+				//Upload location
+				String user = preferences.getString(GM.USER_NAME, "");
+				String code = preferences.getString(GM.USER_CODE, "");
+				//Fetches the remote URL, triggering the location insertion in the database.
+				FetchURL fetch = new FetchURL();
+				Log.e("UPLOAD", "LOCATION");
+				Log.e("UPLOAD", "http://inigovalentin.com/gm/app/upload/location.php?user=" + user + "&code=" + code + "&lat=" + gotLoc.getLatitude() + "&lon=" + gotLoc.getLongitude() + "&manual=0");
+				fetch.Run("http://inigovalentin.com/gm/app/upload/location.php?user=" + user + "&code=" + code + "&lat=" + gotLoc.getLatitude() + "&lon=" + gotLoc.getLongitude() + "&manual=0");
+				//Read the output to see if the submission was done.
+				List<String> lines = fetch.getOutput();
+				for(int i = 0; i < lines.size(); i++)
+					if (lines.get(i).length() >= 21){
+						if (lines.get(i).substring(0, 21).equals("<status>sent</status>")){
+							Log.d("Location uploaded", gotLoc.getLatitude() + ", " + gotLoc.getLongitude());
+						}
+						
+						if (lines.get(i).substring(0, 21).equals("<status>stop</status>")){
+							
+							//Stop reporting
+							Log.d("Location report stop", "Location is now being reported by other admin");
+							
+							//Cancel alarm
+							Intent in = new Intent(context, LocationAlarm.class);
+				            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1253, in, PendingIntent.FLAG_UPDATE_CURRENT | Intent.FILL_IN_DATA);
+							AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+						    alarmManager.cancel(pendingIntent);
+						    
+						    //Cancel notification
+					        NotificationManager nMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+					        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING);
+					        nMgr.cancelAll();
+							
+					        //Show new notification
+					        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+				    		.setSmallIcon(R.drawable.pinpoint_cancel)
+				    		.setContentTitle(context.getString(R.string.notif_reporting_override_title))
+				    		.setAutoCancel(true)
+				    		.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.pinpoint_gm_cancel))
+				    		.setVibrate((new long[] {600, 600, 600}))
+				    		.setSubText(context.getString(R.string.app_name))
+				    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+				    		.setContentText(context.getString(R.string.notif_reporting_override));
+					    	
+					        // Creates an explicit intent for an Activity in your app
+					    	Intent resultIntent = new Intent(context, MainActivity.class);
+					    	TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+					    	stackBuilder.addParentStack(MainActivity.class);
+					    	
+					    	// Adds the Intent that starts the Activity to the top of the stack
+					    	stackBuilder.addNextIntent(resultIntent);
+					    	PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+					    	mBuilder.setContentIntent(resultPendingIntent);
+					    	NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+					    	
+					    	// mId allows you to update the notification later on.
+					    	mNotificationManager.notify(GM.NOTIFICATION_ID_REPORTING_OVERRIDE, mBuilder.build());
+					    	
+					    	//Set preference
+					    	SharedPreferences.Editor editor = preferences.edit();
+						    editor.putBoolean(GM.CURRENTLY_REPORTING, false);
+						    editor.commit();
+						    
+						    //Exit
+						    return;
+						}
+					}
+					
+				
+			}
 			
-		}
-		
-		//If no GPS
-		else {
-			//Stop reporting and show notification
-			Log.d("Location report stop", "No GPS");
-			//Cancel alarm
-			Intent in = new Intent(context, LocationAlarm.class);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1253, in, PendingIntent.FLAG_UPDATE_CURRENT | Intent.FILL_IN_DATA);
-			AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		    alarmManager.cancel(pendingIntent);
-		    //Cancel notification
-	        NotificationManager nMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-	        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING);
-	        nMgr.cancelAll();
-			//Show new notification
-	        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
-    		.setSmallIcon(R.drawable.pinpoint_cancel)
-    		.setContentTitle(context.getString(R.string.notif_reporting_gps_title))
-    		.setAutoCancel(true)
-    		.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.pinpoint_gm_cancel))
-    		.setVibrate((new long[] {600, 600, 600}))
-    		.setSubText(context.getString(R.string.app_name))
-    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-    		.setContentText(context.getString(R.string.notif_reporting_gps));
-	    	// Creates an explicit intent for an Activity in your app
-	    	Intent resultIntent = new Intent(context, MainActivity.class);
-	    	TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
-	    	stackBuilder.addParentStack(MainActivity.class);
-	    	// Adds the Intent that starts the Activity to the top of the stack
-	    	stackBuilder.addNextIntent(resultIntent);
-	    	PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
-	    	mBuilder.setContentIntent(resultPendingIntent);
-	    	NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
-	    	// mId allows you to update the notification later on.
-	    	mNotificationManager.notify(GM.NOTIFICATION_ID_REPORTING_GPS, mBuilder.build());
-			
-			
-			
-			
-			//Toast t = Toast.makeText(context, "please turn on GPS",	Toast.LENGTH_LONG);
-			//t.setGravity(Gravity.CENTER, 0, 0);
-			//t.show();
-			//Intent settingsIntent = new Intent(android.provider.Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-			//settingsIntent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			//context.startActivity(settingsIntent);
+			//If no GPS
+			else {
+				
+				//Stop reporting and show notification
+				Log.d("Location report stop", "No GPS");
+				
+				//Cancel alarm
+				Intent in = new Intent(context, LocationAlarm.class);
+	            PendingIntent pendingIntent = PendingIntent.getBroadcast(context, 1253, in, PendingIntent.FLAG_UPDATE_CURRENT | Intent.FILL_IN_DATA);
+				AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+			    alarmManager.cancel(pendingIntent);
+			    
+			    //Cancel notification
+		        NotificationManager nMgr = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		        nMgr.cancel(GM.NOTIFICATION_ID_REPORTING);
+		        nMgr.cancelAll();
+				
+		        //Show new notification
+		        NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(context)
+	    		.setSmallIcon(R.drawable.pinpoint_cancel)
+	    		.setContentTitle(context.getString(R.string.notif_reporting_gps_title))
+	    		.setAutoCancel(true)
+	    		.setLargeIcon(BitmapFactory.decodeResource(context.getResources(), R.drawable.pinpoint_gm_cancel))
+	    		.setVibrate((new long[] {600, 600, 600}))
+	    		.setSubText(context.getString(R.string.app_name))
+	    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+	    		.setContentText(context.getString(R.string.notif_reporting_gps));
+		    	
+		        // Creates an explicit intent for an Activity in your app
+		    	Intent resultIntent = new Intent(context, MainActivity.class);
+		    	TaskStackBuilder stackBuilder = TaskStackBuilder.create(context);
+		    	stackBuilder.addParentStack(MainActivity.class);
+		    	
+		    	// Adds the Intent that starts the Activity to the top of the stack
+		    	stackBuilder.addNextIntent(resultIntent);
+		    	PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
+		    	mBuilder.setContentIntent(resultPendingIntent);
+		    	NotificationManager mNotificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
+		    	
+		    	// mId allows you to update the notification later on.
+		    	mNotificationManager.notify(GM.NOTIFICATION_ID_REPORTING_GPS, mBuilder.build());
+		    	
+		    	//Set preference
+		    	SharedPreferences.Editor editor = preferences.edit();
+			    editor.putBoolean(GM.CURRENTLY_REPORTING, false);
+			    editor.commit();
+			    
+			    //Exit
+			    return;
+			}
 		}
 	}
 

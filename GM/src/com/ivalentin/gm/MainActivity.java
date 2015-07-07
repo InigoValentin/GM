@@ -3,7 +3,6 @@ package com.ivalentin.gm;
 import java.io.File;
 import java.math.BigInteger;
 import java.security.SecureRandom;
-import java.util.concurrent.ExecutionException;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;

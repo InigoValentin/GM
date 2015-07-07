@@ -1004,7 +1004,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		// Needs to call MapsInitializer before doing any CameraUpdateFactory calls
 		try {
 			MapsInitializer.initialize(this.getActivity());
-			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 13);
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 14);
 			map.animateCamera(cameraUpdate);
 		} catch (Exception e) {
 			Log.e("Error initializing mapss", e.toString());

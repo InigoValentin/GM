@@ -339,7 +339,7 @@
                 android:orientation="vertical" >
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal" >
 
@@ -347,7 +347,9 @@
                         android:id="@+id/iv_social_web"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_margin="16dp"
+                        android:layout_weight=".3"
+                        android:adjustViewBounds="true"
                         android:contentDescription="@string/social_web"
                         android:src="@drawable/social_web" />
 
@@ -355,7 +357,9 @@
                         android:id="@+id/iv_social_facebook"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_margin="16dp"
+                        android:layout_weight=".3"
+                        android:adjustViewBounds="true"
                         android:contentDescription="@string/social_facebook"
                         android:src="@drawable/social_facebook" />
 
@@ -363,14 +367,16 @@
                         android:id="@+id/iv_social_twitter"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_margin="16dp"
+                        android:layout_weight=".3"
+                        android:adjustViewBounds="true"
                         android:contentDescription="@string/social_twitter"
                         android:src="@drawable/social_twitter" />
 
                 </LinearLayout>
 
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="fill_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center_horizontal" >
 
@@ -378,7 +384,9 @@
                         android:id="@+id/iv_social_googleplus"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_margin="16dp"
+                        android:layout_weight=".3"
+                        android:adjustViewBounds="true"
                         android:contentDescription="@string/social_googleplus"
                         android:src="@drawable/social_googleplus" />
 
@@ -386,7 +394,9 @@
                         android:id="@+id/iv_social_youtube"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_margin="16dp"
+                        android:layout_weight=".3"
+                        android:adjustViewBounds="true"
                         android:contentDescription="@string/social_youtube"
                         android:src="@drawable/social_youtube" />
 
@@ -394,7 +404,9 @@
                         android:id="@+id/iv_social_instagram"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_margin="10dp"
+                        android:layout_margin="16dp"
+                        android:layout_weight=".3"
+                        android:adjustViewBounds="true"
                         android:contentDescription="@string/social_instagram"
                         android:src="@drawable/social_instagram" />
 

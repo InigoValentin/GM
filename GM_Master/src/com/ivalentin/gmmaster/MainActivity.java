@@ -212,6 +212,8 @@ public class MainActivity extends Activity {
 				btLocationReport.setOnClickListener(new OnClickListener() {
 					@Override
 					public void onClick(View v) {
+						
+						//Start reportng
 						if (reporting == false){
 							locationManager = (LocationManager) v.getContext().getSystemService(Context.LOCATION_SERVICE);
 							
@@ -289,6 +291,11 @@ public class MainActivity extends Activity {
 									//Change button text
 									btLocationReport.setText(getApplicationContext().getString(R.string.button_location_stop));
 									tvLocationUser.setText(user);
+									
+									//Set preference
+							    	SharedPreferences.Editor editor = preferences.edit();
+								    editor.putBoolean(GM.CURRENTLY_REPORTING, true);
+								    editor.commit();
 								}
 								else{
 									Toast.makeText(getApplicationContext(), getString(R.string.toast_location_reporting), Toast.LENGTH_LONG).show();
@@ -300,12 +307,16 @@ public class MainActivity extends Activity {
 								Toast.makeText(getApplicationContext(), getString(R.string.toast_location_gps), Toast.LENGTH_LONG).show();
 							}
 						}
+						
+						//Stop reporting
 						else{
+							
 							//Cancel alarm
 							Intent intent = new Intent(getApplicationContext(), LocationAlarm.class);
 				            PendingIntent pendingIntent = PendingIntent.getBroadcast(getApplicationContext(), 1253, intent, PendingIntent.FLAG_UPDATE_CURRENT | Intent.FILL_IN_DATA);
 							AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 						    alarmManager.cancel(pendingIntent);
+						    
 						    //Cancel notification
 						    if (Context.NOTIFICATION_SERVICE!=null) {
 						        String ns = Context.NOTIFICATION_SERVICE;
@@ -324,15 +335,18 @@ public class MainActivity extends Activity {
 				    		.setSubText(getString(R.string.app_name))
 				    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
 				    		.setContentText(getString(R.string.notif_reporting_stop));
-					    	// Creates an explicit intent for an Activity in your app
+					    	
+						    // Creates an explicit intent for an Activity in your app
 					    	Intent resultIntent = new Intent(v.getContext(), MainActivity.class);
 					    	TaskStackBuilder stackBuilder = TaskStackBuilder.create(v.getContext());
 					    	stackBuilder.addParentStack(MainActivity.class);
+					    	
 					    	// Adds the Intent that starts the Activity to the top of the stack
 					    	stackBuilder.addNextIntent(resultIntent);
 					    	PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 					    	mBuilder.setContentIntent(resultPendingIntent);
 					    	NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+					    	
 					    	// mId allows you to update the notification later on.
 					    	mNotificationManager.notify(GM.NOTIFICATION_ID_REPORTING_STOP, mBuilder.build());
 						    
@@ -344,6 +358,11 @@ public class MainActivity extends Activity {
 							//Change button text
 							tvLocationUser.setText(getApplicationContext().getString(R.string.location_nobody));
 							btLocationReport.setText(getApplicationContext().getString(R.string.button_location));
+							
+							//Set preference
+					    	SharedPreferences.Editor editor = preferences.edit();
+						    editor.putBoolean(GM.CURRENTLY_REPORTING, false);
+						    editor.commit();
 						}
 					}
 				});

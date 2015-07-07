@@ -188,19 +188,28 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		String curDate = dateFormat.format(date);
 		
 		//Try to find out if the current date is before, after, or in the middle of the festivals.
-		//TODO: If August 4 and GM schedule, move one forward
 		try {
-			if (dateFormat.parse(curDate).before(dateFormat.parse(days[GM.DAY_25][0])))
+			if (dateFormat.parse(curDate).before(dateFormat.parse(days[GM.DAY_25][0]))){
 				selected = GM.DAY_25;
-			else if (dateFormat.parse(curDate).after(dateFormat.parse(days[GM.DAY_9][0])))
+			}
+			else if (dateFormat.parse(curDate).after(dateFormat.parse(days[GM.DAY_9][0]))){
 				selected = GM.DAY_9;
-			else
-				for (int i = 0; i < GM.TOTAL_DAYS; i++)
-					if (curDate.equals(days[i][0]))
+			}
+			else{
+				for (int i = 0; i < GM.TOTAL_DAYS; i++){
+					if (curDate.equals(days[i][0])){
 						selected = i;
-		} catch (ParseException e) {
+					}
+				}
+			}
+			//If August 4 and Margolari schedule, move one day forward
+			if (selected == GM.DAY_4 && schedule != GM.SECTION_SCHEDULE){
+				selected ++;
+			}
+		}
+		catch (ParseException e) {
 			selected = GM.DAY_25;
-			e.printStackTrace();
+			Log.e("Error selecting date in schedule", e.toString());
 		}
 		
 		//Populate the activity list
@@ -221,7 +230,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	@SuppressLint("InflateParams") //Views are added from a loop: I can't specify the parent when inflating.
 	private void populateSchedule(int selected, LinearLayout list, int schedule, String f){
 		
-		//A layout to be populated with one actvity
+		//A layout to be populated with one activity
 		LinearLayout entry, content;
 		
 		//The filter
@@ -532,7 +541,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		// Needs to call MapsInitializer before doing any CameraUpdateFactory calls
 		try {
 			MapsInitializer.initialize(this.getActivity());
-			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 13);
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 14);
 			map.animateCamera(cameraUpdate);
 		} catch (Exception e) {
 			Log.e("Error initializing mapss", e.toString());

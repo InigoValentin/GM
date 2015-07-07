@@ -9,6 +9,16 @@ package com.ivalentin.gmmaster;
 public final class GM {
 	
 	/**
+	 * String with the name of the preference that indicates if the user is reporting.
+	 */
+	static final String CURRENTLY_REPORTING = "currentlyReporting";
+	
+	/**
+	 * Default value of the CURRENTLY_REPORTING preference.
+	 */
+	static final boolean DEFAULT_CURRENTLY_REPORTING = false;
+	
+	/**
 	 * Name of the preference group for the app.
 	 */
 	static final String PREF = "gmmasterpreferences";

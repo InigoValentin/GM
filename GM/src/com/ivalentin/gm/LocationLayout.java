@@ -271,7 +271,7 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 		// Needs to call MapsInitializer before doing any CameraUpdateFactory calls
 		try {
 			MapsInitializer.initialize(this.getActivity());
-			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 12);
+			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 14);
 			map.animateCamera(cameraUpdate);
 		} catch (Exception e) {
 			Log.e("Error initializing mapss", e.toString());

@@ -429,7 +429,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 				if (cursor.getString(4) == null)
 					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))));
 				else
-					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))) + " - " + timeFormat.format(timeFormat.parse(cursor.getString(4))));
+					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))) + " - " + timeFormat.format(dateFormat.parse(cursor.getString(4))));
 			}
 			catch (ParseException ex){
 				Log.e("Error parsing event time", ex.toString());

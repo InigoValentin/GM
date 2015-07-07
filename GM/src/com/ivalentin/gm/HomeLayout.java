@@ -678,6 +678,9 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 				//Sort the list
 				Collections.sort(eventList);
 				
+				//Empty the list
+				llAroundContent.removeAllViews();
+				
 				//For each item
 				for(int i = 0; i < eventList.size() && i < 2; i++){
 		        	
@@ -744,7 +747,6 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		}
 	}
 	
-	//TODO: Test this
 	/**
 	 * Shows a dialog with info about an event from the around list
 	 * 
@@ -817,10 +819,12 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 			
 			//set time
 			try{
-				if (cursor.getString(4) == null)
+				if (cursor.getString(4) == null){
 					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))));
-				else
-					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))) + " - " + timeFormat.format(timeFormat.parse(cursor.getString(4))));
+				}
+				else{
+					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))) + " - " + timeFormat.format(dateFormat.parse(cursor.getString(4))));
+				}
 			}
 			catch (ParseException ex){
 				Log.e("Error parsing event time", ex.toString());
@@ -1006,8 +1010,9 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 			MapsInitializer.initialize(this.getActivity());
 			CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(location, 14);
 			map.animateCamera(cameraUpdate);
-		} catch (Exception e) {
-			Log.e("Error initializing mapss", e.toString());
+		}
+		catch (Exception e) {
+			Log.e("Error initializing maps", e.toString());
 		}
 		//Set GM marker
 		MarkerOptions mo = new MarkerOptions();

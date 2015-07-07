@@ -9,6 +9,11 @@ package com.ivalentin.gmmaster;
 public final class GM {
 	
 	/**
+	 * Address where the web server is
+	 */
+	static final String SERVER = "http://inigovalentin.com/gm/";
+	
+	/**
 	 * String with the name of the preference that indicates if the user is reporting.
 	 */
 	static final String CURRENTLY_REPORTING = "currentlyReporting";

@@ -5,9 +5,6 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import android.util.Log;
-
-
 /**
  * An event holds information about an activity of the festival
  * 
@@ -56,7 +53,6 @@ public class Event implements Comparable<Event>{
 			this.schedule = false;
 		this.host = host;
 		this.coordinates = coordinates;
-		Log.e("Start", start);
 		DateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
 		try{
 			this.start = format.parse(start);

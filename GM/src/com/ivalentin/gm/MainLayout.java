@@ -177,7 +177,6 @@ public class MainLayout extends LinearLayout {
 	 * Fixes the position.
 	 */
 	private void onMenuSlidingComplete() {
-		//TODO: Something is not working here...
 		switch (currentMenuState) {
 			case SHOWING:
 				currentMenuState = MenuState.SHOWN;

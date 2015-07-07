@@ -66,13 +66,13 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 		FetchURL fu;
 		
 		//Check if the user wants to receive notifications
-		if (settings.getInt(GM.PREF_NOTIFICATION , 1) == 1){
+		if (settings.getInt(GM.PREF_NOTIFICATION , GM.DEFAULT_PREF_NOTIFICATION) == 1){
 			success = true;
 			
 			//Get the file
 			try{
 				fu = new FetchURL();
-				fu.Run("http://inigovalentin.com/gm/app/notification.php"); 
+				fu.Run(GM.SERVER + "app/notification.php"); 
 				//All the info
 				output = fu.getOutput();
 				Log.d("Alarm", "Fetched notifications");
@@ -163,7 +163,7 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
 		//Get location
 		boolean result = false;
 		fu = new FetchURL();
-		fu.Run("http://inigovalentin.com/gm/app/location.php");
+		fu.Run(GM.SERVER + "app/location.php");
 		String lat = "", lon = "";
 		output = fu.getOutput();
 		Log.d("Alarm", "Fetched location");

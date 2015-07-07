@@ -18,7 +18,7 @@ import android.widget.ProgressBar;
 
 /**
  * AsyncTask that synchronizes the online database to the device.
- * Is run every time the app is started;
+ * Is run every time the app is started, and in the bacground.
  * 
  * @author Inigo Valentin
  *
@@ -101,7 +101,9 @@ public class Sync extends AsyncTask<Void, Void, Void> {
     }
     
     /**
-     * Called when the AsyncTask is created.
+     * Called when the AsyncTask is created. 
+     * This constructor is intended to use only in the first sync, 
+     * because a dialog will block the UI.
      * 
      * @param myContextRef The Context of the calling activity.
      * @param d Dialog of the initial sync
@@ -160,7 +162,7 @@ public class Sync extends AsyncTask<Void, Void, Void> {
 			String user = preferences.getString(GM.USER_NAME, "");
 			String code = preferences.getString(GM.USER_CODE, "");
 			fu = new FetchURL();
-			fu.Run("http://inigovalentin.com/gm/app/sync.php?user=" + user + "&code=" + code + "&fg=" + fg); 
+			fu.Run(GM.SERVER + "app/sync.php?user=" + user + "&code=" + code + "&fg=" + fg); 
 			//All the info
 			o = fu.getOutput();
 		}
@@ -196,12 +198,12 @@ public class Sync extends AsyncTask<Void, Void, Void> {
 			if (versionSet && version > preferences.getInt(GM.PREF_DB_VERSION, GM.DEFAULT_PREF_DB_VERSION)){
 				try{
 					SQLiteDatabase db = myContextRef.openOrCreateDatabase(GM.DB_NAME, Activity.MODE_PRIVATE, null);
-					Log.d("Sync query", "DELETE FROM " + GM.DB_EVENT + ";");
-					db.execSQL("DELETE FROM " + GM.DB_EVENT + ";");
-					Log.d("Sync query", "DELETE FROM " + GM.DB_PEOPLE + ";");
-					db.execSQL("DELETE FROM " + GM.DB_PEOPLE + ";");
-					Log.d("Sync query", "DELETE FROM " + GM.DB_PLACE + ";");
-					db.execSQL("DELETE FROM " + GM.DB_PLACE + ";");
+					Log.d("Sync query", "DELETE FROM event;");
+					db.execSQL("DELETE FROM event;");
+					Log.d("Sync query", "DELETE FROM people;");
+					db.execSQL("DELETE FROM people;");
+					Log.d("Sync query", "DELETE FROM place;");
+					db.execSQL("DELETE FROM place;");
 					Log.d("Sync query", "DELETE FROM day;");
 					db.execSQL("DELETE FROM day;");
 					Log.d("Sync query", "DELETE FROM offer;");

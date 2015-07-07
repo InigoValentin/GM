@@ -475,6 +475,11 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 		new Sync(this, pbSync).execute();
 	}
 	
+	/**
+	 * Perform an initial sync before the app can be used. 
+	 * A dialog will block the UI. 
+	 * It is intended to be used only when the database is empty.
+	 */
 	private void initialSync(){
 		//Create a dialog
 		Dialog dialog = new Dialog(this);
@@ -484,11 +489,9 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.dialog_sync);
 		
-		//Force sync, stopping the ui thread
+		//Sync
 		ProgressBar pbSync = (ProgressBar) findViewById(R.id.pb_sync);
 		new Sync(this, pbSync, dialog, this).execute();
-		//TODO: Recheck version
-		
 	}
 	
 	/**

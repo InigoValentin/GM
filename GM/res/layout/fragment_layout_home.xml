@@ -219,7 +219,9 @@
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginBottom="15dp"
-	                    android:text="@string/home_section_location_text_0" />
+	                    android:text="@string/home_section_location_text_0"
+	                    android:textSize="20sp"
+	                    android:textStyle="bold" />
 	                
 	                <TextView
 	                    android:id="@+id/tv_home_location_1"
@@ -287,7 +289,9 @@
 	                    android:layout_width="wrap_content"
 	                    android:layout_height="wrap_content"
 	                    android:layout_marginBottom="15dp"
-	                    android:text="@string/home_section_join_header" />
+	                    android:text="@string/home_section_join_header"
+	                    android:textSize="20sp"
+	                    android:textStyle="bold" />
 
 	                <TextView
 	                    android:id="@+id/TextView02"

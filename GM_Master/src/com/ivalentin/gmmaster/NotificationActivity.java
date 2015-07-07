@@ -124,7 +124,7 @@ public class NotificationActivity extends Activity{
 		boolean result = false;
 		//Fetches the remote URL, triggering the admin insertion in the database.
 		FetchURL fetch = new FetchURL();
-		fetch.Run("http://inigovalentin.com/gm/app/upload/notification.php?user=" + user + "&code=" + code + "&title=" + title + "&text=" + text + "&type=" + type + "&gm=" + gm + "&duration=" + duration);
+		fetch.Run(GM.SERVER + "app/upload/notification.php?user=" + user + "&code=" + code + "&title=" + title + "&text=" + text + "&type=" + type + "&gm=" + gm + "&duration=" + duration);
 		//Read the output to see if the submission was done.
 		List<String> lines = fetch.getOutput();
 		for(int i = 0; i < lines.size(); i++)

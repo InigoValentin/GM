@@ -113,9 +113,7 @@ public class LocationAlarm extends BroadcastReceiver {
 				String code = preferences.getString(GM.USER_CODE, "");
 				//Fetches the remote URL, triggering the location insertion in the database.
 				FetchURL fetch = new FetchURL();
-				Log.e("UPLOAD", "LOCATION");
-				Log.e("UPLOAD", "http://inigovalentin.com/gm/app/upload/location.php?user=" + user + "&code=" + code + "&lat=" + gotLoc.getLatitude() + "&lon=" + gotLoc.getLongitude() + "&manual=0");
-				fetch.Run("http://inigovalentin.com/gm/app/upload/location.php?user=" + user + "&code=" + code + "&lat=" + gotLoc.getLatitude() + "&lon=" + gotLoc.getLongitude() + "&manual=0");
+				fetch.Run(GM.SERVER + "app/upload/location.php?user=" + user + "&code=" + code + "&lat=" + gotLoc.getLatitude() + "&lon=" + gotLoc.getLongitude() + "&manual=0");
 				//Read the output to see if the submission was done.
 				List<String> lines = fetch.getOutput();
 				for(int i = 0; i < lines.size(); i++)

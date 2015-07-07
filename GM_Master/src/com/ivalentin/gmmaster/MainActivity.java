@@ -131,7 +131,7 @@ public class MainActivity extends Activity {
 				fetch = new FetchURL();
 				name = preferences.getString(GM.USER_NAME, "");
 				code = preferences.getString(GM.USER_CODE, "");
-				fetch.Run("http://inigovalentin.com/gm/app/upload/adminstatus.php?name=" + name + "&code=" + code);
+				fetch.Run(GM.SERVER + "app/upload/adminstatus.php?name=" + name + "&code=" + code);
 				
 				//Read the output to see if the submission was done.
 				lines = fetch.getOutput();
@@ -173,7 +173,7 @@ public class MainActivity extends Activity {
 				boolean result = false;
 				String reportingUser = preferences.getString(GM.USER_NAME, "");
 				fetch = new FetchURL();
-				fetch.Run("http://inigovalentin.com/gm/app/location.php");
+				fetch.Run(GM.SERVER + "app/location.php");
 				lines = fetch.getOutput();
 				for(int i = 0; i < lines.size(); i++){
 					if (lines.get(i).length() >= 25){
@@ -228,7 +228,7 @@ public class MainActivity extends Activity {
 								String code = preferences.getString(GM.USER_CODE, "");
 								//Fetches the remote URL, triggering the admin insertion in the database.
 								FetchURL fetch = new FetchURL();
-								fetch.Run("http://inigovalentin.com/gm/app/upload/location.php?user=" + user + "&code=" + code + "&lat=0&lon=0&manual=1");
+								fetch.Run(GM.SERVER + "app/upload/location.php?user=" + user + "&code=" + code + "&lat=0&lon=0&manual=1");
 								//Read the output to see if the submission was done.
 								List<String> lines = fetch.getOutput();
 								for(int i = 0; i < lines.size(); i++){
@@ -270,15 +270,18 @@ public class MainActivity extends Activity {
 							    		.setSubText(getString(R.string.app_name))
 							    		.setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
 							    		.setContentText(getString(R.string.notif_reporting));
-							    	// Creates an explicit intent for an Activity in your app
+							    	
+									// Creates an explicit intent for an Activity in your app
 							    	Intent resultIntent = new Intent(v.getContext(), MainActivity.class);
 							    	TaskStackBuilder stackBuilder = TaskStackBuilder.create(v.getContext());
 							    	stackBuilder.addParentStack(MainActivity.class);
+							    	
 							    	// Adds the Intent that starts the Activity to the top of the stack
 							    	stackBuilder.addNextIntent(resultIntent);
 							    	PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
 							    	mBuilder.setContentIntent(resultPendingIntent);
 							    	NotificationManager mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+							    	
 							    	// mId allows you to update the notification later on.
 							    	mNotificationManager.notify(GM.NOTIFICATION_ID_REPORTING, mBuilder.build());
 									
@@ -395,7 +398,7 @@ public class MainActivity extends Activity {
 			
 			//Fetches the remote URL, triggering the admin insertion in the database.
 			FetchURL fetch = new FetchURL();
-			fetch.Run("http://inigovalentin.com/gm/app/upload/admin.php?name=" + name + "&code=" + code + "&phone=" + phone);
+			fetch.Run(GM.SERVER + "app/upload/admin.php?name=" + name + "&code=" + code + "&phone=" + phone);
 			
 			//Read the output to see if the submission was done.
 			List<String> lines = fetch.getOutput();

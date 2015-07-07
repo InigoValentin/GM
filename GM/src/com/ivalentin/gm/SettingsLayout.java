@@ -102,7 +102,7 @@ public class SettingsLayout extends Fragment{
 			tvAccountGm.setText(view.getContext().getString(R.string.settings_account_gm_off));
 		}
 		
-		String username = settings.getString(GM.PREF_USERNAME, GM.DEFAULT_PREF_USERNAME);
+		String username = settings.getString(GM.USER_NAME, GM.DEFAULT_PREF_USERNAME);
 		if (username.length() > 0){
 			tvAccountName.setText(username);
 		}

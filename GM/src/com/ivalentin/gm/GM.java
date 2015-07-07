@@ -9,6 +9,11 @@ package com.ivalentin.gm;
 public final class GM {
 	
 	/**
+	 * Address where the web server is
+	 */
+	static final String SERVER = "http://inigovalentin.com/gm/";
+	
+	/**
 	 * Duration of the menu sliding animation.
 	 */
 	static final int MENU_SLIDING_DURATION = 500;

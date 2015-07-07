@@ -3,6 +3,7 @@ package com.ivalentin.gm;
 import java.io.File;
 import java.math.BigInteger;
 import java.security.SecureRandom;
+import java.util.concurrent.ExecutionException;
 
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -314,109 +315,116 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
         	Log.i("DB status", "Database not found. Creating it...");
         	createDatabase();
         }
-				
-		//Sync db
-		sync();
 		
-		//Load initial section
-		loadSection(GM.SECTION_HOME, false);
-		
-		//If the intent had extras (from notifications), do something
-		if (actionText != null){
-			TextView tvDialogTitle, tvDialogText;
-			Button btDialogClose, btDialogAction;
-			Drawable dialogIcon;
-			if (actionTitle != null){
-				
-				//Create a dialog
-				final Dialog dialog = new Dialog(this);
-				
-				//Set up dialog window
-				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
-				dialog.setContentView(R.layout.dialog_notification);
-				
-				//Set title
-				tvDialogTitle = (TextView) dialog.findViewById(R.id.tv_dialog_notification_title);
-				tvDialogTitle.setText(actionTitle);
-				
-				//Set text
-				tvDialogText = (TextView) dialog.findViewById(R.id.tv_dialog_notification_text);
-				tvDialogText.setText(actionText);
-				
-				//Set close button
-				btDialogClose = (Button) dialog.findViewById(R.id.bt_dialog_notification_close);
-				btDialogClose.setOnClickListener(new OnClickListener() {
-	    			@Override
-	    			public void onClick(View v) {
-	    				dialog.dismiss();
-	    			}
-	    		});
-				
-				//Set the action button
-				btDialogAction = (Button) dialog.findViewById(R.id.bt_dialog_notification_action);
-				if (action != null){
+		//If its the first time
+		if (preferences.getInt(GM.PREF_DB_VERSION, GM.DEFAULT_PREF_DB_VERSION) == GM.DEFAULT_PREF_DB_VERSION){
+			initialSync();
+		}
+		//If t's not the first time
+		else{
+			//Sync db
+			sync();
+			
+			//Load initial section
+			loadSection(GM.SECTION_HOME, false);
+			
+			//If the intent had extras (from notifications), do something
+			if (actionText != null){
+				TextView tvDialogTitle, tvDialogText;
+				Button btDialogClose, btDialogAction;
+				Drawable dialogIcon;
+				if (actionTitle != null){
 					
-					//If the notification action opens the GM schedule
-					if (action.equals(GM.EXTRA_ACTION_GM)){
+					//Create a dialog
+					final Dialog dialog = new Dialog(this);
+					
+					//Set up dialog window
+					dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+					dialog.setContentView(R.layout.dialog_notification);
+					
+					//Set title
+					tvDialogTitle = (TextView) dialog.findViewById(R.id.tv_dialog_notification_title);
+					tvDialogTitle.setText(actionTitle);
+					
+					//Set text
+					tvDialogText = (TextView) dialog.findViewById(R.id.tv_dialog_notification_text);
+					tvDialogText.setText(actionText);
+					
+					//Set close button
+					btDialogClose = (Button) dialog.findViewById(R.id.bt_dialog_notification_close);
+					btDialogClose.setOnClickListener(new OnClickListener() {
+		    			@Override
+		    			public void onClick(View v) {
+		    				dialog.dismiss();
+		    			}
+		    		});
+					
+					//Set the action button
+					btDialogAction = (Button) dialog.findViewById(R.id.bt_dialog_notification_action);
+					if (action != null){
 						
-						//Set the icon
-						dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_gm, null);
-						dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
-						tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
-						tvDialogTitle.setCompoundDrawablePadding(20);
+						//If the notification action opens the GM schedule
+						if (action.equals(GM.EXTRA_ACTION_GM)){
+							
+							//Set the icon
+							dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_gm, null);
+							dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
+							tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
+							tvDialogTitle.setCompoundDrawablePadding(20);
+							
+							//Set up the action button
+							btDialogAction.setVisibility(View.VISIBLE);
+							btDialogAction.setText(this.getApplicationContext().getString(R.string.notification_action_gm));
+							btDialogAction.setOnClickListener(new OnClickListener() {
+				    			@Override
+				    			public void onClick(View v) {
+				    				dialog.dismiss();
+				    				loadSection(GM.SECTION_GM_SCHEDULE, false);
+				    			}
+				    		});
+						}
 						
-						//Set up the action button
-						btDialogAction.setVisibility(View.VISIBLE);
-						btDialogAction.setText(this.getApplicationContext().getString(R.string.notification_action_gm));
-						btDialogAction.setOnClickListener(new OnClickListener() {
-			    			@Override
-			    			public void onClick(View v) {
-			    				dialog.dismiss();
-			    				loadSection(GM.SECTION_GM_SCHEDULE, false);
-			    			}
-			    		});
+						//If the notification action opens the city schedule
+						else if (action.equals(GM.EXTRA_ACTION_SCHEDULE)){
+							
+							//Set the icon
+							dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_program, null);
+							dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
+							tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
+							tvDialogTitle.setCompoundDrawablePadding(20);
+							
+							//Set up the action button
+							btDialogAction.setVisibility(View.VISIBLE);
+							btDialogAction.setText(this.getApplicationContext().getString(R.string.notification_action_schedule));
+							btDialogAction.setOnClickListener(new OnClickListener() {
+				    			@Override
+				    			public void onClick(View v) {
+				    				dialog.dismiss();
+				    				loadSection(GM.SECTION_SCHEDULE, false);
+				    			}
+				    		});
+						}
+						
+						//If the notification is just text
+						else{
+							
+							//Set the icon
+							dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_about, null);
+							dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
+							tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
+							tvDialogTitle.setCompoundDrawablePadding(20);
+							
+							//Hide action button
+							btDialogAction.setVisibility(View.GONE);
+						}
 					}
-					
-					//If the notification action opens the city schedule
-					else if (action.equals(GM.EXTRA_ACTION_SCHEDULE)){
-						
-						//Set the icon
-						dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_program, null);
-						dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
-						tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
-						tvDialogTitle.setCompoundDrawablePadding(20);
-						
-						//Set up the action button
-						btDialogAction.setVisibility(View.VISIBLE);
-						btDialogAction.setText(this.getApplicationContext().getString(R.string.notification_action_schedule));
-						btDialogAction.setOnClickListener(new OnClickListener() {
-			    			@Override
-			    			public void onClick(View v) {
-			    				dialog.dismiss();
-			    				loadSection(GM.SECTION_SCHEDULE, false);
-			    			}
-			    		});
-					}
-					
-					//If the notification is just text
 					else{
-						
-						//Set the icon
-						dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_about, null);
-						dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
-						tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
-						tvDialogTitle.setCompoundDrawablePadding(20);
-						
-						//Hide action button
 						btDialogAction.setVisibility(View.GONE);
 					}
+	
+					//Show the dialog
+					dialog.show();
 				}
-				else{
-					btDialogAction.setVisibility(View.GONE);
-				}
-
-				//Show the dialog
-				dialog.show();
 			}
 		}
 	}
@@ -466,6 +474,22 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	public void sync(){
 		ProgressBar pbSync = (ProgressBar) findViewById(R.id.pb_sync);
 		new Sync(this, pbSync).execute();
+	}
+	
+	private void initialSync(){
+		//Create a dialog
+		Dialog dialog = new Dialog(this);
+		dialog.setCancelable(false);
+		
+		//Set up the window
+		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+		dialog.setContentView(R.layout.dialog_sync);
+		
+		//Force sync, stopping the ui thread
+		ProgressBar pbSync = (ProgressBar) findViewById(R.id.pb_sync);
+		new Sync(this, pbSync, dialog, this).execute();
+		//TODO: Recheck version
+		
 	}
 	
 	/**

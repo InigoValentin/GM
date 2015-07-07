@@ -181,4 +181,13 @@
 	<string name="notification_action_schedule">Ver programa de fiestas</string>
 	<string name="notification_action_gm">Ver programa Margolari</string>
 	
+	<!-- Sync dialog strings -->
+	
+	<string name="dialog_sync_title">Sincronizando</string>
+	<string name="dialog_sync_text">Descargando los últimos contenidos en tu teléfono.</string>
+	<string name="dialog_sync_internet">La primera vez que usas esta aplicación debes disponer de una conexión a internet.</string>
+	<string name="dialog_sync_failed_title">Error de sincronizacion</string>
+	<string name="dialog_sync_failed_text">No se pudierdon descargar los contenidos\n\nAsegúrate de que dispones de conexión a internet e inténtalo de nuevo.</string>
+	<string name="dialog_sync_failed_close">Cerrar</string>
+	
 </resources>

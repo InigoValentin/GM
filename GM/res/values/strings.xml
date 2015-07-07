@@ -180,4 +180,15 @@
 	<string name="notification_close">Close</string>
 	<string name="notification_action_schedule">Open festival schedule</string>
 	<string name="notification_action_gm">Open Margolariak Schedule</string>
+	
+	
+	<!-- Sync dialog strings -->
+	
+	<string name="dialog_sync_title">Fetching content</string>
+	<string name="dialog_sync_text">Downloading the latest content.</string>
+	<string name="dialog_sync_internet">You must have an active network connection the first time you run this app.</string>
+	<string name="dialog_sync_failed_title">Synchronization failed</string>
+	<string name="dialog_sync_failed_text">Couldn\'t download content.\n\nMake sure you have a network connection and try again.</string>
+	<string name="dialog_sync_failed_close">Close</string>
+	
 </resources>

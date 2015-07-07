@@ -4,12 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.util.Log;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.Window;
+import android.widget.Button;
 import android.widget.ProgressBar;
 
 /**
@@ -23,6 +27,8 @@ public class Sync extends AsyncTask<Void, Void, Void> {
 	
 	private Context myContextRef;
 	private ProgressBar pbSync;
+	private Dialog dialog;
+	private MainActivity activity;
 	private boolean fg;
 	
 	
@@ -34,6 +40,9 @@ public class Sync extends AsyncTask<Void, Void, Void> {
 	protected void onPreExecute(){
 		if (pbSync != null)
 			pbSync.setVisibility(View.VISIBLE);
+		if (dialog != null){
+			dialog.show();
+		}
 		Log.d("Sync", "Starting full sync");
 	}
 	
@@ -45,6 +54,36 @@ public class Sync extends AsyncTask<Void, Void, Void> {
 	protected void onPostExecute(Void v){
 		if (pbSync != null)
 			pbSync.setVisibility(View.INVISIBLE);
+		if (dialog != null){
+			dialog.dismiss();
+			//Check db version agan
+			SharedPreferences preferences = myContextRef.getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
+			if (preferences.getInt(GM.PREF_DB_VERSION, GM.DEFAULT_PREF_DB_VERSION) == GM.DEFAULT_PREF_DB_VERSION){
+				//Create a dialog
+				final Dialog dial = new Dialog(activity);
+				dial.setCancelable(false);
+				
+				//Set up the window
+				dial.requestWindowFeature(Window.FEATURE_NO_TITLE);
+				dial.setContentView(R.layout.dialog_sync_failed);
+				
+				//Set button
+				Button btClose = (Button) dial.findViewById(R.id.bt_dialog_sync_failed_close);
+				btClose.setOnClickListener(new OnClickListener(){
+					@Override
+					public void onClick(View v) {
+						dial.dismiss();
+						activity.finish();
+					}
+				});
+				
+				//Show the dialog
+				dial.show();
+			}
+			else{
+				activity.loadSection(GM.SECTION_HOME, false);
+			}
+		}
 		Log.d("Sync", "Full sync finished");
 	}
 	
@@ -55,6 +94,23 @@ public class Sync extends AsyncTask<Void, Void, Void> {
      * @param pb The progress bar that will be shown while the sync goes on.
      */
     public Sync(Activity myContextRef, ProgressBar pb) {
+        this.myContextRef = myContextRef;
+        dialog = null;
+        pbSync = pb;
+        fg = true;
+    }
+    
+    /**
+     * Called when the AsyncTask is created.
+     * 
+     * @param myContextRef The Context of the calling activity.
+     * @param d Dialog of the initial sync
+     * @param pb The progress bar that will be shown while the sync goes on.
+     * @param activity The calling MainActvity
+     */
+    public Sync(Activity myContextRef, ProgressBar pb, Dialog d, MainActivity activity) {
+    	this.dialog = d;
+    	this.activity = activity;
         this.myContextRef = myContextRef;
         pbSync = pb;
         fg = true;
@@ -94,7 +150,7 @@ public class Sync extends AsyncTask<Void, Void, Void> {
 		List<String> query = new ArrayList<String>();
 		
 		//Preferences.
-		SharedPreferences preferences = myContextRef.getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);;
+		SharedPreferences preferences = myContextRef.getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
 		
 		//Boolean that will prevent the process to go on if something goes wrong.
 		boolean success = true;

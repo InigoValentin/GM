@@ -46,7 +46,13 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * Layout that show event close to the user in both time and space.
+ * Layout that show event close to the user in both time and space. 
+ * It implements LocationListener so it can detect changes in the user location. 
+ * It implements OnMapReadyCallback so a map can be shown when an item is clicked.
+ * 
+ * @see Fragment
+ * @see LocationListener
+ * @see OnMapReadyCallback
  * 
  * @author Iñigo Valentin
  *
@@ -95,6 +101,12 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 	 * Run when the fragment is inflated.
 	 * Assigns views, gets the date and does the first call to the {@link populate function}.
 	 * 
+	 * @param inflater A LayoutInflater to manage views
+	 * @param container The container View
+	 * @param savedInstanceState Bundle containing the state
+	 * 
+	 * @return The fragment view
+	 * 
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@SuppressLint("InflateParams") //Throws unknown error when done properly.
@@ -107,7 +119,7 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		//Set the title
 		((MainActivity) getActivity()).setSectionTitle(view.getContext().getString(R.string.menu_around));
 		
-		//Get the location passed from MainActivity so we dont have to wait for it to be aquired.
+		//Get the location passed from MainActivity so we don't have to wait for it to be acquired.
 		Bundle bundle = this.getArguments();
 		coordinates[0] = bundle.getDouble("lat", 0);
 		coordinates[1] = bundle.getDouble("lon", 0);
@@ -117,7 +129,7 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		noGps = (LinearLayout) view.findViewById(R.id.ll_around_no_gps);
 		noEvents = (LinearLayout) view.findViewById(R.id.ll_around_no_events);
 		
-		//"Open Settings" button, shown when GPS is off
+		//"Open Settings" button, shown when GPS is off.
 		Button btSettings = (Button) view.findViewById(R.id.bt_around_no_gps);
 		btSettings.setOnClickListener(new OnClickListener(){
 			@Override
@@ -126,7 +138,7 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 			}
 		});
 		
-		//"View Schedule" button, shown when no events
+		//"View Schedule" button, shown when no events.
 		Button btSchedule = (Button) view.findViewById(R.id.bt_around_no_events);
 		btSchedule.setOnClickListener(new OnClickListener(){
 			@Override
@@ -136,65 +148,11 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 			
 		});
 		
-		//Set Location manager
+		//Set Location manager.
 		locationManager = (LocationManager) view.getContext().getSystemService(Context.LOCATION_SERVICE);
-		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-            	double lat = location.getLatitude();
-        		double lng = location.getLongitude();
-        		coordinates[0] = lat;
-        		coordinates[1] = lng;
-        		//Check GPS status
-        		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-        			//Populate the activity list
-        			list.setVisibility(View.VISIBLE);
-        			noGps.setVisibility(View.GONE);
-        			noEvents.setVisibility(View.GONE);
-        			populateAround(list);
-        		}
-        		else{
-        			list.setVisibility(View.GONE);
-        			noEvents.setVisibility(View.GONE);
-        			noGps.setVisibility(View.VISIBLE);
-        		}
-            }
-            @Override
-            public void onProviderDisabled(String provider) {
-            	//Check GPS status
-        		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-        			//Populate the activity list
-        			list.setVisibility(View.VISIBLE);
-        			noGps.setVisibility(View.GONE);
-        			noEvents.setVisibility(View.GONE);
-        			populateAround(list);
-        		}
-        		else{
-        			list.setVisibility(View.GONE);
-        			noEvents.setVisibility(View.GONE);
-        			noGps.setVisibility(View.VISIBLE);
-        		}
-            }
-            @Override
-            public void onProviderEnabled(String provider) {
-            	//Check GPS status
-        		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
-        			//Populate the activity list
-        			list.setVisibility(View.VISIBLE);
-        			noGps.setVisibility(View.GONE);
-        			noEvents.setVisibility(View.GONE);
-        			populateAround(list);
-        		}
-        		else{
-        			list.setVisibility(View.GONE);
-        			noEvents.setVisibility(View.GONE);
-        			noGps.setVisibility(View.VISIBLE);
-        		}
-            }
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) { }           
-        });
+		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, this);
 		
+		//Show and hide sections depending on the GPS status.
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 			//Populate the activity list
 			list.setVisibility(View.VISIBLE);
@@ -206,15 +164,13 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 			noGps.setVisibility(View.VISIBLE);
 		}
 						
-		
-		
 		//Return the fragment view
 		return view;
 	}
 	
 	/**
-	 * Populates the list of activities around.
-	 * 
+	 * Populates the list of activities around. 
+	 * It uses the default layout as parent.
 	 */
 	public void populateAround(){
 		LinearLayout list = (LinearLayout) this.getView().findViewById(R.id.ll_around_list);
@@ -256,21 +212,25 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		//Make the list empty, in case we are not populating it for the first time.
         list.removeAllViews();
         
-        
-        double distance;
+        //Elements to parse, format and calculate times.
         Calendar cal;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
 		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd-", Locale.US);
 		Date date = new Date();
 		Date startMinus30, endMinus15, startPlus30;
-		DecimalFormat df = new DecimalFormat("#.#"); 
+		
+		//Decimal formatter to write text
+		DecimalFormat df = new DecimalFormat("#.#");
+		
+		//Holds the distance between the user and the event
+		double distance;
         
         
-        //Loop thorough every returned row, creating an event for each
+        //Loop thorough every returned row, creating an event for each suitable row.
         while (cursor.moveToNext()){
         	
-        	//Add event to the list       	
+        	//Operate with dates to see if the event close in time.       	
         	try{
 				cal = Calendar.getInstance();
 			    cal.setTime(dateFormat.parse(cursor.getString(8)));
@@ -317,12 +277,16 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
         
         //Loop events in the list.
         if (eventList.size() == 0){
+        	//If no events around
         	list.setVisibility(View.GONE);
         	noEvents.setVisibility(View.VISIBLE);
         }
         else{
+        	//If there are events being hold now or close in time.
         	list.setVisibility(View.VISIBLE);
         	noEvents.setVisibility(View.GONE);
+        	
+        	//Loop events
 	        for(int i = 0; i < eventList.size(); i++){
 	        	
 	        	//Create a new row
@@ -364,10 +328,10 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		        		tvRowTime.setText(view.getContext().getString(R.string.tomorrow) + " " + timeFormat.format(tm));
 				}
 				catch (Exception e) {
-					Log.e("Date error", e.toString());
+					Log.e("Around event date error", e.toString());
 				}
 	        	
-				//Set touch event
+				//Set touch event that will show a dialog.
 				llTouch = (LinearLayout) entry.findViewById(R.id.ll_row_around_content);
 				llTouch.setOnClickListener(new OnClickListener(){
 					@Override
@@ -384,9 +348,17 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
         }
 	}
 	
+	/**
+	 * Shows a dialog with info about an event.
+	 * 
+	 * @param id The id of the event
+	 */
 	private void showDialog(int id){
-		Log.e("DIALOG", "#" + id);
+		
+		//Create the dialog
 		final Dialog dialog = new Dialog(getActivity());
+		
+		//Set window
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.dialog_around);
 		
@@ -403,32 +375,39 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		TextView tvPlace = (TextView) dialog.findViewById(R.id.tv_dialog_around_place);
 		TextView tvAddress = (TextView) dialog.findViewById(R.id.tv_dialog_around_address);
 		Button btClose = (Button) dialog.findViewById(R.id.bt_around_close);
+		
 		//Get info about the event
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
 		Cursor cursor = db.rawQuery("SELECT event.id, event.name, description, start, end, place.name, address, lat, lon FROM event, place WHERE schedule = 1 AND place.id = event.place AND event.id = " + id + ";", null);
 		if (cursor.getCount() > 0){
 			cursor.moveToNext();
 		
-			//Set texts
+			//Set title
 			tvTitle.setText(cursor.getString(1));
+			
+			//Set decription
 			tvDescription.setText(cursor.getString(2));
+			
+			//Set date
 			try{
 				Date day = dateFormat.parse(cursor.getString(3));
 				Date date = new Date();
-				//If the event is today
-				if (dayFormat.format(day).equals(dayFormat.format(date)))
-					tvDate.setText(dialog.getContext().getString(R.string.today));
 				
+				//If the event is today, show "Today" instead of the date.
+				if (dayFormat.format(day).equals(dayFormat.format(date))){
+					tvDate.setText(dialog.getContext().getString(R.string.today));
+				}
 				else{
 					Calendar cal = Calendar.getInstance();
 				    cal.setTime(date);
 				    cal.add(Calendar.HOUR_OF_DAY, 24);
-				    //If the event is tomorrow
+				    
+				    //If the event is tomorrow, show "Tomorrow" instead of the date.
 				    if (dayFormat.format(cal.getTime()).equals(dayFormat.format(date))){
 				    	tvDate.setText(dialog.getContext().getString(R.string.tomorrow));
 				    }
 					
-				    //Else
+				    //Else, show the date
 				    else{
 				    	SimpleDateFormat printFormat = new SimpleDateFormat("dd MMMM", Locale.US);
 				    	tvDate.setText(printFormat.format(day));
@@ -436,9 +415,10 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 				}
 			}
 			catch (Exception ex){
-				Log.e("Error parsing event date", ex.toString());
+				Log.e("Error parsing around event date", ex.toString());
 			}
 			
+			//Set time
 			try{
 				if (cursor.getString(4) == null)
 					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))));
@@ -446,8 +426,10 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))) + " - " + timeFormat.format(timeFormat.parse(cursor.getString(4))));
 			}
 			catch (ParseException ex){
-				Log.e("Error parsing event time", ex.toString());
+				Log.e("Error parsing around event time", ex.toString());
 			}
+			
+			//Set place
 			tvPlace.setText(cursor.getString(5));
 			tvAddress.setText(cursor.getString(6));
 			
@@ -471,22 +453,28 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 			startMap();
 			mapView.onResume();
 			dialog.setOnShowListener(new OnShowListener(){
-
 				@Override
 				public void onShow(DialogInterface dialog) {
 					// Gets to GoogleMap from the MapView and does initialization stuff
-					startMap();
-					
-				}});
-			
-			
+					startMap();		
+				}
+			});
 		}
 	}
 	
-	public void startMap(){
+	/**
+	 * Starts the map in the dialog.
+	 */
+	private void startMap(){
 		mapView.getMapAsync(this);
 	}
 	
+	/**
+	 * Called when the fragment is brought back into the foreground. 
+	 * Resumes the map and the location manager.
+	 * 
+	 * @see android.support.v4.app.Fragment#onResume()
+	 */
 	@Override
 	public void onResume() {
 		if (mapView != null)
@@ -497,6 +485,12 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		super.onResume();
 	}
 
+	/**
+	 * Called when the fragment is destroyed. 
+	 * Finishes the map. 
+	 * 
+	 * @see android.support.v4.app.Fragment#onDestroy()
+	 */
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -506,7 +500,13 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		}
 	}
 
-	 @Override
+	/**
+	 * Called in a situation of low memory.
+	 * Lets the map handle this situation.
+	 * 
+	 * @see android.support.v4.app.Fragment#onLowMemory()
+	 */
+	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
 		if (mapView != null){
@@ -515,6 +515,14 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		}
 	}
 
+	/**
+	 * Called when the map is ready to be displayed. 
+	 * Sets the map options and a marker for the map.
+	 * 
+	 * @param googleMap The map to be shown
+	 * 
+	 * @see com.google.android.gms.maps.OnMapReadyCallback#onMapReady(com.google.android.gms.maps.GoogleMap)
+	 */
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		this.map = googleMap;
@@ -538,6 +546,14 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		
 	}
 	
+	/**
+	 * Called when the user location changes. 
+	 * Recalculates the list of events.
+	 * 
+	 * @param location The new location
+	 * 
+	 * @see android.location.LocationListener#onLocationChanged(android.location.Location)
+	 */
 	@Override
     public void onLocationChanged(Location location) {
     	double lat = location.getLatitude();
@@ -558,6 +574,16 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 			noGps.setVisibility(View.VISIBLE);
 		}
     }
+	
+	
+    /**
+     * Called when a location provider is disabled. 
+     * Recalculates the list of events.
+     * 
+     * @param provider The name of the provider
+     * 
+     * @see android.location.LocationListener#onProviderDisabled(java.lang.String)
+     */
     @Override
     public void onProviderDisabled(String provider) {
     	//Check GPS status
@@ -574,6 +600,15 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 			noGps.setVisibility(View.VISIBLE);
 		}
     }
+    
+    /**
+     * Called when a location provider is enabled.
+     * Recalculates the list of events.
+     * 
+     * @param provider The name of the provider
+     * 
+     * @see android.location.LocationListener#onProviderEnabled(java.lang.String)
+     */
     @Override
     public void onProviderEnabled(String provider) {
     	//Check GPS status
@@ -590,6 +625,17 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 			noGps.setVisibility(View.VISIBLE);
 		}
     }
+    
+    /**
+     * Called when the location provider changes it's state. 
+     * Does nothing, all useful cases are handled outside here.
+     * 
+     * @param provider The name of the provider
+     * @param status Status code of the provider
+     * @param extras Extras passed 
+     * 
+     * @see android.location.LocationListener#onStatusChanged(java.lang.String, int, android.os.Bundle)
+     */
     @Override
     public void onStatusChanged(String provider, int status, Bundle extras) { }
 		

@@ -20,7 +20,8 @@ public final class Distance {
 	 * @param lat2 Latitude of the second point
 	 * @param lon2 Longitude of the second point
 	 * @param unit The result unit. 'M' for statute miles (default), 'K' for kilometers and 'N' for nautical miles.
-	 * @return
+	 * 
+	 * @return The distance between the points
 	 */
 	public static final double calculateDistance(double lat1, double lon1, double lat2, double lon2, char unit) {
 		double theta = lon1 - lon2;
@@ -39,7 +40,9 @@ public final class Distance {
 	
 	/**
 	 * Converts decimal degrees to radians.
+	 * 
 	 * @param deg Decimal degrees.
+	 * 
 	 * @return Radians.
 	 */
 	private static final double deg2rad(double deg) {
@@ -48,7 +51,9 @@ public final class Distance {
 	
 	/**
 	 * Converts radians to decimal degrees.
+	 * 
 	 * @param rad Radans.
+	 * 
 	 * @return Decimal degrees.
 	 */
 	private static final double rad2deg(double rad) {

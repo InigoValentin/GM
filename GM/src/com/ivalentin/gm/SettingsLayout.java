@@ -28,11 +28,16 @@ public class SettingsLayout extends Fragment{
 	//The user name
 	private String userName;
 	
+	//Color to store default text color before change them
 	private ColorStateList defaultColorTitle, defaultColorSummary;
 	
 	/**
 	 * Run when the fragment is inflated.
-	 * Assigns the view and the click listeners.
+	 * Assigns the view and the click listeners. 
+	 * 
+	 * @param inflater A LayoutInflater to manage views
+	 * @param container The container View
+	 * @param savedInstanceState Bundle containing the state
 	 * 
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
@@ -105,6 +110,7 @@ public class SettingsLayout extends Fragment{
 			tvAccountName.setText(view.getContext().getString(R.string.settings_account_unset));
 		}
 		
+		//Set click listener for "Notification" preference
 		rlNotification.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -136,6 +142,7 @@ public class SettingsLayout extends Fragment{
 			
 		});
 		
+		//Set click listener for the "GM notifications" preference
 		rlNotificationGm.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -160,6 +167,7 @@ public class SettingsLayout extends Fragment{
 			}			
 		});
 		
+		//Set click listener for the "I am margolari" preference
 		rlAccountGm.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -181,6 +189,8 @@ public class SettingsLayout extends Fragment{
 				}
 			}	
 		});
+		
+		//Set click listener for the "Name" preference
 		rlAccountName.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
@@ -189,12 +199,7 @@ public class SettingsLayout extends Fragment{
 				AlertDialog.Builder builder = new AlertDialog.Builder(view.getContext());
 				builder.setTitle(view.getContext().getString(R.string.settings_account_message_title));
 				// Set up the input
-				//final TextView tv = new TextView(view.getContext());
-				//tv.setText(view.getContext().getString(R.string.app_name));
-				//final EditText input = new EditText(view.getContext());
 				final EditText input = (EditText) dialogLayout.findViewById(R.id.et_change_username);
-				// Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
-				//input.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
 				builder.setView(dialogLayout);
 
 				// Set up the buttons

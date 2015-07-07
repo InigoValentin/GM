@@ -8,9 +8,10 @@ import android.widget.ScrollView;
 
 /**
  * An extended ScrollView. 
- * It allows to be swept from the left to open the app menu.
+ * It allows to be swept from the left to open the application menu.
  * 
  * @author Iñigo Valentin
+ * 
  * @see ScrollView
  *
  */
@@ -51,11 +52,14 @@ public class CustomScrollView extends ScrollView{
 	 * 
 	 * If the motion is in the leftmost part of the screen, the event is not 
 	 * passed along and the menu is shown.
+	 * 
 	 * @see android.widget.ScrollView#onTouchEvent(android.view.MotionEvent)
 	 * 
-	 * @param ev The MotionEvent triggering the action.
+	 * @param ev The MotionEvent triggering the action
+	 * 
+	 * @return True if the app handles the motion (i.e. to slide), false otherwise (normal event)
 	 */
-	@SuppressLint("ClickableViewAccessibility")
+	@SuppressLint("ClickableViewAccessibility") //Disturbs the sliding process
 	@Override
     public boolean onTouchEvent(MotionEvent ev) {
 		int width = this.getWidth();

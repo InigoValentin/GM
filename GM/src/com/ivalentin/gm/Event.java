@@ -12,6 +12,8 @@ import android.util.Log;
  * An event holds information about an activity of the festival
  * 
  * @author Iñigo Valentin
+ * 
+ * @see Comparable
  *
  */
 public class Event implements Comparable<Event>{
@@ -204,6 +206,8 @@ public class Event implements Comparable<Event>{
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 * 
 	 * @param Other event to compare to this.
+	 * 
+	 * @return Negative integer if this instance is less than another, positive if it's greater, 0 if they are equal.
 	 */
 	@Override
 	public int compareTo(Event another) {
@@ -254,10 +258,4 @@ public class Event implements Comparable<Event>{
 		
 		return Math.round(result);
 	}
-	
-	
-	
-	
-	
-	
 }

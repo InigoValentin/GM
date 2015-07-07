@@ -501,5 +501,5 @@ public final class GM {
 	/**
 	 * The desired accuracy of the GPS coordinates, used to provide location updates, in meters.
 	 */
-	static final int LOCATION_ACCURACY = 40;
+	static final int LOCATION_ACCURACY = 20;
 }

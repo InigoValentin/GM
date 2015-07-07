@@ -1,7 +1,7 @@
 <?php
 	/*
 	 *
-	 * This file insert the data submitterb by ../add/event.php into the database.
+	 * This file insert the data submitted by ../add/gmevent.php into the database.
 	 * 
 	 * Please note that, along with the other files in this folder and the "add"
 	 * folder, ths file can cause security problems, so it must be removed from the
@@ -42,7 +42,7 @@
 				$host = $_GET['host_' . $i];
 				if (strlen($host) == 0)
 					$host = "null";
-				$query = "INSERT INTO event (gm, schedule, name, description, start, end, place, host) VALUES (0, 1, '$name', '$description', $start, $end, $place, $host);";
+				$query = "INSERT INTO event (gm, schedule, name, description, start, end, place, host) VALUES (1, 0, '$name', '$description', $start, $end, $place, $host);";
 				//if (strlen($name) > 0 && $address != "" && $cp != "" && $lat != "" && $lon != ""){
 				//	mysqli_query($con, $query);
 				//	echo "Entrada anadida: $name<br/>\n";

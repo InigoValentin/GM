@@ -18,15 +18,29 @@ import android.widget.Scroller;
  */
 public class MainLayout extends LinearLayout {
 
+	//The width of the view
 	private int mainLayoutWidth;
+	
+	//The menu view
 	private View menu;
+	
+	//The content view
 	private View content;
+	
+	//The margin of the menu
 	private static int menuRightMargin = 25;
 
+	/**
+	 * Gets the menu's view.
+	 * @return The menu view
+	 */
 	public View getMenuView(){
 		return menu;
 	}
 	
+	/**
+	 * Possible states of the menu
+	 */
 	private enum MenuState {
 		HIDING, HIDDEN, SHOWING, SHOWN,
 	};
@@ -99,6 +113,10 @@ public class MainLayout extends LinearLayout {
 
 	}
 
+	/**
+	 * Changes the menu state. 
+	 * Closes it if it's open. Opens it if it's closed.
+	 */
 	public void toggleMenu() {
 		if (currentMenuState == MenuState.HIDING || currentMenuState == MenuState.SHOWING)
 			return;
@@ -120,6 +138,14 @@ public class MainLayout extends LinearLayout {
 		this.invalidate();
 	}
 	
+	/**
+	 * Handles the animation of the sliding menu.
+	 * 
+	 * @author seavenois
+	 * 
+	 * @see Runnable
+	 *
+	 */
 	protected class MenuRunnable implements Runnable {
 		@Override
 		public void run() {
@@ -128,6 +154,11 @@ public class MainLayout extends LinearLayout {
 		}
 	}
 		
+	/**
+	 * Moves the content view when the menu is slided. 
+	 * 
+	 * @param isScrolling Indicates if the menu is being slided.
+	 */
 	private void adjustContentPosition(boolean isScrolling) {
 		int scrollerXOffset = menuScroller.getCurrX();
 		
@@ -141,7 +172,12 @@ public class MainLayout extends LinearLayout {
 			this.onMenuSlidingComplete();
 	}
 	
+	/**
+	 * Called when the menu has been slided completely. 
+	 * Fixes the position.
+	 */
 	private void onMenuSlidingComplete() {
+		//TODO: Something is not working here...
 		switch (currentMenuState) {
 			case SHOWING:
 				currentMenuState = MenuState.SHOWN;

@@ -24,6 +24,8 @@ import android.util.Log;
 /**
  * Manages alarms to perform actions in the background, such as sync and receive notifications.
  * 
+ * @see WakefulBroadcastReceiver
+ * 
  * @author Iñigo Valentin
  *
  */
@@ -38,6 +40,10 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
     /**
      * Actions to be performed when an alarm is received. 
      * Performs a full sync, and gets the pending notifications.
+     * 
+     * @param context Context of the activity or application
+     * @param intent Receiver intent
+     * 
      * @see android.content.BroadcastReceiver#onReceive(android.content.Context, android.content.Intent)
      */
     @Override

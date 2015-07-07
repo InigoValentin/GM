@@ -87,6 +87,12 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 	 * Run when the fragment is inflated.
 	 * Assigns views, gets the date and does the first call to the {@link populate function}.
 	 * 
+	 * @param inflater A LayoutInflater to handle the views
+	 * @param container The parent View
+	 * @param sanvedInstanceState Bundle with the saved state
+	 * 
+	 * @return The fragment view
+	 * 
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@SuppressLint("InflateParams") //Throws unknown error when done properly.
@@ -132,12 +138,9 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		llGm = (LinearLayout) view.findViewById(R.id.ll_home_section_gm);
 		llAround = (LinearLayout) view.findViewById(R.id.ll_home_section_around);
 		llLocation = (LinearLayout) view.findViewById(R.id.ll_home_section_location);
-		//llJoin = (LinearLayout) view.findViewById(R.id.ll_home_section_join);
 		llScheduleContent = (LinearLayout) view.findViewById(R.id.ll_home_section_schedule_content);
 		llGmContent = (LinearLayout) view.findViewById(R.id.ll_home_section_gm_content);
 		llAroundContent = (LinearLayout) view.findViewById(R.id.ll_home_section_around_content);
-		//llLocationContent = (LinearLayout) view.findViewById(R.id.ll_home_section_location_content);
-		//llJoinContent = (LinearLayout) view.findViewById(R.id.ll_home_section_join_content);
 		llScheduleLink = (LinearLayout) view.findViewById(R.id.ll_home_section_schedule_link);
 		llGmLink = (LinearLayout) view.findViewById(R.id.ll_home_section_gm_link);
 		llAroundLink = (LinearLayout) view.findViewById(R.id.ll_home_section_around_link);
@@ -176,11 +179,17 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		llJoinLink.setOnClickListener(new OnClickListener(){
 			@Override
 			public void onClick(View v) {
+				
+				//Here, we are going to show a dialog with all info related to the prices
+				
+				//Create the dialog
 				final Dialog dialog = new Dialog(getActivity());
+				
+				//Set window
 				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 				dialog.setContentView(R.layout.dialog_prices);
 		 
-				//Assgn dialog views
+				//Assign dialog views
 				TextView[] tvDayName = new TextView[6];
 				TextView[] tvDayPrice = new TextView[6];
 				TextView[] tvOfferName = new TextView[3];
@@ -216,24 +225,22 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 				SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
 				Cursor cursor;
 				
-				//Icon options
+				//Set up icons
 				Drawable dayIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.price_day, null);
-				//dayIcon.setBounds(0, 0, 70, 70);
 				dayIcon.setBounds(0, 0, (int) (tvDayName[0].getTextSize() * 1.5), (int) (tvDayName[0].getTextSize() * 1.5));
 				Drawable offerIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.price_offer, null);
-				//offerIcon.setBounds(0, 0, 70, 70);
 				offerIcon.setBounds(0, 0, (int) (tvOfferName[0].getTextSize() * 1.5), (int) (tvOfferName[0].getTextSize() * 1.5));
 				
 				//Set TextViews for days
 				int i = 0;
 				cursor = db.rawQuery("SELECT name, price FROM day ORDER BY id;", null);
 				while (cursor.moveToNext() && i < 6){
-					Log.e("DAY", cursor.getString(0));
 					tvDayName[i].setText(cursor.getString(0));
 					tvDayName[i].setCompoundDrawables(dayIcon, null, null, null);
 					tvDayName[i].setCompoundDrawablePadding(5);
 					tvDayPrice[i].setText(cursor.getString(1) + " " + getResources().getString(R.string.eur));
 					
+					//Items for the price calculator
 					cbDayName[i].setText(cursor.getString(0));
 					cbDayName[i].setOnClickListener(new OnClickListener(){
 						@Override
@@ -243,7 +250,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 					i ++;
 				}
 				
-				//Set TextViews for days
+				//Set TextViews for offers
 				i = 0;
 				cursor = db.rawQuery("SELECT name, price FROM offer ORDER BY id;", null);
 				while (cursor.moveToNext() && i < 3){
@@ -293,7 +300,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 	        	tvRowName = (TextView) entry.findViewById(R.id.tv_row_home_schedule_title);
 	        	tvRowName.setText(cursor.getString(1));
 	        	
-	        	//Set descrption
+	        	//Set description
 	        	tvRowDescription = (TextView) entry.findViewById(R.id.tv_row_home_schedule_description);
 	        	tvRowDescription.setText(cursor.getString(2));
 	        	
@@ -409,6 +416,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		ImageView ivSocialY = (ImageView) view.findViewById(R.id.iv_social_youtube);
 		ImageView ivSocialI = (ImageView) view.findViewById(R.id.iv_social_instagram);
 		
+		//Set click listener for the social buttons
 		ivSocialW.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -494,9 +502,9 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		
 		//Open database
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
-
-		
 		Cursor cursor = db.rawQuery("SELECT price FROM day ORDER BY id;", null);
+		
+		//Loop simultaneously the db entries and the checkboxes
 		int i = 0;
 		int total = 0;
 		int selected = 0;
@@ -511,6 +519,8 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		//Get offers
 		cursor = db.rawQuery("SELECT price, days FROM offer ORDER BY id;", null);
 		while (cursor.moveToNext()){
+			
+			//If selected days equal the days in the ofer, fix the price
 			if (cursor.getInt(1) == selected)
 				total = cursor.getInt(0);
 		}
@@ -518,7 +528,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		//Set text
 		tvTotal.setText(v.getContext().getResources().getString(R.string.prices_total) + " " + total + v.getContext().getResources().getString(R.string.eur));
 		
-		
+		//Return the total price
 		return total;
 	}
 
@@ -528,29 +538,44 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 	 * Shows or hides the location panel depending on if there is a recent location report, and sets the distance and time text.
 	 */
 	private void updateLocation(){
+		
+		//Elements to format, parse, and operate with dates
 		Calendar cal;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 		Date date = new Date();
+		
+		//Preferences
 		SharedPreferences preferences = v.getContext().getSharedPreferences(GM.PREF, Context.MODE_PRIVATE);
+		
+		//Text view in the location section that will change
 		tvLocation = (TextView) v.findViewById(R.id.tv_home_location_1);
+		
 		try {
+			//Get the date of the last saved location report
 			Date locationDate = dateFormat.parse(preferences.getString(GM.PREF_GM_LOCATION, "1970-01-01 00:00:00"));
 			cal = Calendar.getInstance();
 		    cal.setTime(date);
 		    cal.add(Calendar.MINUTE, -10);
+		    
+		    //If the last location report was saved in the last 10 minutes
 		    if (cal.getTime().before(locationDate)){
-		    	//Get Location
+		    	//Get the location of GM from preferences
 		    	double gmLat = Double.parseDouble(preferences.getString(GM.PREF_GM_LATITUDE, "0"));
 		    	double gmLon = Double.parseDouble(preferences.getString(GM.PREF_GM_LONGITUDE, "0"));
+		    	
+		    	//Calculate the distance to the saved location
 		    	Double distance = Distance.calculateDistance(coordinates[0], coordinates[1], gmLat, gmLon, 'K');
 		    	distance = (double) Math.round(1000 * distance);
 		    	
+		    	//Write the distance
 		    	if (distance > 1000d)
 		    		tvLocation.setText(String.format(v.getContext().getString(R.string.home_section_location_text_1), String.format("%.2f", distance / 1000)  + " " + v.getContext().getString(R.string.kilometers), Math.round(distance * 0.012)));
 		    	else
 		    		tvLocation.setText(String.format(v.getContext().getString(R.string.home_section_location_text_1), distance.intValue()  + " " + v.getContext().getString(R.string.meters), Math.round(distance * 0.012)));
 
 		    }
+		    
+		    //If the location report is older than 10 minutes
 		    else{
 		    	llLocation.setVisibility(View.GONE);
 		    }
@@ -562,30 +587,44 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 	}
 	
 	/**
-	 * Populates the around section with events, or hiddes it if none
+	 * Populates the around section with events, or hides it if none
 	 */
 	@SuppressLint("InflateParams") //Rows are added in a loop.
 	private void populateAround(){
-		Calendar cal;
+		
+		//Each element in the list
 		LinearLayout entry;
+		
+		//An inflater
 		LayoutInflater factory = LayoutInflater.from(v.getContext());
+		
+		//Elements to format, parse and operate with dates
+		Calendar cal;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 		SimpleDateFormat timeFormat = new SimpleDateFormat("HH:mm", Locale.US);
 		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd-", Locale.US);
+		Date startMinus30, endMinus15, startPlus30;
 		Date date = new Date();
+		
+		//Database elements
 		SQLiteDatabase db;
 		Cursor cursor;
-		Date startMinus30, endMinus15, startPlus30;
+		
+		//Array of events
 	    ArrayList<Event> eventList = new ArrayList<Event>();
 		Event event;
 		
 		//Check GPS status
 		if (locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)){
 		
+			//Get data from the database
 			db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
 			cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host, event.id FROM event, place WHERE schedule = 1 AND event.place = place.id;", null);
+			
+			//For each entry
 			while (cursor.moveToNext()){
 				try{
+					//Set limit dates to consider the element close in time.
 					cal = Calendar.getInstance();
 				    cal.setTime(dateFormat.parse(cursor.getString(8)));
 				    cal.add(Calendar.MINUTE, -30);
@@ -602,7 +641,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 					    cal.add(Calendar.MINUTE, -15);
 					    endMinus15 = cal.getTime();
 					    
-					    //If in range
+					    //If in range, add to the list
 					    if (date.after(startMinus30) && date.before(endMinus15)){
 					    	event = new Event(cursor.getInt(11), cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
 				        	eventList.add(event);
@@ -610,6 +649,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 				    }
 				    //Events without end time
 				    else{
+				    	//If in range, add to the list
 				    	if (date.after(startMinus30) && date.before(startPlus30)){
 				    		event = new Event(cursor.getInt(11), cursor.getString(2), cursor.getString(3), cursor.getInt(1), cursor.getInt(0), cursor.getString(4), cursor.getString(10), new double[] {cursor.getDouble(6), cursor.getDouble(7)}, cursor.getString(8), cursor.getString(9));
 				        	eventList.add(event);
@@ -621,14 +661,24 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 					Log.e("Error parsing date for around event", e.toString());
 				}
 			}
+			
+			//Close the cursor
 			cursor.close();
+			
+			//If no events close in time, don't show any
 			if (eventList.size() == 0)
 				llAround.setVisibility(View.GONE);
+			
+			//If there are events
 			else{
 				TextView tvRowName, tvRowDescription, tvRowPlace, tvRowTime, tvRowDistance, tvRowId;
 				int distance;
 				DecimalFormat df = new DecimalFormat("#.#"); 
+				
+				//Sort the list
 				Collections.sort(eventList);
+				
+				//For each item
 				for(int i = 0; i < eventList.size() && i < 2; i++){
 		        	
 		        	//Create a new row
@@ -672,7 +722,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 						Log.e("Date error", e.toString());
 					}
 		        	
-					//Set on click event
+					//Set on click event to show a dialog.
 					entry.setOnClickListener(new OnClickListener(){
 						@Override
 						public void onClick(View v) {
@@ -695,8 +745,17 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 	}
 	
 	//TODO: Test this
+	/**
+	 * Shows a dialog with info about an event from the around list
+	 * 
+	 * @param id The id of the event
+	 */
 	private void showAroundDialog(int id){
+		
+		//Create the dialog
 		final Dialog dialog = new Dialog(getActivity());
+		
+		//Set up the window
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.dialog_around);
 		
@@ -713,19 +772,25 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		TextView tvPlace = (TextView) dialog.findViewById(R.id.tv_dialog_around_place);
 		TextView tvAddress = (TextView) dialog.findViewById(R.id.tv_dialog_around_address);
 		Button btClose = (Button) dialog.findViewById(R.id.bt_around_close);
+		
 		//Get info about the event
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
 		Cursor cursor = db.rawQuery("SELECT event.id, event.name, description, start, end, place.name, address, lat, lon FROM event, place WHERE place.id = event.place AND event.id = " + id + ";", null);
 		if (cursor.getCount() > 0){
 			cursor.moveToNext();
 		
-			//Set texts
+			//Set title
 			tvTitle.setText(cursor.getString(1));
+			
+			//Set description
 			tvDescription.setText(cursor.getString(2));
+			
+			//Set date
 			try{
 				Date day = dateFormat.parse(cursor.getString(3));
 				Date date = new Date();
-				//If the event is today
+				
+				//If the event is today, show "Today" instead of the date
 				if (dayFormat.format(day).equals(dayFormat.format(date)))
 					tvDate.setText(dialog.getContext().getString(R.string.today));
 				
@@ -733,12 +798,13 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 					Calendar cal = Calendar.getInstance();
 				    cal.setTime(date);
 				    cal.add(Calendar.HOUR_OF_DAY, 24);
-				    //If the event is tomorrow
+				    
+				    //If the event is tomorrow, show "Tomorrow" instead of the date
 				    if (dayFormat.format(cal.getTime()).equals(dayFormat.format(date))){
 				    	tvDate.setText(dialog.getContext().getString(R.string.tomorrow));
 				    }
 					
-				    //Else
+				    //Else, show the date
 				    else{
 				    	SimpleDateFormat printFormat = new SimpleDateFormat("dd MMMM", Locale.US);
 				    	tvDate.setText(printFormat.format(day));
@@ -749,6 +815,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 				Log.e("Error parsing event date", ex.toString());
 			}
 			
+			//set time
 			try{
 				if (cursor.getString(4) == null)
 					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))));
@@ -758,6 +825,8 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 			catch (ParseException ex){
 				Log.e("Error parsing event time", ex.toString());
 			}
+			
+			//Set place
 			tvPlace.setText(cursor.getString(5));
 			tvAddress.setText(cursor.getString(6));
 			
@@ -778,6 +847,8 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
 			lp.dimAmount = 0.0f; 
 			dialog.show();
+			
+			//Start the dialog map
 			startMap();
 			mapView.onResume();
 			dialog.setOnShowListener(new OnShowListener(){
@@ -786,12 +857,22 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 					// Gets to GoogleMap from the MapView and does initialization stuff
 					startMap();
 					
-				}});
+				}
+			});
 		}
 	}
 	
+	/**
+	 * Show a dialog with info about an event from each of the schedule sections
+	 * 
+	 * @param id The id of the event
+	 */
 	private void showScheduleDialog(final int id){
+		
+		//Create the dialog
 		final Dialog dialog = new Dialog(getActivity());
+		
+		//Set up the window
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.dialog_schedule);
 		
@@ -808,19 +889,22 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		TextView tvPlace = (TextView) dialog.findViewById(R.id.tv_dialog_schedule_place);
 		TextView tvAddress = (TextView) dialog.findViewById(R.id.tv_dialog_schedule_address);
 		Button btClose = (Button) dialog.findViewById(R.id.bt_schedule_close);
+		
 		//Get info about the event
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
 		Cursor cursor = db.rawQuery("SELECT event.id, event.name, description, start, end, place.name, address, lat, lon FROM event, place WHERE place.id = event.place AND event.id = " + id + ";", null);
 		if (cursor.getCount() > 0){
 			cursor.moveToNext();
 		
-			//Set texts
+			//Set title
 			tvTitle.setText(cursor.getString(1));
+			
+			//set description
 			tvDescription.setText(cursor.getString(2));
 			try{
 				Date day = dateFormat.parse(cursor.getString(3));
 				Date date = new Date();
-				//If the event is today
+				//If the event is today, show "Today" instead of the date
 				if (dayFormat.format(day).equals(dayFormat.format(date)))
 					tvDate.setText(dialog.getContext().getString(R.string.today));
 				
@@ -828,12 +912,13 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 					Calendar cal = Calendar.getInstance();
 				    cal.setTime(date);
 				    cal.add(Calendar.HOUR_OF_DAY, 24);
-				    //If the event is tomorrow
+				    
+				    //If the event is tomorrow, show "Tomorrow" instead of the date
 				    if (dayFormat.format(cal.getTime()).equals(dayFormat.format(date))){
 				    	tvDate.setText(dialog.getContext().getString(R.string.tomorrow));
 				    }
 					
-				    //Else
+				    //Else, show the date
 				    else{
 				    	SimpleDateFormat printFormat = new SimpleDateFormat("dd MMMM", Locale.US);
 				    	tvDate.setText(printFormat.format(day));
@@ -844,6 +929,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 				Log.e("Error parsing event date", ex.toString());
 			}
 			
+			//Set the time
 			try{
 				if (cursor.getString(4) == null)
 					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))));
@@ -853,6 +939,8 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 			catch (ParseException ex){
 				Log.e("Error parsing event time", ex.toString());
 			}
+			
+			//Set the place
 			tvPlace.setText(cursor.getString(5));
 			tvAddress.setText(cursor.getString(6));
 			
@@ -873,6 +961,8 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
 			lp.dimAmount = 0.0f; 
 			dialog.show();
+			
+			//Start the map
 			startMap();
 			mapView.onResume();
 			dialog.setOnShowListener(new OnShowListener(){
@@ -882,17 +972,28 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 					// Gets to GoogleMap from the MapView and does initialization stuff
 					startMap();
 					
-				}});
-			
-			
+				}
+			});			
 		}
 	}
 	
 	
+	/**
+	 * Starts the map in the dialogs.
+	 */
 	public void startMap(){
 		mapView.getMapAsync(this);
 	}
 	
+	
+	/**
+	 * Called when the map is ready to be displayed. 
+	 * Sets the map options and a marker for the map.
+	 * 
+	 * @param googleMap The map to be shown
+	 * 
+	 * @see com.google.android.gms.maps.OnMapReadyCallback#onMapReady(com.google.android.gms.maps.GoogleMap)
+	 */
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		this.map = googleMap;
@@ -916,6 +1017,15 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		
 	}
 	
+	/**
+	 * Called when the user location changes. 
+	 * Recalculates the list of around events and calls updateLocation() to 
+	 * update the distance in the location section.
+	 * 
+	 * @param location The new location
+	 * 
+	 * @see android.location.LocationListener#onLocationChanged(android.location.Location)
+	 */
 	@Override
 	public void onLocationChanged(Location location) {
 		coordinates[0] = location.getLatitude();
@@ -925,28 +1035,66 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		
 	}
 
+	/**
+     * Called when the location provider changes it's state. 
+     * Recalculates the list of events in the around section.
+     * 
+     * @param provider The name of the provider
+     * @param status Status code of the provider
+     * @param extras Extras passed 
+     * 
+     * @see android.location.LocationListener#onStatusChanged(java.lang.String, int, android.os.Bundle)
+     */
 	@Override
 	public void onStatusChanged(String provider, int status, Bundle extras) {
 		populateAround();		
 	}
 
+	
+	/**
+     * Called when a location provider is enabled.
+     * Recalculates the list of events.
+     * 
+     * @param provider The name of the provider
+     * 
+     * @see android.location.LocationListener#onProviderEnabled(java.lang.String)
+     */
 	@Override
 	public void onProviderEnabled(String provider) {
 		populateAround();		
 	}
 
+	/**
+     * Called when a location provider is disabled. 
+     * Recalculates the list of events.
+     * 
+     * @param provider The name of the provider
+     * 
+     * @see android.location.LocationListener#onProviderDisabled(java.lang.String)
+     */
 	@Override
 	public void onProviderDisabled(String provider) {
 		populateAround();
 		
 	}
 	
+	/**
+	 * Called when the fragment is paused. 
+	 * Stops the location manager
+	 * @see android.support.v4.app.Fragment#onPause()
+	 */
 	@Override
 	public void onPause(){
 		locationManager.removeUpdates(this);
 		super.onPause();
 	}
 	
+	/**
+	 * Called when the fragment is brought back into the foreground. 
+	 * Resumes the map and the location manager.
+	 * 
+	 * @see android.support.v4.app.Fragment#onResume()
+	 */
 	@Override
 	public void onResume(){
 		if (mapView != null)
@@ -955,6 +1103,12 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		super.onResume();
 	}
 	
+	/**
+	 * Called when the fragment is destroyed. 
+	 * Finishes the map. 
+	 * 
+	 * @see android.support.v4.app.Fragment#onDestroy()
+	 */
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -964,7 +1118,13 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		}
 	}
 
-	 @Override
+	/**
+	 * Called in a situation of low memory.
+	 * Lets the map handle this situation.
+	 * 
+	 * @see android.support.v4.app.Fragment#onLowMemory()
+	 */
+	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
 		if (mapView != null){

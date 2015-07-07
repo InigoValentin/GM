@@ -57,7 +57,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	//Currently selected day
 	private int selected;
 	
-	//Indidicates official schedule
+	//Indicates official schedule
 	private int schedule;
 	
 	//Arrow buttons
@@ -77,12 +77,17 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	 * Run when the fragment is inflated.
 	 * Assigns views, gets the date and does the first call to the {@link populate function}.
 	 * 
+	 * @param inflater A LayoutInflater to manage views
+	 * @param container The container View
+	 * @param savedInstanceState Bundle containing the state
+	 * 
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@SuppressLint("InflateParams") //Throws unknown error when done properly.
 	@Override
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 		
+		//Set bundle for the map
 		bund = savedInstanceState;
 		
 		//Load the layout
@@ -91,6 +96,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		//Get schedule type
 		Bundle bundle = this.getArguments();
 		schedule = bundle.getInt(GM.SCHEDULE, GM.SECTION_SCHEDULE);
+		
 		//Set the title
 		if (schedule == GM.SECTION_SCHEDULE)
 			((MainActivity) getActivity()).setSectionTitle(view.getContext().getString(R.string.menu_schedule));
@@ -158,7 +164,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 			}
 		});
 		
-		//Asign the filter text
+		//Assign the filter text
 		EditText etFilter = (EditText) view.findViewById(R.id.et_schedule_filter);
 		etFilter.addTextChangedListener(new TextWatcher() {
 
@@ -170,6 +176,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 
 	        @Override
 	        public void onTextChanged(CharSequence s, int start, int before, int count) {
+	        	//Repopulate when the text is changed
 	        	populateSchedule(selected, list, schedule, s.toString());
 	          
 	        }
@@ -180,7 +187,8 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		Date date = new Date();
 		String curDate = dateFormat.format(date);
 		
-		//Try to find out if the current date is before, after, or in the middlke of the festivals.
+		//Try to find out if the current date is before, after, or in the middle of the festivals.
+		//TODO: If August 4 and GM schedule, move one forward
 		try {
 			if (dateFormat.parse(curDate).before(dateFormat.parse(days[GM.DAY_25][0])))
 				selected = GM.DAY_25;
@@ -205,7 +213,10 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	/**
 	 * Populates the list of activities with the ones n the selected day.
 	 * 
-	 * @param selected The day to show activities from.
+	 * @param selected The day to show activities from
+	 * @param list The layout where the items will be added
+	 * @param schedule GM.SECTION_SCHEDULE if city schedule, GM.SECTION_GM_SCHEDULE if gm schedule
+	 * @param f Search filter texts
 	 */
 	@SuppressLint("InflateParams") //Views are added from a loop: I can't specify the parent when inflating.
 	private void populateSchedule(int selected, LinearLayout list, int schedule, String f){
@@ -249,52 +260,70 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		//Read from database
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
 		Cursor cursor;
+		
+		//Elements to parse, format and operate with dates
 		Calendar cal;
 		Date maxDate, minDate;
 		String maxDateStr, minDateStr;
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.US);
 		SimpleDateFormat dayFormat = new SimpleDateFormat("yyyy-MM-dd", Locale.US);
 		cal = Calendar.getInstance();
-		Log.e("DATE", days[selected][0]);
+		
+		//Get date of the selected daye
 	    try {
 			cal.setTime(dayFormat.parse(days[selected][0]));
 		} catch (ParseException e) {
 			Log.e("Error parsing date", e.toString());
 		}
+	    
+	    //Set margins so the days goes from 6:00 in the morning to 5:59 the next day, instead of from 00:00 to 23:59
 	    cal.add(Calendar.HOUR_OF_DAY, 6); 
 	    minDate = cal.getTime();
 	    cal.add(Calendar.HOUR_OF_DAY, 24); 
 	    maxDate = cal.getTime();
 	    maxDateStr = dateFormat.format(maxDate);
 	    minDateStr = dateFormat.format(minDate);
+	    
+	    //Get data from database
 	    if (schedule == GM.SECTION_GM_SCHEDULE)
 	    	cursor = db.rawQuery("SELECT event.id, event.name, event.description, event.place, place.id, place.name, event.start FROM " + GM.DB_EVENT + ", " + GM.DB_PLACE + " WHERE " + GM.DB_EVENT_GM + " = 1 AND place.id = event.place AND start BETWEEN '" + minDateStr + "' AND '" + maxDateStr + "' AND (lower(event.name) LIKE '%" + filter + "%' OR lower(event.description) LIKE '%" + filter + "%' OR lower(place.name) LIKE '%" + filter + "%') ORDER BY " + GM.DB_EVENT_START + ";", null);
 	    else
 	    	cursor = db.rawQuery("SELECT event.id, event.name, event.description, event.place, place.id, place.name, event.start FROM " + GM.DB_EVENT + ", " + GM.DB_PLACE + " WHERE " + GM.DB_EVENT_SCHEDULE + " = 1 AND place.id = event.place AND start BETWEEN '" + minDateStr + "' AND '" + maxDateStr + "' AND (lower(event.name) LIKE '%" + filter + "%' OR lower(event.description) LIKE '%" + filter + "%' OR lower(place.name) LIKE '%" + filter + "%') ORDER BY " + GM.DB_EVENT_START + ";", null);
 		
+	    //Clear the list
 		list.removeAllViews();
+		
         //Loop
         while (cursor.moveToNext()){
+        	
         	//Create a new row
         	entry = (LinearLayout) factory.inflate(R.layout.row_schedule, null);
         	
-        	//Locate row elements
-        	content = (LinearLayout) entry.findViewById(R.id.ll_row_schedule_content);
+        	//Set id        	
         	tvRowId = (TextView) entry.findViewById(R.id.tv_row_schedule_id);
         	tvRowId.setText(cursor.getString(0));
+        	
+        	//Set title
         	tvRowTitle = (TextView) entry.findViewById(R.id.tv_row_schedule_title);
         	tvRowTitle.setText(cursor.getString(1));
+        	
+        	//Set description
         	tvRowDesc = (TextView) entry.findViewById(R.id.tv_row_schedule_description);
         	tvRowDesc.setText(cursor.getString(2));
+        	
+        	//Set place
         	tvRowPlace = (TextView) entry.findViewById(R.id.tv_row_schedule_place);
         	tvRowPlace.setText(cursor.getString(5));
         	icon.setBounds(0, 0, (int) (tvRowPlace.getTextSize() * 1.5), (int) (tvRowPlace.getTextSize() * 1.5));
         	tvRowPlace.setCompoundDrawables(icon, null, null, null);
+        	
+        	//Set time
         	tvRowTime = (TextView) entry.findViewById(R.id.tv_row_schedule_time);
         	String tm = cursor.getString(6).substring(cursor.getString(6).length() - 8, cursor.getString(6).length() - 3);
         	tvRowTime.setText(tm);
         	
         	//Set onClick event
+        	content = (LinearLayout) entry.findViewById(R.id.ll_row_schedule_content);
         	content.setOnClickListener(new OnClickListener(){
 				@Override
 				public void onClick(View v) {
@@ -307,7 +336,11 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
         	//Add to the list
         	list.addView(entry);
         }
+        
+        //Invalidate the list so it is redrawn
         list.invalidate();
+        
+        //Close cursor and database
         cursor.close();
         db.close();
 	}
@@ -319,7 +352,11 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	 * @param id The event id
 	 */
 	private void showDialog(final int id){
+		
+		//Create the dialog
 		final Dialog dialog = new Dialog(getActivity());
+		
+		//Set up dialog window
 		dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		dialog.setContentView(R.layout.dialog_schedule);
 		
@@ -336,19 +373,24 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		TextView tvPlace = (TextView) dialog.findViewById(R.id.tv_dialog_schedule_place);
 		TextView tvAddress = (TextView) dialog.findViewById(R.id.tv_dialog_schedule_address);
 		Button btClose = (Button) dialog.findViewById(R.id.bt_schedule_close);
+		
 		//Get info about the event
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
 		Cursor cursor = db.rawQuery("SELECT event.id, event.name, description, start, end, place.name, address, lat, lon FROM event, place WHERE place.id = event.place AND event.id = " + id + ";", null);
 		if (cursor.getCount() > 0){
 			cursor.moveToNext();
 		
-			//Set texts
+			//Set title
 			tvTitle.setText(cursor.getString(1));
+			
+			//Set description
 			tvDescription.setText(cursor.getString(2));
+			
+			//Set date
 			try{
 				Date day = dateFormat.parse(cursor.getString(3));
 				Date date = new Date();
-				//If the event is today
+				//If the event is today, show "Today" instead of the date
 				if (dayFormat.format(day).equals(dayFormat.format(date)))
 					tvDate.setText(dialog.getContext().getString(R.string.today));
 				
@@ -356,12 +398,13 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 					Calendar cal = Calendar.getInstance();
 				    cal.setTime(date);
 				    cal.add(Calendar.HOUR_OF_DAY, 24);
-				    //If the event is tomorrow
+				    
+				    //If the event is tomorrow, show "Tomorrow" instead of the date
 				    if (dayFormat.format(cal.getTime()).equals(dayFormat.format(date))){
 				    	tvDate.setText(dialog.getContext().getString(R.string.tomorrow));
 				    }
 					
-				    //Else
+				    //Else, show the date
 				    else{
 				    	SimpleDateFormat printFormat = new SimpleDateFormat("dd MMMM", Locale.US);
 				    	tvDate.setText(printFormat.format(day));
@@ -372,6 +415,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 				Log.e("Error parsing event date", ex.toString());
 			}
 			
+			//Set time
 			try{
 				if (cursor.getString(4) == null)
 					tvTime.setText(timeFormat.format(dateFormat.parse(cursor.getString(3))));
@@ -381,6 +425,8 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 			catch (ParseException ex){
 				Log.e("Error parsing event time", ex.toString());
 			}
+			
+			//Set the place
 			tvPlace.setText(cursor.getString(5));
 			tvAddress.setText(cursor.getString(6));
 			
@@ -401,6 +447,8 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
 			lp.dimAmount = 0.0f; 
 			dialog.show();
+			
+			//Start the map
 			startMap();
 			mapView.onResume();
 			dialog.setOnShowListener(new OnShowListener(){
@@ -410,16 +458,25 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 					// Gets to GoogleMap from the MapView and does initialization stuff
 					startMap();
 					
-				}});
-			
+				}
+			});		
 			
 		}
 	}
 	
-	public void startMap(){
+	/**
+	 * Starts the map in the dialog.
+	 */
+	private void startMap(){
 		mapView.getMapAsync(this);
 	}
 	
+	/**
+	 * Called when the fragment is brought back into the foreground. 
+	 * Resumes the map and the location manager.
+	 * 
+	 * @see android.support.v4.app.Fragment#onResume()
+	 */
 	@Override
 	public void onResume() {
 		if (mapView != null)
@@ -427,6 +484,12 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		super.onResume();
 	}
 
+	/**
+	 * Called when the fragment is destroyed. 
+	 * Finishes the map. 
+	 * 
+	 * @see android.support.v4.app.Fragment#onDestroy()
+	 */
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
@@ -436,7 +499,13 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		}
 	}
 
-	 @Override
+	/**
+	 * Called in a situation of low memory.
+	 * Lets the map handle this situation.
+	 * 
+	 * @see android.support.v4.app.Fragment#onLowMemory()
+	 */
+	@Override
 	public void onLowMemory() {
 		super.onLowMemory();
 		if (mapView != null){
@@ -445,6 +514,14 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		}
 	}
 
+	/**
+	 * Called when the map is ready to be displayed. 
+	 * Sets the map options and a marker for the map.
+	 * 
+	 * @param googleMap The map to be shown
+	 * 
+	 * @see com.google.android.gms.maps.OnMapReadyCallback#onMapReady(com.google.android.gms.maps.GoogleMap)
+	 */
 	@Override
 	public void onMapReady(GoogleMap googleMap) {
 		this.map = googleMap;

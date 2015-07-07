@@ -12,6 +12,8 @@ import android.webkit.WebView;
  * Layout that show information about the app and the developer. 
  * It's pretty much static.
  * 
+ * @see Fragment
+ * 
  * @author Iñigo Valentin
  *
  */
@@ -20,6 +22,12 @@ public class AboutLayout extends Fragment{
 	/**
 	 * Run when the fragment is inflated.
 	 * Assigns views, gets the date and does the first call to the {@link populate function}.
+	 * 
+	 * @param inflater A LayoutInflater to manage views
+	 * @param container The container View
+	 * @param savedInstanceState Bundle containing the state
+	 * 
+	 * @return the fragment view
 	 * 
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */

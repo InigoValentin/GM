@@ -131,7 +131,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	}
 	
 	/** 
-	 * run when the app resumes. It's extended to request
+	 * Run when the app resumes. It's extended to request
 	 * location updates when the app is resumed.
 	 * 
 	 * @see android.support.v4.app.FragmentActivity#onResume()
@@ -194,7 +194,9 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	  
 	  
 	/**
-	 * Runs when the activity is created
+	 * Runs when the activity is created. 
+	 * 
+	 * @param savedInstanceState Saved state of the activity.
 	 * 
 	 * @see android.support.v7.app.ActionBarActivity#onCreate(android.os.Bundle)
 	 */
@@ -202,10 +204,11 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		
-		// Get the location manager.
+		//Set the location manager.
 	    locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
 	    locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, this);
-	    // Define the criteria how to select the location provider: use default.
+	    
+	    //Define the criteria how to select the location provider: use default.
 	    Criteria criteria = new Criteria();
 	    provider = locationManager.getBestProvider(criteria, false);
 	    Location location = locationManager.getLastKnownLocation(provider);
@@ -261,7 +264,6 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 		menuIcon[5] = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_settings, null);
 		menuIcon[6] = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_about, null);
 		for (int i = 0; i < 7; i ++){
-			//menuIcon[i].setBounds(0, 0, 140, 140);
 			menuIcon[i].setBounds(0, 0, (int) (menuItem[i].getTextSize() * 2.2), (int) (menuItem[i].getTextSize() * 2.2));
 			menuItem[i].setCompoundDrawables(menuIcon[i], null, null, null);
 			menuItem[i].setCompoundDrawablePadding(20);
@@ -319,21 +321,23 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 		//Load initial section
 		loadSection(GM.SECTION_HOME, false);
 		
-		//If the intent had extras, do something
+		//If the intent had extras (from notifications), do something
 		if (actionText != null){
 			TextView tvDialogTitle, tvDialogText;
 			Button btDialogClose, btDialogAction;
 			Drawable dialogIcon;
 			if (actionTitle != null){
 				
+				//Create a dialog
 				final Dialog dialog = new Dialog(this);
+				
+				//Set up dialog window
 				dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 				dialog.setContentView(R.layout.dialog_notification);
 				
 				//Set title
 				tvDialogTitle = (TextView) dialog.findViewById(R.id.tv_dialog_notification_title);
 				tvDialogTitle.setText(actionTitle);
-				
 				
 				//Set text
 				tvDialogText = (TextView) dialog.findViewById(R.id.tv_dialog_notification_text);
@@ -351,11 +355,17 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 				//Set the action button
 				btDialogAction = (Button) dialog.findViewById(R.id.bt_dialog_notification_action);
 				if (action != null){
+					
+					//If the notification action opens the GM schedule
 					if (action.equals(GM.EXTRA_ACTION_GM)){
+						
+						//Set the icon
 						dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_gm, null);
 						dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
 						tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
 						tvDialogTitle.setCompoundDrawablePadding(20);
+						
+						//Set up the action button
 						btDialogAction.setVisibility(View.VISIBLE);
 						btDialogAction.setText(this.getApplicationContext().getString(R.string.notification_action_gm));
 						btDialogAction.setOnClickListener(new OnClickListener() {
@@ -366,11 +376,17 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 			    			}
 			    		});
 					}
+					
+					//If the notification action opens the city schedule
 					else if (action.equals(GM.EXTRA_ACTION_SCHEDULE)){
+						
+						//Set the icon
 						dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_program, null);
 						dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
 						tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
 						tvDialogTitle.setCompoundDrawablePadding(20);
+						
+						//Set up the action button
 						btDialogAction.setVisibility(View.VISIBLE);
 						btDialogAction.setText(this.getApplicationContext().getString(R.string.notification_action_schedule));
 						btDialogAction.setOnClickListener(new OnClickListener() {
@@ -381,11 +397,17 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 			    			}
 			    		});
 					}
+					
+					//If the notification is just text
 					else{
+						
+						//Set the icon
 						dialogIcon = ResourcesCompat.getDrawable(getResources(), R.drawable.icon_about, null);
 						dialogIcon.setBounds(0, 0, (int) (tvDialogTitle.getTextSize() * 1.4), (int) (tvDialogTitle.getTextSize() * 1.4));
 						tvDialogTitle.setCompoundDrawables(dialogIcon, null, null, null);
 						tvDialogTitle.setCompoundDrawablePadding(20);
+						
+						//Hide action button
 						btDialogAction.setVisibility(View.GONE);
 					}
 				}
@@ -448,7 +470,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	
 	/**
 	 * Overrides onBackPressed(). 
-	 * Used to show the previous fragment instead of fnishing the app.
+	 * Used to show the previous fragment instead of finishing the app.
 	 * 
 	 * @see android.support.v7.app.ActionBarActivity#onBackPressed()
 	 */

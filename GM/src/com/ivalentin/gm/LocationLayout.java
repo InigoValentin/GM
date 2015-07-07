@@ -1,6 +1,5 @@
 package com.ivalentin.gm;
 
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -61,6 +60,10 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 	/**
 	 * Run when the fragment is inflated.
 	 * 
+	 * @param inflater A LayoutInflater to manage views
+	 * @param container The container View
+	 * @param savedInstanceState Bundle containing the state
+	 * 
 	 * @see android.support.v4.app.Fragment#onCreateView(android.view.LayoutInflater, android.view.ViewGroup, android.os.Bundle)
 	 */
 	@Override
@@ -101,7 +104,6 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 		//Try to get last location time
 		try{
 			Date locationDate = dateFormat.parse(settings.getString(GM.PREF_GM_LOCATION, "1970-01-01 00:00:00"));
-			Log.e("REPORT DATE", locationDate.toString());
 			cal = Calendar.getInstance();
 		    cal.setTime(date);
 		    cal.add(Calendar.MINUTE, -10);
@@ -128,7 +130,7 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 			mapView.getMapAsync(this);
 	    }
 		
-		//If there is no location report
+		//If there is no location report, try to show the next event where Margolariak will be
 	    else{
 	    	llReport.setVisibility(View.GONE);
 	    	TextView tvLocation = (TextView) v.findViewById(R.id.tv_location_schedule);
@@ -138,8 +140,12 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 			Cursor cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host FROM event, place WHERE event.place = place.id ORDER BY start;", null);
 			Date startMinus24, startPlus30, start, end;
 			boolean found = false;
+			
+			//Loop db entries until we find the next event
 			while (cursor.moveToNext() && found == false){
 				try{
+					
+					//Set limit dates to see if the event is suitable
 					start = dateFormat.parse(cursor.getString(8));
 					cal = Calendar.getInstance();
 				    cal.setTime(dateFormat.parse(cursor.getString(8)));
@@ -185,6 +191,8 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 				catch (Exception e){
 					Log.e("Error parsing date for around event", e.toString());
 				}
+				
+				//If no events found, hide text.
 				if (found == false){
 					tvLocation.setVisibility(View.GONE);
 				}
@@ -192,11 +200,13 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 					tvLocation.setVisibility(View.VISIBLE);
 				}
 			}
+			
+			//Close the cursor
 			cursor.close();
 	    	
 	    }
-				
-
+		
+		//Return the view
 		return v;
 	}
 
@@ -245,7 +255,7 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 
 	/**
 	 * Called when the map is ready to be used. 
-	 * Intializes it and sets the Gasteizko Margolariak marker.
+	 * Initializes it and sets the Gasteizko Margolariak marker.
 	 * 
 	 * @param googleMap the map
 	 * 

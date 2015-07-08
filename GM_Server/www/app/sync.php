@@ -12,6 +12,7 @@
 	//It contains just the line
 	//     $con = mysqli_connect(host, user, pass, database);
 	include '../db-access.php';
+	mysqli_set_charset($con, 'utf8');
 	$name = mysqli_real_escape_string($con, $_GET['name']);
 	$code = mysqli_real_escape_string($con, $_GET['code']);
 	$fg = mysqli_real_escape_string($con, $_GET['fg']);

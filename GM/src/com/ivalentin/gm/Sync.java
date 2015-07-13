@@ -200,12 +200,16 @@ public class Sync extends AsyncTask<Void, Void, Void> {
 					SQLiteDatabase db = myContextRef.openOrCreateDatabase(GM.DB_NAME, Activity.MODE_PRIVATE, null);
 					Log.d("Sync query", "DELETE FROM event;");
 					db.execSQL("DELETE FROM event;");
+					db.delete("event", null, null);
 					Log.d("Sync query", "DELETE FROM people;");
 					db.execSQL("DELETE FROM people;");
+					db.delete("event", null, null);
 					Log.d("Sync query", "DELETE FROM place;");
 					db.execSQL("DELETE FROM place;");
+					db.delete("event", null, null);
 					Log.d("Sync query", "DELETE FROM day;");
 					db.execSQL("DELETE FROM day;");
+					db.delete("event", null, null);
 					Log.d("Sync query", "DELETE FROM offer;");
 					db.execSQL("DELETE FROM offer;");
 					for(int i = 0; i < query.size(); i++){

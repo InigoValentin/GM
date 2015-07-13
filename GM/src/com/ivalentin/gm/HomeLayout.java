@@ -888,6 +888,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		//Set the custom dialog components - text, image and button
 		TextView tvTitle = (TextView) dialog.findViewById(R.id.tv_dialog_schedule_title);
 		TextView tvDescription = (TextView) dialog.findViewById(R.id.tv_dialog_schedule_description);
+		TextView tvHost = (TextView) dialog.findViewById(R.id.tv_dialog_schedule_host);
 		TextView tvDate = (TextView) dialog.findViewById(R.id.tv_dialog_schedule_date);
 		TextView tvTime = (TextView) dialog.findViewById(R.id.tv_dialog_schedule_time);
 		TextView tvPlace = (TextView) dialog.findViewById(R.id.tv_dialog_schedule_place);
@@ -896,7 +897,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		
 		//Get info about the event
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
-		Cursor cursor = db.rawQuery("SELECT event.id, event.name, description, start, end, place.name, address, lat, lon FROM event, place WHERE place.id = event.place AND event.id = " + id + ";", null);
+		Cursor cursor = db.rawQuery("SELECT event.id, event.name, description, start, end, place.name, address, lat, lon, host FROM event, place WHERE place.id = event.place AND event.id = " + id + ";", null);
 		if (cursor.getCount() > 0){
 			cursor.moveToNext();
 		
@@ -905,6 +906,20 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 			
 			//set description
 			tvDescription.setText(cursor.getString(2));
+			
+			//Set host
+			if (cursor.getString(9) != null){
+				Cursor hostCursor = db.rawQuery("SELECT name FROM people WHERE id = " + cursor.getString(9) + ";", null);
+				if (hostCursor.moveToNext()){
+					tvHost.setVisibility(View.VISIBLE);
+					tvHost.setText(String.format(getString(R.string.schedule_host), hostCursor.getString(0)));
+				}
+			}
+			else{
+				tvHost.setVisibility(View.GONE);
+			}	
+			
+			//Set date
 			try{
 				Date day = dateFormat.parse(cursor.getString(3));
 				Date date = new Date();

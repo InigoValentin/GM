@@ -15,7 +15,7 @@
 	//     $con = mysqli_connect(host, user, pass, database);
 	include '../db-access.php';
 	mysqli_set_charset($con, 'utf8');
-	$id = 294;
+	$id = 1;
 	$res = mysqli_query($con, "SELECT * FROM event ORDER BY start");
 	while ($row = mysqli_fetch_array($res)){
 		if ($row['host'] == null)

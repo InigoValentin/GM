@@ -5,6 +5,7 @@
 	<!-- App related strings -->
 
 	<string name="app_name">Gasteizko Margolariak</string>
+	<string name="app_name_software">Gasteizko Margolariak App</string>
 
 
 	<!-- Arrow buttons -->
@@ -27,6 +28,7 @@
 
 	<string name="schedule_filter">Search&#8230;</string>
 	<string name="schedule_close">Close</string>
+	<string name="schedule_host">Host: %1$s</string>
 
 
 	<!-- Month names -->

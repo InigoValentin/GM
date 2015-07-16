@@ -59,7 +59,7 @@
 					//TODO: insert
 				}
 			}
-			echo "<br/><br/><br/>$inserted nuevas entradas anadidas.<br/>\n$error errores.\n<br/><br/><form action='/gm/add/event.php'><input type='submit' value='Continuar anadiendo'/></form>";
+			echo "<br/><br/><br/>$inserted nuevas entradas anadidas.<br/>\n$error errores.\n<br/><br/><form action='/gm/add/gmevent.php'><input type='submit' value='Continuar anadiendo'/></form>";
 		?>
 	</body>
 </html>

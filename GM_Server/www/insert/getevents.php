@@ -16,7 +16,21 @@
 	include '../db-access.php';
 	mysqli_set_charset($con, 'utf8');
 	$id = 1;
-	$res = mysqli_query($con, "SELECT * FROM event ORDER BY start");
+	$res = mysqli_query($con, "SELECT * FROM event WHERE schedule = 1 ORDER BY start");
+	while ($row = mysqli_fetch_array($res)){
+		if ($row['host'] == null)
+			$host = "null";
+		else
+			$host = "$row[host]";
+		if ($row['end'] == null)
+			$end = "null";
+		else
+			$end = "str_to_date('$row[end]', '%Y-%m-%d %H:%i:%s')";
+		echo "INSERT INTO event VALUES ($id, $row[schedule], $row[gm], '$row[name]', '$row[description]', $host, $row[place], str_to_date('$row[start]', '%Y-%m-%d %H:%i:%s'), $end);\n";
+		$id ++;
+	}
+	echo "\n\n";
+	$res = mysqli_query($con, "SELECT * FROM event WHERE gm = 1 ORDER BY start");
 	while ($row = mysqli_fetch_array($res)){
 		if ($row['host'] == null)
 			$host = "null";

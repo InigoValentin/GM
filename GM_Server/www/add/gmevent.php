@@ -51,6 +51,7 @@
 			echo "<option value='2015-08-07'>7 agosto</option>\n";
 			echo "<option value='2015-08-08'>8 agosto</option>\n";
 			echo "<option value='2015-08-09'>9 agosto</option>\n";
+			echo "<option value='2015-08-10'>10 agosto</option>\n";
 			echo "</select><br/><br/>\n";
 			echo "<table style='margin-left:15px;'>\n";
 			echo "<tr><th>Nombre</th><th>Description</th><th>Empieza</th><th>Termina</th><th>Lugar</th><th>Organiza</th></tr>\n";

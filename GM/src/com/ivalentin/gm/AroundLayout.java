@@ -23,6 +23,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnShowListener;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -94,6 +95,11 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 	@Override
 	public void onPause() {
 		super.onPause();
+		if (map != null)
+			map.setMyLocationEnabled(false);
+		if (mapView != null){
+			mapView.onPause();
+		}
 		locationManager.removeUpdates(this);
 	}
 	
@@ -448,6 +454,19 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
     			}
     		});
 			
+        	//Actions to take when the dialog is cancelled
+			dialog.setOnCancelListener(new OnCancelListener(){
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					if (map != null)
+						map.setMyLocationEnabled(false);
+					if (mapView != null){
+    					mapView.onResume();
+    					mapView.onDestroy();
+    				}					
+				}
+			});
+        	
 			//Show the dialog
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
 			lp.dimAmount = 0.0f;
@@ -483,6 +502,8 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 	public void onResume() {
 		if (mapView != null)
 			mapView.onResume();
+		if (map != null)
+			map.setMyLocationEnabled(true);
 		Criteria criteria = new Criteria();
 	    provider = locationManager.getBestProvider(criteria, false);
 		locationManager.requestLocationUpdates(provider, 5000, 10, this);
@@ -498,11 +519,15 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		if (map != null)
+			map.setMyLocationEnabled(false);
 		if (mapView != null){
 			mapView.onResume();
 			mapView.onDestroy();
 		}
 	}
+	
+	
 
 	/**
 	 * Called in a situation of low memory.

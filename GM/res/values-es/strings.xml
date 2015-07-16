@@ -158,11 +158,18 @@
 
 	<string name="social_web">Web</string>
 	<string name="social_facebook">Facebook</string>
+	<string name="social_mail">e-mail</string>
+	<string name="social_whatsapp">Whatsapp</string>
 	<string name="social_twitter">Twitter</string>
 	<string name="social_googleplus">Google+</string>
 	<string name="social_youtube">Youtube</string>
 	<string name="social_instagram">Instagram</string>
 	<string name="social_web_link">http://margolariak.com/</string>
+	<string name="social_mail_link">mailto:gasteizkomargolariak@gmail.com</string>
+	<string name="social_whatsapp_link">smsto:+34637140371</string>
+	<string name="social_whatsapp_package">com.whatsapp</string>
+	<string name="social_whatsapp_chat">chat</string>
+	<string name="social_whatsapp_error">Error de conexión con Whatsapp. Está instalado?</string>
 	<string name="social_facebook_link">http://facebook.com/gmargolariak</string>
 	<string name="social_twitter_link">http://twitter.com/gmargolariak</string>
 	<string name="social_googleplus_link">https://plus.google.com/106661466029005469492</string>

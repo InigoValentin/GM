@@ -24,6 +24,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnShowListener;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -47,6 +48,7 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Section that will be seen when the app is started. 
@@ -410,6 +412,8 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		
 		//Assign buttons in social section
 		ImageView ivSocialW = (ImageView) view.findViewById(R.id.iv_social_web);
+		ImageView ivSocialM = (ImageView) view.findViewById(R.id.iv_social_mail);
+		ImageView ivSocialWA = (ImageView) view.findViewById(R.id.iv_social_whatsapp);
 		ImageView ivSocialF = (ImageView) view.findViewById(R.id.iv_social_facebook);
 		ImageView ivSocialT = (ImageView) view.findViewById(R.id.iv_social_twitter);
 		ImageView ivSocialG = (ImageView) view.findViewById(R.id.iv_social_googleplus);
@@ -426,6 +430,35 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
                 startActivity(i);
             }
         });
+		
+		ivSocialM.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = view.getContext().getString(R.string.social_mail_link);
+                Intent i = new Intent(Intent.ACTION_VIEW);
+                i.setData(Uri.parse(url));
+                startActivity(i);
+            }
+        });
+		
+		ivSocialWA.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+            	try{
+            		Uri mUri = Uri.parse(getString(R.string.social_whatsapp_link));
+            		Intent mIntent = new Intent(Intent.ACTION_SENDTO, mUri);
+            		mIntent.setPackage(getString(R.string.social_whatsapp_package));
+            		//mIntent.putExtra("sms_body", "");
+            		mIntent.putExtra(getString(R.string.social_whatsapp_chat),true);
+            		startActivity(mIntent);
+            	}
+            	catch (Exception e){
+            		Toast.makeText(v.getContext(), getString(R.string.social_whatsapp_error), Toast.LENGTH_LONG).show();
+            	}
+            }
+        });
+		
+		
 		
 		ivSocialF.setOnClickListener(new OnClickListener() {
             @Override
@@ -847,6 +880,19 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
     			}
     		});
 			
+        	//Actions to take when the dialog is cancelled
+			dialog.setOnCancelListener(new OnCancelListener(){
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					if (map != null)
+						map.setMyLocationEnabled(false);
+					if (mapView != null){
+    					mapView.onResume();
+    					mapView.onDestroy();
+    				}					
+				}
+			});
+        	
 			//Show the dialog
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
 			lp.dimAmount = 0.0f; 
@@ -976,6 +1022,19 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
     			}
     		});
 			
+        	//Actions to take when the dialog is cancelled
+			dialog.setOnCancelListener(new OnCancelListener(){
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					if (map != null)
+						map.setMyLocationEnabled(false);
+					if (mapView != null){
+    					mapView.onResume();
+    					mapView.onDestroy();
+    				}					
+				}
+			});        	
+        	
 			//Show the dialog
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
 			lp.dimAmount = 0.0f; 
@@ -1106,6 +1165,11 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 	@Override
 	public void onPause(){
 		locationManager.removeUpdates(this);
+		if (map != null)
+			map.setMyLocationEnabled(false);
+		if (mapView != null){
+			mapView.onPause();
+		}
 		super.onPause();
 	}
 	
@@ -1119,6 +1183,8 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 	public void onResume(){
 		if (mapView != null)
 			mapView.onResume();
+		if (map != null)
+			map.setMyLocationEnabled(true);
 		locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 10000, 5, this);
 		super.onResume();
 	}
@@ -1132,6 +1198,8 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		if (map != null)
+			map.setMyLocationEnabled(false);
 		if (mapView != null){
 			mapView.onResume();
 			mapView.onDestroy();

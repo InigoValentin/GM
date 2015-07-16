@@ -20,6 +20,7 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.DialogInterface.OnCancelListener;
 import android.content.DialogInterface.OnShowListener;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -456,9 +457,22 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
     			}
     		});
 			
+			//Actions to take when the dialog is cancelled
+			dialog.setOnCancelListener(new OnCancelListener(){
+				@Override
+				public void onCancel(DialogInterface dialog) {
+					if (map != null)
+						map.setMyLocationEnabled(false);
+					if (mapView != null){
+    					mapView.onResume();
+    					mapView.onDestroy();
+    				}					
+				}
+			});
+			
 			//Show the dialog
 			WindowManager.LayoutParams lp = dialog.getWindow().getAttributes();
-			lp.dimAmount = 0.0f; 
+			lp.dimAmount = 0.0f;
 			dialog.show();
 			
 			//Start the map
@@ -494,6 +508,8 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	public void onResume() {
 		if (mapView != null)
 			mapView.onResume();
+		if (map != null)
+			map.setMyLocationEnabled(true);
 		super.onResume();
 	}
 
@@ -506,9 +522,27 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
+		if (map != null)
+			map.setMyLocationEnabled(false);
 		if (mapView != null){
 			mapView.onResume();
 			mapView.onDestroy();
+		}
+	}
+	
+	/**
+	 * Called when the fragment is paused. 
+	 * Finishes the map. 
+	 * 
+	 * @see android.support.v4.app.Fragment#onPause()
+	 */
+	@Override
+	public void onPause() {
+		super.onDestroy();
+		if (map != null)
+			map.setMyLocationEnabled(false);
+		if (mapView != null){
+			mapView.onPause();
 		}
 	}
 

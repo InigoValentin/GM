@@ -52,11 +52,11 @@ INSERT INTO place VALUES (31, 'Jardines del Obispo Fernández de Piérola', 'Cal
 INSERT INTO place VALUES (32, 'Frontón Ogueta', 'Paseo de Cervantes, s/n', '01007', 42.837516, -2.6863);
 INSERT INTO place VALUES (33, 'Monte de la Tortilla', 'Mendizabala, junto al ferial', '01007', 42.834802, -2.684282);
 INSERT INTO place VALUES (34, 'Plaza de la Provincia', 'Calle Vicente Goikoetxea, 15', '01008', 42.847213, -2.676162);
-INSERT INTO place VALUES (35, 'Cuesta de San Francisco', 'Cuesta de San Francisco, 1', '01001', 42.847053, -2.671337);
+INSERT INTO place VALUES (35, 'Cuesta de San Francisco', 'Cuesta de SAn Francisco, 1', '01001', 42.847053, -2.671337);
 INSERT INTO place VALUES (36, 'Santuario de Estibaliz', 'Estí­baliz 1, Villafranca', '01193', 42.84748, -2.570965);
 INSERT INTO place VALUES (37, 'Zona Txagorritxu', 'Alrededor de Calle Jose Atxotegi, s/n', '01009', 42.855124, -2.690975);
-INSERT INTO place VALUES (38, 'Restaurante Com.es', 'Calle Barratxi, 39', '01013', 42.874975, -2.648169);
-INSERT INTO place VALUES (39, 'Residencia Txagorritxu', 'Calle Mejico, 11', '01009', 42.853165, -2.687545);
+INSERT INTO place VALUES (38, 'Restaurante Comes Gamarra', 'Calle Barratxi, 39', '01013', 42.874975, -2.648169);
+INSERT INTO place VALUES (39, 'Residencia Txagorritxu', 'Calle México, 11', '01009', 42.853165, -2.687545);
 INSERT INTO place VALUES (40, 'Restaurante Mirador de Salburua', 'Portal de Zurbano, 17', '01013', 42.864097, -2.649123);
 INSERT INTO place VALUES (41, 'Bar Zeppelin', 'Calle Nieves Cano, 29', '01006', 42.838518, -2.671719);
 INSERT INTO place VALUES (42, 'Recinto ferial', 'Portal de Lasarte, 23', '01007', 42.834736, -2.684677);
@@ -65,7 +65,24 @@ INSERT INTO place VALUES (44, 'Calle Bastiturri', 'Calle Bastiturri, 2', '01008'
 INSERT INTO place VALUES (45, 'Calle Prado', 'Calle Prado, 18', '01005', 42.845913, -2.675137);
 INSERT INTO place VALUES (46, 'Plaza de las Burullerias', 'Plaza de las Burullerias, s/n', '01001', 42.85127, -2.672852);
 INSERT INTO place VALUES (47, 'Plaza Green Capital', 'Plaza Green Capital, s/n', '01004', 42.841923, -2.666805);
-INSERT INTO place VALUES (48, 'Calle Florida con Pio XII', 'Calle Florida 55', '01004', 42.842271, -2.666323);
+INSERT INTO place VALUES (48, 'Calle Florida con Pío XII', 'Calle Florida 55', '01004', 42.842271, -2.666323);
+INSERT INTO place VALUES (49, 'Pasaje Postas', 'General Alava, 11', '01005', 42.845499, -2.67129);
+INSERT INTO place VALUES (50, 'Restaurante Sokoa', 'Calle Independencia, 11', '01005', 42.844596, -2.669122);
+INSERT INTO place VALUES (51, 'Calle Lope de Larrea', 'Calle Lope de Larrea, 4', '01005', 42.842067, -2.668656);
+INSERT INTO place VALUES (52, 'Plaza del Renacimiento', 'Calle Pí­o XII, 1', '01004', 42.842259, -2.6663);
+INSERT INTO place VALUES (53, 'La Paz con Olaguí­bel', 'Calle Paz, 17', '01004', 42.846033, -2.668037);
+INSERT INTO place VALUES (54, 'Parque de Aranzabal', 'Calle Aranzabal, 6', '01008', 42.844603, -2.681627);
+INSERT INTO place VALUES (55, 'Banco de España', 'Calle Estatuto de Gernika, 1', '01001', 42.846711, -2.670969);
+INSERT INTO place VALUES (56, 'Bar 180', 'Calle Zapatería, 84', '01001', 42.849746, -2.674193);
+INSERT INTO place VALUES (57, 'Bar Margolari', 'Calle Abendano, 37', '01008', 42.846632, -2.683603);
+INSERT INTO place VALUES (58, 'Plaza de las Desamparadas', 'Calle Paz, 1', '01005', 42.843939, -2.668322);
+INSERT INTO place VALUES (59, 'Bar Bodegón Gorbea', 'Calle Herrería, 24', '01001', 42.847378, -2.674381);
+INSERT INTO place VALUES (60, 'Calle Nueva Fuera', 'Calle Nueva Fuera, 30', '01001', 42.849023, -2.669523);
+INSERT INTO place VALUES (61, 'Plaza Amárica', 'Plaza Amárica, s/n', '01005', 42.842966, -2.673417);
+INSERT INTO place VALUES (62, 'Cervecerí­a Guernica', 'Calle Pintorería, 19', '01001', 42.84849, -2.670314);
+INSERT INTO place VALUES (63, 'Parroquia de San Cristóbal', 'Calle Alberto Schommer, 3', '01006', 42.837594, -2.666616);
+INSERT INTO place VALUES (64, 'Bar Mentirón', 'Calle Diputación Foral de Alava, 1', '01001', 42.846381, -2.673911);
+INSERT INTO place VALUES (65, 'Calle Mateo Moraza', 'Calle Mateo Moraza, 3', '01001', 42.846983, -2.672651);
 
 
 --People
@@ -109,6 +126,7 @@ INSERT INTO people VALUES (37, 'Cuadrilla Belakiak', 'http://www.belakiak.com/')
 INSERT INTO people VALUES (38, 'Cuadrilla Gasteiztarrak', 'http://cuadrillagasteiztarrak.blogspot.com.es/');
 INSERT INTO people VALUES (39, 'Gaiteros de la Academia Municipal de Folklore', null);
 INSERT INTO people VALUES (40, 'Cuadrilla Hegotarrak', 'http://hegotarrak.blogspot.com.es/');
+INSERT INTO people VALUES (41, 'Cuadrilla Karraxi', 'https://twitter.com/karraxiblusas');
 
 
 --Schedule events, July 25
@@ -445,74 +463,81 @@ INSERT INTO event VALUES (309, 0, 1, 'Dianas', 'Gasteizko Margolariak estará pr
 INSERT INTO event VALUES (310, 0, 1, 'Visita al cementerio', 'Gasteizko Margolariak estará presente en la ofrenda a los Blusas y Neskas fallecidos.', 4, 8, str_to_date('2015-07-25 09:30:00', '%Y-%m-%d %H:%i:%s'), null);
 INSERT INTO event VALUES (311, 0, 1, 'Carrera de burros', 'Veremos la carrera de burros mientras poteamos en los alrededores.', 4, 1, str_to_date('2015-07-25 09:45:00', '%Y-%m-%d %H:%i:%s'), null);
 INSERT INTO event VALUES (312, 0, 1, 'Taller de Cesta Punta', 'Organizaremos un taller para los más pequeños de Cesta Punta.', null, 2, str_to_date('2015-07-25 10:20:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (313, 0, 1, 'Almuerzo', 'Almuerzo casero con la cuadrilla, para ir conociéndonos y entrando en ambiente.', null, 49, str_to_date('2015-07-25 11:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (313, 0, 1, 'Almuerzo', 'Almuerzo con la cuadrilla, para ir conociéndonos y entrando en ambiente.', null, 49, str_to_date('2015-07-25 11:00:00', '%Y-%m-%d %H:%i:%s'), null);
 INSERT INTO event VALUES (314, 0, 1, 'Herri Kirolak', 'Gasteizko Margolariak participa en los Herri Kirolak! Puedes participar o animar a la cuadrilla!', 4, 2, str_to_date('2015-07-25 12:00:00', '%Y-%m-%d %H:%i:%s'), null);
 INSERT INTO event VALUES (315, 0, 1, 'Comida con la cuadrilla', 'Buena comida en el restaurante Sokoa para reponer fuerzas tras los Herri Kirolak.', null, 50, str_to_date('2015-07-25 14:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (316, 0, 1, 'Ida a los toros', 'En el paseillo de ida, Gasteizko Margolariak saldrá en la posición 10 de 24, acompañados por la txaranga "El Postí­n". Antes de empezar, nos haremos una foto de cuadrilla.', 4, 2, str_to_date('2015-07-25 17:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (317, 0, 1, 'Margolariaren Jokuak', 'Juegos entre paseillos, para todo el que quiera participar, amenizados con música y una barra en la Margofurgoneta.', null, 51, str_to_date('2015-07-25 18:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (318, 0, 1, 'Vuelta de los toros', 'En el paseillo de vuelta, Gasteizko Margolariak, con la txaranga "El Postí­n", ira por la calle Dato en la posición 8 de 12.', 4, 52, str_to_date('2015-07-25 20:15:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (319, 0, 1, 'Cena + Ambiente + Photocall', 'Cena con la cuadrilla para reponer fuerzas. Después de la cena, tendremos música, photocall y la Margofurgoneta para que no pasemos sed.', null, 46, str_to_date('2015-07-25 22:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (316, 0, 1, 'Foto de grupo', 'Nos sacaremos una foto de grupo en las escaleras de la Plaza de los Fueros', null, 2, str_to_date('2015-07-25 16:45:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (317, 0, 1, 'Ida a los toros', 'Saldremos en la posición 10 de 24, acompañados por la txaranga "El Postí­n".', 4, 2, str_to_date('2015-07-25 17:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (318, 0, 1, 'Margojokuak', 'Juegos entre paseillos, para todo el que quiera participar, amenizados con música y una barra en la Margofurgoneta.', null, 51, str_to_date('2015-07-25 18:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (319, 0, 1, 'Vuelta de los toros', 'Iremos por la calle Dato en la posición 8 de 12.', 4, 52, str_to_date('2015-07-25 20:15:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (320, 0, 1, 'Cena + Ambiente', 'Cena con la cuadrilla para reponer fuerzas. Después de la cena, tendremos música y la Margofurgoneta para que no pasemos sed.', null, 46, str_to_date('2015-07-25 22:00:00', '%Y-%m-%d %H:%i:%s'), null);
 
 
 --Margolari events, August 5
-INSERT INTO event VALUES (320, 0, 1, 'Almuerzo con la cuadrilla', 'Almorzamos casero para coger fuerzas para el primer dí­a de fiestas.', null, 18, str_to_date('2015-08-05 11:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (321, 0, 1, 'Ofrenda Floral', 'Gasteizko Margolariak estara presente en la ofrenda a la Virgen Blanca.', 4, 15, str_to_date('2015-08-05 12:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (322, 0, 1, 'Foto de cuadrilla', 'Tradicional foto en las escaleras para la posteridad.', null, 15, str_to_date('2015-08-05 12:45:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (323, 0, 1, 'Homenaje a la Ikurriña', 'Gasteizko Margolariak atenderá al homenaje a la Ikurriña.', 4, 7, str_to_date('2015-08-05 13:15:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (324, 0, 1, 'Autobús al restaurante', 'Cogeremos un autobús que nos lleva a comer.', null, 53, str_to_date('2015-08-05 14:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (325, 0, 1, 'Comida con la cuadrilla', 'Comeremos todos juntos en el restaurante Com.es, en Gamarra. Después de comer, un autobús volverá a traernos al centro.', null, 38, str_to_date('2015-08-05 14:30:00', '%Y-%m-%d %H:%i:%s'), str_to_date('2015-08-05 16:30:00', '%Y-%m-%d %H:%i:%s'));
-INSERT INTO event VALUES (326, 0, 1, 'Ida a los toros', 'En el paseillo de ida, Gasteizko Margolariak saldrá en la última posición, acompañados por la txaranga "El Postí­n". Antes de empezar, nos haremos una foto de cuadrilla.', 4, 2, str_to_date('2015-08-05 17:15:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (327, 0, 1, 'Txapeldunen Liga', 'Herri Kirolak y juegos en los que todos pueden participar. Aní­mate!', null, 47, str_to_date('2015-08-05 18:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (328, 0, 1, 'Vuelta de los toros', 'En el paseillo de vuelta, Gasteizko Margolariak irá por la calle Independencia, en la posición 9 de 12, acompañados por la txaranga "El Postí­n". ', 4, 52, str_to_date('2015-08-05 20:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (329, 0, 1, 'Cena de cuadrilla', 'Repondremos fuerzas con una buena cena todos juntos.', null, 54, str_to_date('2015-08-05 23:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (330, 0, 1, 'Kubateo', 'La Margofurgoneta refrescara gargantas mientras disfrutamos con la txaranga.', null, 55, str_to_date('2015-08-06 00:30:00', '%Y-%m-%d %H:%i:%s'), str_to_date('2015-08-06 02:30:00', '%Y-%m-%d %H:%i:%s'));
-INSERT INTO event VALUES (331, 0, 1, 'Kubateo por Zapa', 'La cuadrilla se va de bares!', null, 56, str_to_date('2015-08-06 02:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (321, 0, 1, 'Almuerzo con la cuadrilla', 'Almorzamos comida casera para coger fuerzas para el primer dí­a de fiestas.', null, 18, str_to_date('2015-08-05 11:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (322, 0, 1, 'Ofrenda Floral', 'Gasteizko Margolariak estará presente en la ofrenda a la Virgen Blanca.', 4, 15, str_to_date('2015-08-05 12:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (323, 0, 1, 'Foto de cuadrilla', 'Tradicional foto en las escaleras para la posteridad.', null, 15, str_to_date('2015-08-05 12:45:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (324, 0, 1, 'Homenaje a la Ikurriña', 'Gasteizko Margolariak atenderá al homenaje a la Ikurriña.', 4, 7, str_to_date('2015-08-05 13:15:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (325, 0, 1, 'Autobús al restaurante', 'Cogeremos un autobús que nos lleva a comer.', null, 53, str_to_date('2015-08-05 14:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (326, 0, 1, 'Comida con la cuadrilla', 'Comeremos todos juntos en el restaurante Comes Gamarra. Después de comer, un autobús volverá a traernos al centro.', null, 38, str_to_date('2015-08-05 14:30:00', '%Y-%m-%d %H:%i:%s'), str_to_date('2015-08-05 16:30:00', '%Y-%m-%d %H:%i:%s'));
+INSERT INTO event VALUES (327, 0, 1, 'Foto de grupo', 'Nos sacaremos una foto de grupo en las escaleras de la Plaza de los Fueros', null, 2, str_to_date('2015-08-05 17:15:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (328, 0, 1, 'Ida a los toros', 'Iremos en última posición, acompañados por la txaranga "El Postí­n"', 4, 2, str_to_date('2015-08-05 17:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (329, 0, 1, 'Txapeldunen Liga', 'Herri Kirolak y juegos en los que todos pueden participar. Aní­mate!', null, 47, str_to_date('2015-08-05 18:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (330, 0, 1, 'Vuelta de los toros', 'Por la calle Independencia, en la posición 9 de 12, acompañados por la txaranga "El Postí­n". ', 4, 52, str_to_date('2015-08-05 20:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (331, 0, 1, 'Cena de cuadrilla', 'Repondremos fuerzas con una buena cena todos juntos.', null, 54, str_to_date('2015-08-05 23:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (332, 0, 1, 'Kubateo', 'La Margofurgoneta refrescará gargantas mientras disfrutamos con la txaranga.', null, 55, str_to_date('2015-08-06 00:30:00', '%Y-%m-%d %H:%i:%s'), str_to_date('2015-08-06 02:30:00', '%Y-%m-%d %H:%i:%s'));
+INSERT INTO event VALUES (333, 0, 1, 'Kubateo por Zapa', '¡La cuadrilla se va de bares!', null, 56, str_to_date('2015-08-06 02:30:00', '%Y-%m-%d %H:%i:%s'), null);
 
 
 --Margolari events, August 6
-INSERT INTO event VALUES (332, 0, 1, 'Visita a la residencia Txagorritxu', 'Gasteizko Margolariak amenizara las fiestas a los inquilinos de la residencia Txagorritxu.', null, 39, str_to_date('2015-08-06 11:20:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (333, 0, 1, 'Poteo', 'Un poteo mañanero por el barrio de San Martí­n. Quedaremos, como no podí­a ser de otra forma, en el bar Margolari.', null, 57, str_to_date('2015-08-06 13:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (334, 0, 1, 'Comida con la cuadrilla', 'Comeremos todos juntos para coger fuerza para los paseillos.', null, 22, str_to_date('2015-08-06 14:15:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (335, 0, 1, 'Ida a los toros', 'En el paseillo de ida, Gasteizko Margolariak saldrá en la posición 5 de 25, acompañados de la txaranga "El Postí­n". Antes de empezar, nos haremos una foto de grupo.', 4, 2, str_to_date('2015-08-06 16:45:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (336, 0, 1, 'Margolinpiadak', 'Concursos y carreras entre los miembros de la cuadrilla, con animación, música, y una barra en la Margofurgoneta.', null, 52, str_to_date('2015-08-06 18:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (337, 0, 1, 'Vuelta de los toros', 'Gasteizko Margolariak hará el pasello de vuelta por la calle dato en la posición 10 de 13, acompañados de la txaranga "El Postí­n".', 4, 52, str_to_date('2015-08-06 20:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (338, 0, 1, 'Cena de cuadrilla', 'Unos buenos bocatas todos juntos para seguir la noche con fuerzas.', null, 34, str_to_date('2015-08-06 23:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (339, 0, 1, 'Kubateo', 'La furgoneta dará de beber a los sedientos, mientras nos acompaña la txaranga.', null, 60, str_to_date('2015-08-07 00:00:00', '%Y-%m-%d %H:%i:%s'), str_to_date('2015-08-07 02:00:00', '%Y-%m-%d %H:%i:%s'));
-INSERT INTO event VALUES (340, 0, 1, 'Kubateo por Zapa', 'La cuadrilla se va de bares!', null, 59, str_to_date('2015-08-07 02:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (334, 0, 1, 'Visita y almuerzo en la residencia Txagorritxu', 'Gasteizko Margolariak amenizará las fiestas a nuestros mayores de la residencia Txagorritxu, donde almorzaremos.', null, 39, str_to_date('2015-08-06 11:20:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (335, 0, 1, 'Poteo', 'Un poteo mañanero por el barrio de San Martí­n. Quedaremos, como no podí­a ser de otra forma, en el bar Margolari.', null, 57, str_to_date('2015-08-06 13:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (336, 0, 1, 'Comida con la cuadrilla', 'Comeremos todos juntos para coger fuerza para los paseillos.', null, 22, str_to_date('2015-08-06 14:15:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (337, 0, 1, 'Foto de grupo', 'Nos sacaremos una foto de grupo en las escaleras de la Plaza de los Fueros', null, 2, str_to_date('2015-08-06 16:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (338, 0, 1, 'Ida a los toros', 'Saldremos en la posición 5 de 25, acompañados de la txaranga "El Postí­n".', 4, 2, str_to_date('2015-08-06 17:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (339, 0, 1, 'Margolinpiadak', 'Concursos y carreras entre los miembros de la cuadrilla, con animación, música, y una barra en la Margofurgoneta.', null, 52, str_to_date('2015-08-06 18:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (340, 0, 1, 'Vuelta de los toros', 'Lo haremos por la calle Dato en la posición 10 de 13, acompañados de la txaranga "El Postí­n".', 4, 52, str_to_date('2015-08-06 20:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (341, 0, 1, 'Cena de cuadrilla', 'Unos buenos bocatas todos juntos para seguir la noche con fuerzas.', null, 58, str_to_date('2015-08-06 23:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (342, 0, 1, 'Kubateo', 'La furgoneta dará de beber a los sedientos, mientras nos acompaña la txaranga.', null, 60, str_to_date('2015-08-07 00:30:00', '%Y-%m-%d %H:%i:%s'), str_to_date('2015-08-07 02:00:00', '%Y-%m-%d %H:%i:%s'));
+INSERT INTO event VALUES (343, 0, 1, 'Kubateo por Zapa', '¡La cuadrilla se va de bares!', null, 59, str_to_date('2015-08-07 02:00:00', '%Y-%m-%d %H:%i:%s'), null);
 
 
 --Margolari events, August 7
-INSERT INTO event VALUES (341, 0, 1, 'Misa Celedón Txiki', 'Gasteizko Margolariak acudirá a la misa por Celedón Txiki. ', null, 15, str_to_date('2015-08-07 11:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (342, 0, 1, 'Bajada Celedón Txiki', 'Gasteizko Margolariak estará presente en la bajada de Celedón Txiki.', null, 1, str_to_date('2015-08-07 12:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (343, 0, 1, 'Ida a los toros', 'Gasteizko Margolariak hara el paseillo de ida en la posición 4 de 24, acompañados por la txaranga "El Postí­n". Antes de empezar, nos haremos una foto de cuadrilla.', 4, 2, str_to_date('2015-08-07 16:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (344, 0, 1, 'Bingolari', 'Entre paseillos jugaremos al bingo, mientras disfrutamos de música y la Margofurgoneta nos refresca las gargantas. Puedes ganar "increí­bles" premios!', null, 51, str_to_date('2015-08-07 18:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (345, 0, 1, 'Vuelta de los toros', 'En el paseillo de vuelta, Gasteizko Margolariak ira por la calle Independencia en la posición 8 de 12, acompañados por la txaranga "El Postí­n". ', 4, 52, str_to_date('2015-08-07 20:15:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (346, 0, 1, 'Cena de cuadrilla', 'Despues de una tarde intensa, una buena cena con la cuadrilla para reponer fuerzas.', null, 31, str_to_date('2015-08-07 22:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (347, 0, 1, 'Kubateo + actividades + música', 'Después de la cena, no te pierdas los juegos que organizaremos. Todo acompañado con música y la Margofurgoneta dándonos de beber.', null, 31, str_to_date('2015-08-08 00:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (348, 0, 1, 'Kubateo en la verbena', 'Para terminar bien la noche, estaremos bailando y bebiendo en la verbena.', null, 7, str_to_date('2015-08-08 01:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (344, 0, 1, 'Misa por Celedón Txiki', 'Gasteizko Margolariak acudirá a la misa por Celedón Txiki. ', null, 15, str_to_date('2015-08-07 11:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (345, 0, 1, 'Bajada de Celedón Txiki', 'Gasteizko Margolariak estará presente en la bajada de Celedón Txiki.', null, 1, str_to_date('2015-08-07 12:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (346, 0, 1, 'Foto de grupo', 'Nos sacaremos una foto de grupo en las escaleras de la Plaza de los Fueros', null, 2, str_to_date('2015-08-07 16:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (347, 0, 1, 'Ida a los toros', 'Haremos el paseillo de ida en la posición 4 de 24, acompañados por la txaranga "El Postí­n".', 4, 2, str_to_date('2015-08-07 17:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (348, 0, 1, 'Bingolari', 'Entre paseillos jugaremos al bingo, mientras disfrutamos de música y la Margofurgoneta nos refresca las gargantas. ¡Puedes ganar "increí­bles" premios!', null, 51, str_to_date('2015-08-07 18:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (349, 0, 1, 'Vuelta de los toros', 'Iremos por la calle Independencia en la posición 8 de 12, acompañados por la txaranga "El Postí­n". ', 4, 52, str_to_date('2015-08-07 20:15:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (350, 0, 1, 'Cena de cuadrilla', 'Después de una tarde intensa, una buena cena con la cuadrilla para reponer fuerzas.', null, 31, str_to_date('2015-08-07 22:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (351, 0, 1, 'Kubateo + actividades + música', 'Después de la cena, no te pierdas los juegos que organizaremos. Todo acompañado con música y la Margofurgoneta dándonos de beber.', null, 31, str_to_date('2015-08-08 00:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (352, 0, 1, 'Kubateo en la verbena', 'Para terminar bien la noche, estaremos bailando y bebiendo en la verbena.', null, 7, str_to_date('2015-08-08 01:30:00', '%Y-%m-%d %H:%i:%s'), null);
 
 
 --Margolari events, August 8
-INSERT INTO event VALUES (349, 0, 1, 'XXI Concurso Gastronómico', 'Gasteizko Margolariak estará representada en el concurso gastronómico. ', 31, 7, str_to_date('2015-08-08 10:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (350, 0, 1, 'Taller de pintura infantil', 'Gasteizko Margolariak organiza un taller de pintura para los más pequeños.', 22, 1, str_to_date('2015-08-08 10:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (351, 0, 1, 'Autobús al restaurante', 'Cogeremos un autobús que nos llevara al restaurante para comer.', null, 53, str_to_date('2015-08-08 13:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (352, 0, 1, 'Comida de cuadrilla', 'Comeremos todos juntos en el restaurante Mirador de Salburua. Cuando terminemos, un autobús volverá a traernos al centro.', null, 40, str_to_date('2015-08-08 14:00:00', '%Y-%m-%d %H:%i:%s'), str_to_date('2015-08-08 16:30:00', '%Y-%m-%d %H:%i:%s'));
-INSERT INTO event VALUES (353, 0, 1, 'Ida a los toros', 'En el paseillo de ida Gasteizko Margolariak ira en la posición 20 de 24, acompañado de la txaranga "El Postí­n". Antes de salir, nos sacaremos una foto de cuadrilla.', 4, 2, str_to_date('2015-08-08 17:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (354, 0, 1, 'Juegos picantes', 'Juegos picantes entre miembros de la cuadrilla. Todo amenizado con música y bebidas servidas en la Margofurgoneta. Atrévete a participar!', null, 51, str_to_date('2015-08-08 18:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (355, 0, 1, 'Vuelta de los toros', 'Gasteizko Margolariak hara el paseillo de vuelta por la calle Dato en primera posición, acompañados, como siempre, por la txaranga "El Postí­n".', 4, 52, str_to_date('2015-08-08 20:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (356, 0, 1, 'Cena de cuadrilla', 'Cena al aire libre con la cuadrilla para reponer fuerzas después de un dí­a intenso.', null, 61, str_to_date('2015-08-08 22:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (357, 0, 1, 'Kubateo', 'La Margofurgoneta refrescará gargantas mientras la txaranga anima la noche.', null, 60, str_to_date('2015-08-08 23:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (358, 0, 1, 'Kubateo por Pinto', 'Gasteizko Margolariak se va de bares con la txaranga!', null, 62, str_to_date('2015-08-09 01:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (353, 0, 1, 'XXI Concurso Gastronómico', 'Gasteizko Margolariak estará representada en el concurso gastronómico. ', 31, 7, str_to_date('2015-08-08 10:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (354, 0, 1, 'Taller de pintura infantil', 'Gasteizko Margolariak organiza un taller de pintura para los más pequeños. ', 22, 1, str_to_date('2015-08-08 10:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (355, 0, 1, 'Autobús al restaurante', 'Cogeremos un autobús que nos llevara al restaurante para comer.', null, 53, str_to_date('2015-08-08 13:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (356, 0, 1, 'Comida de cuadrilla', 'Comeremos todos juntos en el restaurante Mirador de Salburua. Cuando terminemos, un autobús volverá a traernos al centro.', null, 40, str_to_date('2015-08-08 14:00:00', '%Y-%m-%d %H:%i:%s'), str_to_date('2015-08-08 16:30:00', '%Y-%m-%d %H:%i:%s'));
+INSERT INTO event VALUES (357, 0, 1, 'Foto de grupo', 'Nos sacaremos una foto de grupo en las escaleras de la Plaza de los Fueros', null, 2, str_to_date('2015-08-08 16:45:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (358, 0, 1, 'Ida a los toros', 'Salimos en la posición 20 de 24, acompañado de la txaranga "El Postí­n".', 4, 2, str_to_date('2015-08-08 17:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (359, 0, 1, 'Juegos picantes', 'Juegos picantes entre miembros de la cuadrilla. Todo amenizado con música y bebidas servidas en la Margofurgoneta. ¡Atrévete a participar!', null, 51, str_to_date('2015-08-08 18:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (360, 0, 1, 'Vuelta de los toros', 'Haremos el paseillo de vuelta por la calle Dato en primera posición, acompañados, como siempre, por la txaranga "El Postí­n".', 4, 52, str_to_date('2015-08-08 20:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (361, 0, 1, 'Cena de cuadrilla', 'Cena al aire libre con la cuadrilla para reponer fuerzas después de un dí­a intenso.', null, 61, str_to_date('2015-08-08 22:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (362, 0, 1, 'Kubateo', 'La Margofurgoneta refrescará gargantas mientras la txaranga anima la noche.', null, 60, str_to_date('2015-08-08 23:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (363, 0, 1, 'Kubateo por Pinto', '¡Gasteizko Margolariak se va de bares con la txaranga!', null, 62, str_to_date('2015-08-09 01:00:00', '%Y-%m-%d %H:%i:%s'), null);
 
 
 --Margolari events, August 9
-INSERT INTO event VALUES (359, 0, 1, 'Ida a los toros', 'Gasteizko Margolariak hará el paseillo de ida en la posición 4 de 24, acompanados de la txaranga "El Postí­n". Antes de empezar, nos haremos una foto de grupo.', 4, 2, str_to_date('2015-08-09 16:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (360, 0, 1, 'Autobús a las barracas', 'Entre paseillos, un autobús nos recogerá para llevarnos a las barracas.', null, 63, str_to_date('2015-08-09 18:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (361, 0, 1, 'Barracas', 'Giraremos, gritaremos y disfrutaremos en las barracas. Despues, un autobus volvera a llevarnos a la plaza de toros a tiempo para el paseillo. Atrévete!', null, 42, str_to_date('2015-08-09 18:15:00', '%Y-%m-%d %H:%i:%s'), str_to_date('2015-08-09 19:30:00', '%Y-%m-%d %H:%i:%s'));
-INSERT INTO event VALUES (362, 0, 1, 'Vuelta de los toros', 'Gasteizko Margolariak hará el paseillo de vuelta por la calle Independencia en la posición 11 de 12, acompañados de la txaranga "El Postí­n".', 4, 52, str_to_date('2015-08-09 20:30:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (363, 0, 1, 'Cena y sobremesa', 'Despediremos las fiestas con una cena como se merecen. Después, alargaremos la sobremesa hasta la bajada de Celedón.', null, 22, str_to_date('2015-08-09 22:00:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (364, 0, 1, 'Subida de Celedón', 'Acudiremos a la subida de Celedón, para despedir las fiestas como se merecen.', null, 27, str_to_date('2015-08-10 00:45:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (365, 0, 1, 'Procesión de luto', 'Entierro simbólico de un blusa de la cuadrilla.', null, 1, str_to_date('2015-08-10 01:15:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (366, 0, 1, 'Aurresku de despedida', 'Gasteizko Margolariak acudirá al Aurresku de despedida de las fiestas.', 3, 15, str_to_date('2015-08-10 01:25:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (367, 0, 1, 'Kubateo', 'Las noche no termina con Celedón. Después, estaremos de kubateo con la Margofurgoneta y la txaranga.', null, 55, str_to_date('2015-08-10 01:45:00', '%Y-%m-%d %H:%i:%s'), null);
-INSERT INTO event VALUES (368, 0, 1, 'Desayuno para valientes', 'Después de la última noche de fiestas, un desayuno para los últimos en irse a casa.', null, 64, str_to_date('2015-08-10 05:50:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (364, 0, 1, 'Foto de grupo', 'Nos sacaremos una foto de grupo en las escaleras de la Plaza de los Fueros', null, 2, str_to_date('2015-08-09 16:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (365, 0, 1, 'Ida a los toros', 'Haremos el paseillo de ida en la posición 4 de 24, acompanados de la txaranga "El Postí­n".', 4, 2, str_to_date('2015-08-09 17:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (366, 0, 1, 'Autobús a las barracas', 'Entre paseillos, un autobús nos recogerá para llevarnos a las barracas.', null, 63, str_to_date('2015-08-09 18:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (367, 0, 1, 'Barracas', 'Giraremos, gritaremos y disfrutaremos en las barracas. ¡Atrévete!', null, 42, str_to_date('2015-08-09 18:15:00', '%Y-%m-%d %H:%i:%s'), str_to_date('2015-08-09 19:30:00', '%Y-%m-%d %H:%i:%s'));
+INSERT INTO event VALUES (368, 0, 1, 'Autobús de vuelta', 'Un autobús nos traerá de vuelta al centro.', null, 63, str_to_date('2015-08-09 19:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (369, 0, 1, 'Vuelta de los toros', 'El paseillo de vuelta lo haremos por la calle Independencia en la posición 11 de 12, acompañados de la txaranga "El Postí­n".', 4, 52, str_to_date('2015-08-09 20:30:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (370, 0, 1, 'Cena y sobremesa', 'Despediremos las fiestas con una cena como se merecen. Después, alargaremos la sobremesa hasta la bajada de Celedón.', null, 22, str_to_date('2015-08-09 22:00:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (371, 0, 1, 'Subida de Celedón', 'Acudiremos a la subida de Celedón, para despedir las fiestas como se merecen.', null, 27, str_to_date('2015-08-10 00:45:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (372, 0, 1, 'Procesión de luto', 'Entierro simbólico de un blusa de la cuadrilla.', null, 1, str_to_date('2015-08-10 01:15:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (373, 0, 1, 'Aurresku de despedida', 'Gasteizko Margolariak acudirá al Aurresku de despedida de las fiestas.', 3, 15, str_to_date('2015-08-10 01:25:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (374, 0, 1, 'Kubateo', 'Las noche no termina con Celedón. Después, estaremos de kubateo con la Margofurgoneta y la txaranga.', null, 55, str_to_date('2015-08-10 01:45:00', '%Y-%m-%d %H:%i:%s'), null);
+INSERT INTO event VALUES (375, 0, 1, 'Desayuno para valientes', 'Después de la última noche de fiestas, un desayuno para los últimos en irse a casa.', null, 64, str_to_date('2015-08-10 08:00:00', '%Y-%m-%d %H:%i:%s'), null);

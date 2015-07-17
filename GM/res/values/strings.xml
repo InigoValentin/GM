@@ -6,6 +6,7 @@
 
 	<string name="app_name">Gasteizko Margolariak</string>
 	<string name="app_name_software">Gasteizko Margolariak App</string>
+	<string name="app_email">gasteizkomargolariak@gmail.com</string>
 
 
 	<!-- Arrow buttons -->
@@ -114,6 +115,9 @@
 	<string name="prices_howto_2">If you have chosen the 5 days offer pack or the 6 days offer pack, there is no need to indicate the days: Your full name will suffice.</string>
 	<string name="prices_howto_3">Payments for the Santiago day (July 25) have to be done before July 22</string>
 	<string name="prices_howto_4">Payments for the rest of days have to be done before August 1</string>
+	<string name="prices_contact_text">For any questions you may have, don\'t hesitate in dropping us a line.</string>
+	<string name="prices_contact_button">e-mail us</string>
+	<string name="prices_contact_subject">Joining Gasteizko Margolariak</string>
 	
 
 	<!-- Settings section strings -->

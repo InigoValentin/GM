@@ -280,7 +280,11 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	    //Set margins so the days goes from 6:00 in the morning to 5:59 the next day, instead of from 00:00 to 23:59
 	    cal.add(Calendar.HOUR_OF_DAY, 6); 
 	    minDate = cal.getTime();
-	    cal.add(Calendar.HOUR_OF_DAY, 24); 
+	    //TODO: Text this
+	    if (selected == GM.DAY_9)
+	    	cal.add(Calendar.HOUR_OF_DAY, 36);
+	    else
+	    	cal.add(Calendar.HOUR_OF_DAY, 24);
 	    maxDate = cal.getTime();
 	    maxDateStr = dateFormat.format(maxDate);
 	    minDateStr = dateFormat.format(minDate);

@@ -450,13 +450,30 @@
 	                android:layout_marginTop="15dp"
 	                android:textColor="@color/text_dialog"
 	                android:text="@string/prices_howto_3" />
+
+	            <TextView
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_marginTop="15dp"
+	                android:text="@string/prices_howto_4"
+	                android:textColor="@color/text_dialog" />
 	            
 	            <TextView
 	                android:layout_width="wrap_content"
 	                android:layout_height="wrap_content"
 	                android:layout_marginTop="15dp"
-	                android:textColor="@color/text_dialog"
-	                android:text="@string/prices_howto_4" />
+	                android:text="@string/prices_contact_text"
+	                android:textColor="@color/text_dialog" />
+
+	            <Button
+	                android:id="@+id/bt_dialog_prices_contact"
+	                android:layout_width="wrap_content"
+	                android:layout_height="wrap_content"
+	                android:layout_gravity="center_horizontal"
+	                android:layout_marginBottom="10dp"
+	                android:layout_marginTop="10dp"
+	                android:padding="5dp"
+	                android:text="@string/prices_contact_button" />
 
 	        </LinearLayout>
 	

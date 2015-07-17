@@ -1,0 +1,81 @@
+DROP TABLE IF EXISTS version;
+CREATE TABLE version (
+	version	INT	PRIMARY KEY
+);
+
+DROP TABLE IF EXISTS day;
+CREATE TABLE day (
+	id		INT			AUTO_INCREMENT	PRIMARY KEY,
+	name	VARCHAR(60)	NOT NULL,
+	price	INT			NOT NULL
+);
+
+DROP TABLE IF EXISTS offer;
+CREATE TABLE offer (
+	id		INT 		AUTO_INCREMENT	PRIMARY KEY,
+	name	VARCHAR(90)	NOT NULL,
+	days	INT			NOT NULL,
+	price	INT			NOT NULL
+);
+
+
+DROP TABLE IF EXISTS location;
+CREATE TABLE location (
+	id		INT			AUTO_INCREMENT 	PRIMARY KEY,
+	time	TIMESTAMP	NOT NULL		DEFAULT now(),
+	lat		DOUBLE		NOT NULL,
+	lon		DOUBLE		NOT NULL,
+	manual	BOOLEAN		NOT NULL		DEFAULT 0,
+	user	INT			NOT NULL		REFERENCES admin.id
+);
+
+DROP TABLE IF EXISTS notification;
+CREATE TABLE notification (
+	id			INT				AUTO_INCREMENT 	PRIMARY KEY,
+	user		INT				NOT NULL		REFERENCES user.id,
+	time		TIMESTAMP		NOT NULL		DEFAULT now(),
+	duration	INT				NOT NULL		DEFAULT 60,
+	type		VARCHAR(20)		NOT NULL		DEFAULT 'message',
+	title		VARCHAR(100)	NOT NULL,
+	text		VARCHAR(800)	NOT NULL,
+	gm			BOOLEAN			NOT NULL		DEFAULT 0
+);
+
+DROP TABLE IF EXISTS place;
+CREATE TABLE place (
+	id		INT				AUTO_INCREMENT	PRIMARY KEY,
+	name	VARCHAR(100)	NOT NULL,
+	address	VARCHAR(200),
+	cp		VARCHAR(10),
+	lat		DOUBLE,
+	lon		DOUBLE
+);
+
+DROP TABLE IF EXISTS people;
+CREATE TABLE people (
+	id		INT				AUTO_INCREMENT	PRIMARY KEY,
+	name	VARCHAR(100)	NOT NULL,
+	link	VARCHAR(300)
+);
+
+DROP TABLE IF EXISTS event;
+CREATE TABLE event (
+	id			INT				AUTO_INCREMENT	PRIMARY KEY,
+	schedule	BOOLEAN			DEFAULT 1,
+	gm			BOOLEAN			DEFAULT 0,
+	name		VARCHAR(200)	NOT NULL,
+	description	VARCHAR(3500),
+	host		INT				REFERENCES people.id,
+	place		INT				REFERENCES place.id,
+	start		DATETIME,
+	end			DATETIME
+);
+
+DROP TABLE IF EXISTS feedback;
+CREATE TABLE feedback (
+	user	INT			REFERENCES user.id,
+	event	INT			REFERENCES event.id,
+	time	DATETIME,
+	PRIMARY KEY (user, event)
+);
+	

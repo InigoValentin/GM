@@ -6,6 +6,7 @@
 
 	<string name="app_name">Gasteizko Margolariak</string>
 	<string name="app_name_software">Aplicación Gasteizko Margolariak</string>
+	<string name="app_email">gasteizkomargolariak@gmail.com</string>
 	
 
 	<!-- Arrow buttons -->
@@ -114,6 +115,9 @@
 	<string name="prices_howto_2">Si optas por los packs de 5 o 6 días, no es necesario indicar los días, bastará con tu nombre completo.</string>
 	<string name="prices_howto_3">Los pagos para el día de Santiago (25 de julio) deberán realizarse antes del 22 de julio.</string>
 	<string name="prices_howto_4">Los pagos para fiestas de La Blanca (del 4 al 9 de Agosto) deberán realizarse antes del 1 de agosto.</string>
+	<string name="prices_contact_text">Si tienes qualquier duda o pregunta, no dudes en escribirnos.</string>
+	<string name="prices_contact_button">Enviar e-mail</string>
+	<string name="prices_contact_subject">Quiero apuntarme</string>
 
 
 	<!-- Settings section strings -->

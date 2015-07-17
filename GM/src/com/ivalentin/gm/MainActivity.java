@@ -48,6 +48,9 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	
 	//GPS coordinates provider
 	private String provider;
+	
+	//Alarm to get location
+	AlarmReceiver alarm;
 		
 	/**
 	 * Loads a section in the main screen.
@@ -139,6 +142,7 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	@Override
 	protected void onResume() {
 		super.onResume();
+		alarm.onReceive(this, this.getIntent());
 		locationManager.requestLocationUpdates(provider, GM.LOCATION_ACCURACY, 1, this);
 	}
 
@@ -228,8 +232,9 @@ public class MainActivity extends ActionBarActivity implements LocationListener{
 	    }
 
 		//Set an alarm for notifications..
-	    AlarmReceiver alarm = new AlarmReceiver();
+	    alarm = new AlarmReceiver();
 		alarm.setAlarm(this);
+		alarm.onReceive(this, this.getIntent());
 		
 		//Remove title bar.
 	    this.requestWindowFeature(Window.FEATURE_NO_TITLE);

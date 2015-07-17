@@ -222,6 +222,19 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 				cbDayName[4] = (CheckBox) dialog.findViewById(R.id.cb_dialog_prices_4);
 				cbDayName[5] = (CheckBox) dialog.findViewById(R.id.cb_dialog_prices_5);
 				Button btClose = (Button) dialog.findViewById(R.id.bt_dialog_prices_close);
+				Button btContact = (Button) dialog.findViewById(R.id.bt_dialog_prices_contact);
+				
+				//Listener for the contact dialog
+				btContact.setOnClickListener(new OnClickListener(){
+					@Override
+					public void onClick(View v) {
+						//TODO: test this 
+						//Mail intent
+						Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", v.getContext().getString(R.string.app_email), null));
+						intent.putExtra(Intent.EXTRA_SUBJECT, v.getContext().getString(R.string.prices_contact_subject));
+						startActivity(Intent.createChooser(intent, null));
+					}
+				});
 				
 				//Open database
 				SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);

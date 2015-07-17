@@ -51,8 +51,8 @@ public class AlarmReceiver extends WakefulBroadcastReceiver {
         
     	Log.d("Alarm", "Received");
     	
-    	//Synchronize database.
-    	new Sync(context).execute();
+    	//Synchronize database. //TODO: I dont hink i need this here.
+    	//new Sync(context).execute();
 
 		//The received web page, line by line.
 		List<String> output = null;

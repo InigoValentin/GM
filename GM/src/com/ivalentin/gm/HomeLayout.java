@@ -564,12 +564,30 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		
 		//Get offers
 		cursor = db.rawQuery("SELECT price, days FROM offer ORDER BY id;", null);
+		boolean offerApplied = false;
 		while (cursor.moveToNext()){
 			
 			//If selected days equal the days in the ofer, fix the price
-			if (cursor.getInt(1) == selected)
+			if (cursor.getInt(1) == selected){
 				total = cursor.getInt(0);
+				offerApplied = true;
+			}
 		}
+		/*if (offerApplied == false){
+			Cursor closestOffer = db.rawQuery("SELECT price, days FROM offer WHERE days < " + Integer.toString(selected) + " ORDER BY days DESC LIMIT 1;", null);
+			if (closestOffer.getCount() == 1){
+				closestOffer.moveToNext();
+				total = closestOffer.getInt(0);
+				while (cursor.moveToNext() && i < 6){
+					if (cbDayName[i].isChecked()){
+						selected ++;
+						total = total + cursor.getInt(0);
+					}
+					i ++;
+				}
+			}
+			//TODO: Look for the closest inmediatly lower offer, apply and calculate difference
+		}*/
 		
 		//Set text
 		tvTotal.setText(v.getContext().getResources().getString(R.string.prices_total) + " " + total + v.getContext().getResources().getString(R.string.eur));

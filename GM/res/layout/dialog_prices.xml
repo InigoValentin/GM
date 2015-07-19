@@ -472,6 +472,7 @@
 	                android:layout_gravity="center_horizontal"
 	                android:layout_marginBottom="10dp"
 	                android:layout_marginTop="10dp"
+	                android:background="@drawable/arrowbutton"
 	                android:padding="5dp"
 	                android:text="@string/prices_contact_button" />
 

@@ -551,11 +551,13 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		Cursor cursor = db.rawQuery("SELECT price FROM day ORDER BY id;", null);
 		
 		//Loop simultaneously the db entries and the checkboxes
+		ArrayList<Integer> price = new ArrayList<Integer>();
 		int i = 0;
 		int total = 0;
 		int selected = 0;
 		while (cursor.moveToNext() && i < 6){
 			if (cbDayName[i].isChecked()){
+				price.add(cursor.getInt(0));
 				selected ++;
 				total = total + cursor.getInt(0);
 			}
@@ -573,21 +575,22 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 				offerApplied = true;
 			}
 		}
-		/*if (offerApplied == false){
+		
+		//Offer + single days
+		if (offerApplied == false){
+			Collections.sort(price);
 			Cursor closestOffer = db.rawQuery("SELECT price, days FROM offer WHERE days < " + Integer.toString(selected) + " ORDER BY days DESC LIMIT 1;", null);
 			if (closestOffer.getCount() == 1){
 				closestOffer.moveToNext();
 				total = closestOffer.getInt(0);
-				while (cursor.moveToNext() && i < 6){
-					if (cbDayName[i].isChecked()){
-						selected ++;
-						total = total + cursor.getInt(0);
-					}
+				int difference = selected - closestOffer.getInt(1);
+				i = 0;
+				while (i < difference && price.size() > i){
+					total = total + price.get(i);
 					i ++;
 				}
 			}
-			//TODO: Look for the closest inmediatly lower offer, apply and calculate difference
-		}*/
+		}
 		
 		//Set text
 		tvTotal.setText(v.getContext().getResources().getString(R.string.prices_total) + " " + total + v.getContext().getResources().getString(R.string.eur));

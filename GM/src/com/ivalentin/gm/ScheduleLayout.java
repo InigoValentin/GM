@@ -280,7 +280,8 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	    //Set margins so the days goes from 6:00 in the morning to 5:59 the next day, instead of from 00:00 to 23:59
 	    cal.add(Calendar.HOUR_OF_DAY, 6); 
 	    minDate = cal.getTime();
-	    //TODO: Text this
+	    
+	    //If its the last day, include events of the next one
 	    if (selected == GM.DAY_9)
 	    	cal.add(Calendar.HOUR_OF_DAY, 36);
 	    else
@@ -300,6 +301,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		
         //Loop
         while (cursor.moveToNext()){
+        	
         	
         	//Create a new row
         	entry = (LinearLayout) factory.inflate(R.layout.row_schedule, null);

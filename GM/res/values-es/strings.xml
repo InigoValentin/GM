@@ -49,7 +49,7 @@
 	<string name="day_title_4">Celedón</string>
 	<string name="day_title_5">La Blanca</string>
 	<string name="day_title_6">Día Margolari</string>
-	<string name="day_title_7">Celedon Txiki</string>
+	<string name="day_title_7">Celedón Txiki</string>
 	<string name="day_title_8">Blusa Veterano</string>
 	<string name="day_title_9">Despedida</string>
 
@@ -65,7 +65,7 @@
 	<!-- Around section string -->
 	
 	<string name="around_no_events_0">No hay eventos proximamente.</string>
-	<string name="around_no_events_1">Según se acerquen las fiestas, aquí irán apareceido actividades cerca de ti!</string>
+	<string name="around_no_events_1">Según se acerquen las fiestas, ¡aquí irán apareceido actividades cerca de ti!</string>
 	<string name="around_no_events_button">Ver el programa de fiestas</string>
 	<string name="around_no_gps">Enciende el GPS de tu teléfono para poder localizar eventos a tu alrededor.</string>
 	<string name="around_no_gps_button">Abrir ajustes</string>
@@ -78,8 +78,8 @@
 	<string name="home_section_gm">Actividades de Margolariak</string>
 	<string name="home_section_around">Cerca de mi</string>
 	<string name="home_section_location">Encuéntranos</string>
-	<string name="home_section_location_text_0">Gasteizko Margolariak está cerca!</string>
-	<string name="home_section_location_text_1">Están a solo %1$s de ti! (Unos %2$d minutos andando)</string>
+	<string name="home_section_location_text_0">¡Gasteizko Margolariak está cerca!</string>
+	<string name="home_section_location_text_1">¡Están a solo %1$s de ti! (Unos %2$d minutos andando)</string>
 	<string name="home_section_social">Síguenos</string>
 	<string name="home_section_join">Hazte Margolari</string>
 	<string name="home_section_schedule_see">Ver programa</string>
@@ -88,8 +88,8 @@
 	<string name="home_section_location_see">Mapa</string>
 	<string name="home_section_social_see">Síguenos</string>
 	<string name="home_section_join_see">Precios</string>
-	<string name="home_section_join_header">Únete a Gasteizko Margolariak por el mejor precio!</string>
-	<string name="home_section_join_text">Escoge días sueltos o elige nuestros packs en oferta!</string>
+	<string name="home_section_join_header">¡Únete a Gasteizko Margolariak por el mejor precio!</string>
+	<string name="home_section_join_text">¡Escoge días sueltos o elige nuestros packs en oferta!</string>
 	<string name="home_section_join_footer">Mira los precios y elige la opción que mejor se adapte a ti.</string>
 
 	
@@ -199,7 +199,7 @@
 	<string name="dialog_sync_title">Sincronizando</string>
 	<string name="dialog_sync_text">Descargando los últimos contenidos en tu teléfono.</string>
 	<string name="dialog_sync_internet">La primera vez que usas esta aplicación debes disponer de una conexión a internet.</string>
-	<string name="dialog_sync_failed_title">Error de sincronizacion</string>
+	<string name="dialog_sync_failed_title">Error de sincronización</string>
 	<string name="dialog_sync_failed_text">No se pudierdon descargar los contenidos\n\nAsegúrate de que dispones de conexión a internet e inténtalo de nuevo.</string>
 	<string name="dialog_sync_failed_close">Cerrar</string>
 	

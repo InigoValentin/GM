@@ -73,6 +73,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 	private GoogleMap map;
 	private LatLng location;
 	private View view;
+	private String markerName = "";
 	
 	/**
 	 * Run when the fragment is inflated.
@@ -390,6 +391,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		
 			//Set title
 			tvTitle.setText(cursor.getString(1));
+			markerName = cursor.getString(1);
 			
 			//Set description
 			tvDescription.setText(cursor.getString(2));
@@ -454,6 +456,10 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 			location = new LatLng(Double.parseDouble(cursor.getString(7)), Double.parseDouble(cursor.getString(8)));
 			mapView = (MapView) dialog.findViewById(R.id.mv_dialog_schedule_map);
 			mapView.onCreate(bund);
+			
+			//Close the db connection
+			cursor.close();
+			db.close();
 			
 			//Set close button			
         	btClose.setOnClickListener(new OnClickListener() {
@@ -592,7 +598,7 @@ public class ScheduleLayout extends Fragment implements OnMapReadyCallback{
 		}
 		//Set GM marker
 		MarkerOptions mo = new MarkerOptions();
-		mo.title(view.getContext().getString(R.string.app_name));
+		mo.title(markerName);
 		mo.position(location);
 		map.addMarker(mo);
 		

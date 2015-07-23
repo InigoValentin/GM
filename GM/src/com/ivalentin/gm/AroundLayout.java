@@ -86,6 +86,7 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 	private Bundle bund;
 	private GoogleMap map;
 	private LatLng location;
+	private String markerName = "";
 
 	/**
 	 * Remove the location listener updates when Activity is paused.
@@ -386,14 +387,14 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		//Get info about the event
 		SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);
 		Cursor cursor = db.rawQuery("SELECT event.id, event.name, description, start, end, place.name, address, lat, lon FROM event, place WHERE place.id = event.place AND event.id = " + id + ";", null);
-		Log.e("RESULTS FOUND", "#" + cursor.getCount());
 		if (cursor.getCount() > 0){
 			cursor.moveToNext();
 		
 			//Set title
 			tvTitle.setText(cursor.getString(1));
+			markerName = cursor.getString(1);
 			
-			//Set decription
+			//Set description
 			tvDescription.setText(cursor.getString(2));
 			
 			//Set date
@@ -445,6 +446,10 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 			location = new LatLng(Double.parseDouble(cursor.getString(7)), Double.parseDouble(cursor.getString(8)));
 			mapView = (MapView) dialog.findViewById(R.id.mv_dialog_around_map);
 			mapView.onCreate(bund);
+			
+			//Close db connection
+			cursor.close();
+			db.close();
 			
 			//Set close button			
         	btClose.setOnClickListener(new OnClickListener() {
@@ -569,7 +574,7 @@ public class AroundLayout extends Fragment implements LocationListener, OnMapRea
 		}
 		//Set GM marker
 		MarkerOptions mo = new MarkerOptions();
-		mo.title(view.getContext().getString(R.string.app_name));
+		mo.title(markerName);
 		mo.position(location);
 		map.addMarker(mo);
 		

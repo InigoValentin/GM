@@ -49,7 +49,7 @@
 	<string name="day_title_4">Celedón</string>
 	<string name="day_title_5">La Blanca</string>
 	<string name="day_title_6">Día Margolari</string>
-	<string name="day_title_7">Celedon Txiki</string>
+	<string name="day_title_7">Celedón Txiki</string>
 	<string name="day_title_8">Blusa Veterano</string>
 	<string name="day_title_9">Despedida</string>
 
@@ -139,7 +139,7 @@
 	<string name="settings_account_message_save">Save</string>
 	<string name="settings_account_message_cancel">Cancel</string>
 	<string name="settings_account_unset">Not set</string>
-	<string name="settings_account_name_disclaimer">Blablabla</string>
+	<string name="settings_account_name_disclaimer">We will not share your name or any other personal info with third parties.</string>
 
 
 	<!-- Location section strings -->

@@ -84,6 +84,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 	private Bundle bund;
 	private GoogleMap map;
 	private LatLng location;
+	private String markerName = "";
 	
 	/**
 	 * Run when the fragment is inflated.
@@ -522,6 +523,10 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
                 startActivity(i);
             }
         });
+
+		//Close database connection
+		cursor.close();
+		db.close();
 		
 	    //Return the view itself.
 		return view;
@@ -850,6 +855,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		
 			//Set title
 			tvTitle.setText(cursor.getString(1));
+			markerName = cursor.getString(1);
 			
 			//Set description
 			tvDescription.setText(cursor.getString(2));
@@ -905,6 +911,10 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 			location = new LatLng(Double.parseDouble(cursor.getString(7)), Double.parseDouble(cursor.getString(8)));
 			mapView = (MapView) dialog.findViewById(R.id.mv_dialog_around_map);
 			mapView.onCreate(bund);
+			
+			//Close db connection
+			cursor.close();
+			db.close();
 			
 			//Set close button			
         	btClose.setOnClickListener(new OnClickListener() {
@@ -983,6 +993,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		
 			//Set title
 			tvTitle.setText(cursor.getString(1));
+			markerName = cursor.getString(1);
 			
 			//set description
 			tvDescription.setText(cursor.getString(2));
@@ -1047,6 +1058,10 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 			location = new LatLng(Double.parseDouble(cursor.getString(7)), Double.parseDouble(cursor.getString(8)));
 			mapView = (MapView) dialog.findViewById(R.id.mv_dialog_schedule_map);
 			mapView.onCreate(bund);
+			
+			//Close db connection
+			cursor.close();
+			db.close();
 			
 			//Set close button			
         	btClose.setOnClickListener(new OnClickListener() {
@@ -1124,7 +1139,7 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 		}
 		//Set GM marker
 		MarkerOptions mo = new MarkerOptions();
-		mo.title(v.getContext().getString(R.string.app_name));
+		mo.title(markerName);
 		mo.position(location);
 		map.addMarker(mo);
 		

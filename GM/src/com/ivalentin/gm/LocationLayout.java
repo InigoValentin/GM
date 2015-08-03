@@ -137,7 +137,7 @@ public class LocationLayout extends Fragment implements OnMapReadyCallback{
 	    	
 	    	//Initialize the database
 	    	SQLiteDatabase db = getActivity().openOrCreateDatabase(GM.DB_NAME, Context.MODE_PRIVATE, null);;
-			Cursor cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host FROM event, place WHERE event.place = place.id ORDER BY start;", null);
+			Cursor cursor = db.rawQuery("SELECT schedule, gm, event.name, event.description, place.name, address, lat, lon, start, end, host FROM event, place WHERE gm = 1 AND event.place = place.id ORDER BY start;", null);
 			Date startMinus24, startPlus30, start, end;
 			boolean found = false;
 			

@@ -229,7 +229,6 @@ public class HomeLayout extends Fragment implements LocationListener, OnMapReady
 				btContact.setOnClickListener(new OnClickListener(){
 					@Override
 					public void onClick(View v) {
-						//TODO: test this 
 						//Mail intent
 						Intent intent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", v.getContext().getString(R.string.app_email), null));
 						intent.putExtra(Intent.EXTRA_SUBJECT, v.getContext().getString(R.string.prices_contact_subject));

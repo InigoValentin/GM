@@ -1,4 +1,9 @@
-Gasteizko Margolariak Android App
+*Discontinued*
+
+The source code of the new Gasteizko Margolariak for Android devices: <a href="https://github.com/Seavenois/GasteizkoMargolariakApp">https://github.com/Seavenois/GasteizkoMargolariakApp</a>
+
+===
+~~Gasteizko Margolariak Android App~~
 ===
 
 An Android app intended for members of <a href="http://margolariak.com/">Gasteizko Margolariak</a> in <a href="http://www.vitoria-gasteiz.org/">Vitoria-Gasteiz</a>, Spain.
